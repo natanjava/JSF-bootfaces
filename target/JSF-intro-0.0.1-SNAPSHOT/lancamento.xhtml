@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui = "http://java.sun.com/jsf/facelets"
+	  xmlns:b="http://bootsfaces.net/ui">
+
+	<h:head>
+		<title>Lançamentos</title>
+	</h:head>
+	
+	<h:body>
+	
+		<ui:include src="/menu.xhtml" />
+		
+		<b:messages id="msg-launch"/>
+		
+		<h:form id="formLancamento" style="margin-top:5%; margin-left: 5%;">
+			<h:panelGrid columns="2">
+				<f:facet name="header">
+					<h:outputText value="Lançamentos" />
+				</f:facet>	
+				
+				<h:outputLabel value="ID"/>				
+				<h:inputText value="#{lancamentoBean.lancamento.id}" readonly="true"/>
+				
+				<h:outputLabel value="Nota"/>				
+				<h:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}" 
+							 required="true"	requiredMessage="Informe o número da nota"/>
+				
+				<h:outputLabel value="Origem"/>				
+				<h:inputText value="#{lancamentoBean.lancamento.empresaOrigem}" 
+						     required="true"	requiredMessage="Informe a origem"/>
+				
+
+				<h:outputLabel value="Destino" />
+				<h:inputText value="#{lancamentoBean.lancamento.empresaDestino}" 
+								required="true"	requiredMessage="Informe o dstino"/>
+				
+				<h:outputLabel value="Initial Date" />
+				<b:datepicker locale="en" value="#{lancamentoBean.lancamento.dataIni}" 
+								required="true" requiredMessage="Preencha uma data"  /> 
+				
+				<h:outputLabel value="Final Date" />
+				<b:datepicker locale="en" value="#{lancamentoBean.lancamento.dataFim}" 
+							  required="true" requiredMessage="Preencha uma data"  /> 
+				
+				
+				<h:outputLabel/> <!-- tag pra dar um espaço -->
+							
+			</h:panelGrid>
+			
+			<h:panelGroup >
+					<h:commandButton value="Novo" action="#{lancamentoBean.novo}" image="/resources/img/novo.png" title="Novo"/>
+					<h:commandButton value="Salvar" action="#{lancamentoBean.salvar}" image="/resources/img/salvar.png" title="Salvar"/>
+					<h:commandButton value="Deletar" action="#{lancamentoBean.remover}" image="/resources/img/excluir.png" title="Deletar"   />									
+					<h:commandButton value="Limpar" action="#{lancamentoBean.novo}" image="/resources/img/limpar.png" title="Limpar"/> 
+			</h:panelGroup>
+		</h:form>
+			
+			<br/>
+		<h:form>	
+			<h:dataTable value="#{lancamentoBean.lancamentos}" var="lanc" border="1" cellpadding="4">
+					
+					<f:facet name="header">Lista de Lancamentos </f:facet>
+						
+						<h:column>
+							<f:facet name="header">ID</f:facet>
+							<h:outputLabel value="#{lanc.id}"/>	
+						</h:column>
+							
+						<h:column>
+							<f:facet name="header">Nota</f:facet>
+							<h:outputLabel value="#{lanc.numeroNotaFiscal}"/>
+						</h:column>
+							
+						
+						<h:column>
+							<f:facet name="header">Origem</f:facet>
+							<h:outputLabel value="#{lanc.empresaOrigem}" />
+						</h:column>
+							
+						<h:column>							
+							<f:facet name="header">Destino</f:facet>
+							<h:outputLabel value="#{lanc.empresaDestino}" />
+						</h:column>
+						
+						<h:column>							
+							<f:facet name="header">Usuario</f:facet>
+							<h:outputLabel value="#{lanc.usuario.nome}" />
+						</h:column>
+						
+						<h:column>							
+							<f:facet name="header">Editar</f:facet>
+							<h:commandLink title="Editar">
+								<h:graphicImage value="/resources/img/editar.png"/>						
+								<f:setPropertyActionListener value="#{lanc}" target="#{lancamentoBean.lancamento}"/>								
+							</h:commandLink>
+						</h:column>				
+						
+						<h:column>							
+							<f:facet name="header">Remover</f:facet>
+							<h:commandLink title="Excluir" action="#{lancamentoBean.remover}">
+								<h:graphicImage value="/resources/img/excluir.png"/>						
+								<f:setPropertyActionListener value="#{lanc}" target="#{lancamentoBean.lancamento}"/>								
+							</h:commandLink>
+						</h:column>				
+									
+				</h:dataTable>		
+			
+		</h:form>	
+		
+	</h:body>
+
+</html>

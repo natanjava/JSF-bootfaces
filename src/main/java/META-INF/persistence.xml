@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	
+	<persistence-unit name="JSF-intro">
+	
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>br.com.entidades.Pessoa</class>
+		<class>br.com.entidades.Lancamento</class>
+		<class>br.com.entidades.Estados</class>
+		<class>br.com.entidades.Cidades</class>
+		
+		<properties>
+			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5433/primeiroprojetojsf"/>
+			<property name="hibernate.connection.username" value="postgres"/> 
+			<property name="hibernate.connection.password" value="admin"/>
+			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.show_sql" value="true"/>  	
+			<property name="hibernate.format_sql" value="true"/>  
+			<property name="hibernate.hbm2ddl.auto" value="none"/>
+			
+			
+			<!-- minimo de conexoes ou portas disponiveis -->
+			<property name="hibernate.c3p0.min_size" value="5"/>			
+			
+			<!-- Maximo de portas que está aberta -->
+			<property name="hibernate.c3p0.max_size" value="5"/>
+			
+			<!-- maximo de portas abertas -->
+			<property name="hibernate.c3p0" value="100"/>
+			
+			<!-- numero de segundos em que uma conexao inativa é mantida -->
+			<property name="hibernate.c3p0.timeout" value="300"/>
+			
+			<!-- numero total de transações/instrucoes/operacoes no banco mantida em cash -->
+			<property name="hibernate.c3p0.max_statements" value="50"/>
+			
+			<!-- tempo ocioso em segundos antes de uma conexao ser validada (segundos)-->
+			<property name="hibernate.c3p0.idle_test_period" value="120"/>
+						
+		
+		</properties>
+	
+	</persistence-unit>
+	
+</persistence>

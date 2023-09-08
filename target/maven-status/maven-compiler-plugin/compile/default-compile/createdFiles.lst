@@ -1,0 +1,13 @@
+br\com\repository\IDaoPessoImpl.class
+br\com\entidades\Cidades.class
+br\com\filter\FilterAutenticacao.class
+br\com\cursojsf\PessoaBean.class
+br\com\jpautil\JPAUtil.class
+br\com\repository\IDaoLancamentoImpl.class
+br\com\cursojsf\LancamentoBean.class
+br\com\entidades\Pessoa.class
+br\com\entidades\Estados.class
+br\com\entidades\Lancamento.class
+br\com\repository\IDaoPessoa.class
+br\com\repository\IDaoLancamento.class
+br\com\dao\DaoGeneric.class
