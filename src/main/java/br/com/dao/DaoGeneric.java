@@ -66,7 +66,7 @@ public class DaoGeneric<E> implements Serializable{
 
 		entityManager.createQuery("delete from " + entidade.getClass().getCanonicalName() + " where id = " + id).executeUpdate();
 		entityTransaction.commit();
-		/* outras possibilidadess
+		/* other possibilities
 		entidade.getClass().getName()  
 		entidade.getClass().getSimpleName().toLowerCase() 	  
 		 * */	
@@ -77,7 +77,7 @@ public class DaoGeneric<E> implements Serializable{
 		entityTransaction.begin();
 		
 		List<E> retorno = entityManager.createQuery("from " +entidade.getName() + " order by id desc").
-						  setMaxResults(5).
+						  //setMaxResults(5).
 						  getResultList( );
 		
 		entityTransaction.commit();

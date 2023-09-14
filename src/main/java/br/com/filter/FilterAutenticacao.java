@@ -42,7 +42,7 @@ public class FilterAutenticacao implements Filter {
 		
 		if ( !url.equalsIgnoreCase("index.jsf") && usuarioLogado == null)  {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsf");
-			dispatcher.forward(request, response);		
+			dispatcher.forward(request, response); // linha 45		
 			return;
 		} 
 		else { 

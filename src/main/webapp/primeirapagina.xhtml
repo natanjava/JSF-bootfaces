@@ -21,12 +21,13 @@
 		<h:graphicImage height="100" width="200" library="img"
 			name="launchsystem.jpg" />
 
-		<h1>Welcome, User!</h1>
+		<h1>Welcome, User!  </h1>  
 
 		<h:form id="formPessoa" enctype="multipart/form-data" style="">
 
 
-			<h:messages style="color:white; background-color: black; max-width:400px;" />
+			<h:messages
+				style="color:white; background-color: black; max-width:400px;" />
 
 			<h:panelGrid columns="2">
 
@@ -38,7 +39,7 @@
 				<b:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
 
 				<h:outputLabel value="Foto" />
-				<h:inputFile id="Foto" value="#{pessoaBean.arquivoFoto}"  />
+				<h:inputFile id="Foto" value="#{pessoaBean.arquivoFoto}" />
 
 				<h:outputLabel value="Nome: " />
 				<b:inputText value="#{pessoaBean.pessoa.nome}" />
@@ -59,7 +60,8 @@
 				</b:selectOneMenu>
 
 				<h:outputLabel value="Nascimento: " />
-				<b:datepicker locale="en" value="#{pessoaBean.pessoa.dataNascimento}" />
+				<b:datepicker locale="en"
+					value="#{pessoaBean.pessoa.dataNascimento}" />
 
 				<h:outputLabel value="Frameworks" />
 				<h:selectManyMenu id="campoframeworks"
@@ -151,36 +153,24 @@
 
 			</h:panelGrid>
 
-			<br />
 		</h:form>
+		<br />
 
 
+		<h:form>
+			<b:dataTable 
+				value="#{pessoaBean.pessoas}" 
+				var="pessoa" 
+				columnVisibility="true"
+				>
 
-		<h:form id="formTable">
-			<b:dataTable value="#{pessoaBean.pessoas}" var="pessoa" border="1"
-				cellpadding="4">
-				<f:facet name="header">
-					Lista de usuários cadastrados
-				</f:facet>
+				<b:dataTableColumn value="#{pessoa.id}" />
 
+				<b:dataTableColumn value="#{pessoa.nome}" />
 
-				<h:column>
-					<f:facet name="header">ID</f:facet>
-					<h:outputText value="#{pessoa.id}" />
-				</h:column>
+				<b:dataTableColumn value="#{pessoa.sobrenome}" />
 
-				<h:column>
-					<f:facet name="header">Nome</f:facet>
-					<h:outputText value="#{pessoa.nome}" />
-				</h:column>
-
-				<h:column>
-					<f:facet name="header">Sobrenome</f:facet>
-					<h:outputText value="#{pessoa.sobrenome}" />
-				</h:column>
-
-				<h:column>
-					<f:facet name="header"> Foto</f:facet>
+				<b:dataTableColumn label="Foto">
 					<h:panelGroup rendered="#{not empty pessoa.fotoIconBase64}">
 						<h:commandLink actionListener="#{pessoaBean.download}">
 							<h:graphicImage width="75" height="60"
@@ -192,31 +182,30 @@
 						<h:outputText value="No Photo"
 							style="font-family: verdana; font-size: 12px;" />
 					</h:panelGroup>
-				</h:column>
+				</b:dataTableColumn>
 
-
-
-				<h:column>
-					<f:facet name="header">Editar</f:facet>
-					<h:commandLink title="Editar">
+				<b:dataTableColumn label="Editar">
+					<h:commandLink>
 						<f:setPropertyActionListener value="#{pessoa}"
 							target="#{pessoaBean.pessoa}" />
 						<h:graphicImage value="/resources/img/editar.png" />
 					</h:commandLink>
-				</h:column>
+				</b:dataTableColumn>
 
-				<h:column rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
-					<f:facet name="header">Excluir</f:facet>
+				<b:dataTableColumn label="Excluir" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 					<h:commandLink title="Excluir" action="#{pessoaBean.remove}">
 						<f:setPropertyActionListener value="#{pessoa}"
 							target="#{pessoaBean.pessoa}" />
 						<h:graphicImage value="/resources/img/excluir.png" />
 					</h:commandLink>
-				</h:column>
+				</b:dataTableColumn>
 
 			</b:dataTable>
 
 		</h:form>
+
+
+		
 
 	</div>
 

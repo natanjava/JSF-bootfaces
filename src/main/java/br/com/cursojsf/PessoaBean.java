@@ -219,24 +219,33 @@ public class PessoaBean implements Serializable {
 	}
 	
 	public String logar() throws Exception {
-		Pessoa pessoaUser = iDaoPessoa.consultarUsuario(pessoa.getLogin(), pessoa.getSenha());
-		
-		if (pessoaUser != null ) { // acha usuario e depois adicion na sessão usuarioLogado
-			FacesContext context = FacesContext.getCurrentInstance();  // recupera qualquer informação do ambiente, em JSF			
-			ExternalContext externalContext = context.getExternalContext();
-			/**/
-			externalContext.getSessionMap().put("usuarioLogado", pessoaUser); // pega o objeto ao inves de perfil ou login
-			return "primeirapagina.xhtml";
-			/**/			
-			/*
-			HttpServletRequest req = (HttpServletRequest) externalContext.getRequest();
-			HttpSession session = req.getSession();						
-			session.setAttribute("usuarioLogado", pessoaUser);  // pega o objeto inteiro e guarda na sessão
+		List<Pessoa> pessoaUser = iDaoPessoa.consultarUsuario(pessoa.getLogin(), pessoa.getSenha());
+		try {
 			
-			return "primeirapagina.xhtml";*/
-			
-		} else {
-			FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User not found."));	
+			if (pessoaUser != null ||  pessoaUser.size()!=0) { // user Ok
+				FacesContext context = FacesContext.getCurrentInstance();  			
+				ExternalContext externalContext = context.getExternalContext();
+				/**/
+				externalContext.getSessionMap().put("usuarioLogado", pessoaUser.get(0)); // pega o objeto ao inves de perfil ou login
+				return "primeirapagina.xhtml";
+				/**/			
+				/*
+				HttpServletRequest req = (HttpServletRequest) externalContext.getRequest();
+				HttpSession session = req.getSession();						
+				session.setAttribute("usuarioLogado", pessoaUser);  // pega o objeto inteiro e guarda na sessão
+				
+				return "primeirapagina.xhtml";*/
+				
+			} else {
+				FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User not found."));	
+				return "index.xhtml";
+			}
+		} catch (NoResultException e) {
+			FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User not found"));
+			return "index.xhtml";
+		}
+		catch (IndexOutOfBoundsException e)	{
+			FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User not found"));
 			return "index.xhtml";
 		}
 		
@@ -277,7 +286,7 @@ public class PessoaBean implements Serializable {
 	
 	
 	public void pesquisaCep(AjaxBehaviorEvent event) {
-		//System.out.println("Metodo pesquisaCep invocado: " + pessoa.getCep());
+		//System.out.println("Method pesquisaCep(search ZipCOde) invoked: " + pessoa.getCep());
 		
 		try {
 			URL url = new URL("https://viacep.com.br/ws/" +pessoa.getCep()+ "/json/");

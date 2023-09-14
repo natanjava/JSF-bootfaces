@@ -24,11 +24,10 @@ public class Lancamento implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String numeroNotaFiscal;
+	private String descricao;
 	
 	private String empresaOrigem;
 	
-	private String empresaDestino;
 	
 	@ManyToOne(optional = false)
 	@org.hibernate.annotations.ForeignKey(name="usuario_fk")
@@ -49,13 +48,7 @@ public class Lancamento implements Serializable {
 		this.id = id;
 	}
 
-	public String getNumeroNotaFiscal() {
-		return numeroNotaFiscal;
-	}
-
-	public void setNumeroNotaFiscal(String numeroNotaFiscal) {
-		this.numeroNotaFiscal = numeroNotaFiscal;
-	}
+	
 
 	public String getEmpresaOrigem() {
 		return empresaOrigem;
@@ -73,14 +66,6 @@ public class Lancamento implements Serializable {
 		this.usuario = usuario;
 	}
 	
-	public String getEmpresaDestino() {
-		return empresaDestino;
-	}
-	
-	public void setEmpresaDestino(String empresaDestino) {
-		this.empresaDestino = empresaDestino;
-	}
-			
 	public Date getDataIni() {
 		return dataIni;
 	}
@@ -97,11 +82,20 @@ public class Lancamento implements Serializable {
 		this.dataFim = dataFim;
 	}
 
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -113,11 +107,5 @@ public class Lancamento implements Serializable {
 		Lancamento other = (Lancamento) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-
-	
-	
-	
-	
 		
 }

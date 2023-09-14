@@ -6,11 +6,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 
 import br.com.entidades.Estados;
 import br.com.entidades.Lancamento;
@@ -26,20 +29,27 @@ public class IDaoPessoImpl implements IDaoPessoa, Serializable {
 	@Inject
 	private EntityManager entityManager;
 
+	
 	@Override
-	public Pessoa consultarUsuario(String login, String senha) {
-		Pessoa pessoa = null;
+	public List<Pessoa> consultarUsuario(String login, String senha) {
+		List<Pessoa> pessoas = null;
 		
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
 		
-		pessoa = (Pessoa) entityManager.createQuery("select p from Pessoa p where p.login = '" + login + "' and p.senha = '" + senha +"'").
-				getSingleResult();		
+		
+		pessoas = (List<Pessoa>) entityManager.createQuery("select p from Pessoa p where p.login = '" + login 
+				+ "' and p.senha = '" + senha +"'")
+				.getResultList();		
 		
 		entityTransaction.commit();		
 		
-		return pessoa;
+		return pessoas;
 	}
+	 
+
+	
+	
 
 
 	@Override
