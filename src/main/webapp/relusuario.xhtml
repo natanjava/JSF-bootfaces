@@ -18,26 +18,7 @@
 		
 		<h:form id="formPessoas" style="margin-top:5%; margin-left: 5%;">
 			
-			<h:panelGrid columns="2">
-				
-				<b:column>
-				 	<h:outputLabel value="Data Ini.:"/>
-					 <b:datepicker locale="en" value="#{relUsuario.dataIni}"/>
-				</b:column>
-				
-				<b:column>
-					 <h:outputLabel value="Data Fim.:"/>
-					 <b:datepicker locale="en" value="#{relUsuario.dataFim}"/>
-				</b:column>
-				
-				
-				<b:column>
-					 <h:outputLabel value="Nome: "/>
-				 	<b:inputText value="#{relUsuario.nome}"/>
-				</b:column>
-				
-			</h:panelGrid>
-			
+						
 			<b:commandButton value="Buscar" look="primary " action="#{relUsuario.relPessoa}" />
 			
 		</h:form>

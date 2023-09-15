@@ -47,8 +47,7 @@
 				<h:outputLabel value="Sobrenome: " />
 				<b:inputText value="#{pessoaBean.pessoa.sobrenome}" id="sobrenome" />
 
-				<h:outputLabel value="Idade: " />
-				<b:inputText value="#{pessoaBean.pessoa.idade}" mask="numeric" />
+
 
 				<h:outputLabel value="Sexo: " />
 				<b:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}"
@@ -72,27 +71,6 @@
 					<f:selectItem itemValue="JSF" />
 				</h:selectManyMenu>
 
-				<h:outputLabel value="CEP" />
-				<b:inputText value="#{pessoaBean.pessoa.cep}">
-					<f:ajax event="blur" execute="@form"
-						listener="#{pessoaBean.pesquisaCep}" render="@form" />
-				</b:inputText>
-
-				<h:outputLabel value="Logradouro" />
-				<b:inputText value="#{pessoaBean.pessoa.logradouro}" id="logradouro" />
-
-				<h:outputLabel value="Complemento" />
-				<b:inputText value="#{pessoaBean.pessoa.complemento}"
-					id="complemento" />
-
-				<h:outputLabel value="Bairo" />
-				<b:inputText value="#{pessoaBean.pessoa.bairro}" id="bairro" />
-
-				<h:outputLabel value="Localidade" />
-				<b:inputText value="#{pessoaBean.pessoa.localidade}" id="localidade" />
-
-				<h:outputLabel value="UF" />
-				<b:inputText value="#{pessoaBean.pessoa.uf}" id="uf" />
 
 
 				<h:outputLabel value="Ativo" />

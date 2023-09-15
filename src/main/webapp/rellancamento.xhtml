@@ -18,26 +18,7 @@
 		
 		<h:form id="formLancamento" style="margin-top:5%; margin-left: 5%;">
 			
-			<h:panelGrid columns="2">
-				
-				<b:column>
-				 	<h:outputLabel value="Data Ini.:"/>
-					 <b:datepicker locale="en" value="#{rellancamento.dataIni}"/>
-				</b:column>
-				
-				<b:column>
-					 <h:outputLabel value="Data Fim.:"/>
-					 <b:datepicker locale="en" value="#{rellancamento.dataFim}"/>
-				</b:column>
-				
-				
-				<b:column>
-					 <h:outputLabel value="Número Nota.:"/>
-				 	<b:inputText value="#{rellancamento.descricao}"/>
-				</b:column>
-				
-			</h:panelGrid>
-			
+						
 			<b:commandButton value="Buscar" look="primary " action="#{rellancamento.bucarLancamento}" />
 			
 		</h:form>

@@ -284,7 +284,7 @@ public class PessoaBean implements Serializable {
 	
 	
 	
-	
+	/*
 	public void pesquisaCep(AjaxBehaviorEvent event) {
 		//System.out.println("Method pesquisaCep(search ZipCOde) invoked: " + pessoa.getCep());
 		
@@ -320,6 +320,7 @@ public class PessoaBean implements Serializable {
 		}
 		
 	}
+	 * */
 	
 	/* Everything which is called via Listener (from a JSF-tag), must to have one parameter 'AjaxBehaviorEvent'     	
 	  * This method is no more been used, there was problem wit JSF-tag renderization*/	

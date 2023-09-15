@@ -42,9 +42,6 @@ public class Pessoa implements Serializable {
 	//@NotNull (message="Sobrenome deve ser informado")
 	private String Sobrenome;
 
-	@DecimalMax(value="70", message = "Idade maxima 70 anos")
-	@DecimalMin(value="10", message = "Idade minima 10 anos")
-	private Integer idade;
 
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
@@ -65,23 +62,7 @@ public class Pessoa implements Serializable {
 
 	private Integer[] linguagens;
 
-	private String cep;
-
-	private String logradouro;
-
-	private String complemento;
-
-	private String bairro;
-
-	private String localidade;
-
-	private String uf;
-
-	private String unidade;
-
-	private String ibge;
-
-	private String gia;
+	
 	
 	 @ManyToOne 
 	 private Cidades cidades;	 
@@ -140,13 +121,7 @@ public class Pessoa implements Serializable {
 		Sobrenome = sobrenome;
 	}
 
-	public Integer getIdade() {
-		return idade;
-	}
-
-	public void setIdade(Integer idade) {
-		this.idade = idade;
-	}
+	
 
 	public Date getDataNascimento() {
 		return dataNascimento;
@@ -220,71 +195,7 @@ public class Pessoa implements Serializable {
 		this.linguagens = linguagens;
 	}
 
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
 	
-	 public String getGia() { return gia; }
-	 
-	 public void setGia(String gia) { this.gia = gia; }
-
-
-	public String getLogradouro() {
-		return logradouro;
-	}
-
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getLocalidade() {
-		return localidade;
-	}
-
-	public void setLocalidade(String localidade) {
-		this.localidade = localidade;
-	}
-
-	public String getUf() {
-		return uf;
-	}
-
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
-
-	
-	 public String getUnidade() { return unidade; }
-	 
-	 
-	 public void setUnidade(String unidade) { this.unidade = unidade; }
-	 
-	 
-	 public String getIbge() { return ibge; }
-	 
-	 
-	 public void setIbge(String ibge) { this.ibge = ibge; }
 	 
 	 public String getFotoIconBase64() {
 		return fotoIconBase64;
