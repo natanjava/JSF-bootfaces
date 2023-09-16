@@ -12,14 +12,21 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 		<class>br.com.entidades.Cidades</class>
 		
 		<properties>
+			<!-- 
 			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5433/primeiroprojetojsf"/>
 			<property name="hibernate.connection.username" value="postgres"/> 
 			<property name="hibernate.connection.password" value="admin"/>
+			 -->
+			<property name="hibernate.connection.url" value="jdbc:postgresql://16.170.235.54:5432/primeiroprojetojsf?autoReconnect=true"/>
+			<property name="hibernate.connection.username" value="natan-aws"/> 
+			<property name="hibernate.connection.password" value="xxxx"/>
+			
+			
 			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 			<property name="hibernate.show_sql" value="true"/>  	
 			<property name="hibernate.format_sql" value="true"/>  
-			<property name="hibernate.hbm2ddl.auto" value="none"/>
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
 			
 			
 			<!-- minimo de conexoes ou portas disponiveis -->
