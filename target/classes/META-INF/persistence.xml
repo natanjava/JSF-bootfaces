@@ -21,7 +21,7 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 			 <!--  
 			 -->
 			<property name="hibernate.connection.url" value="jdbc:postgresql://16.170.235.54:5432/primeiroprojetojsf?autoReconnect=true"/>
-			<property name="hibernate.connection.username" value="xxxx"/> 
+			<property name="hibernate.connection.username" value="xxx"/> 
 			<property name="hibernate.connection.password" value="xxx"/>
 			
 			

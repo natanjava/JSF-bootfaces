@@ -216,8 +216,8 @@ public class PessoaBean implements Serializable {
 	
 	public String remove() {
 		daoGeneric.deletarPorId(pessoa);
-		pessoa = new Pessoa(); // para JSF rendereizar os dados com campo vazio
-		carregarPessoas(); // existe alteracao no banco, carrega a lista de novo
+		pessoa = new Pessoa(); 
+		carregarPessoas(); 
 		mostrarMsg("Removed successfully");
 		return "";
 	} 
@@ -225,15 +225,13 @@ public class PessoaBean implements Serializable {
 	@PostConstruct
 	public void carregarPessoas () {
 		pessoas = daoGeneric.getListEntityLimit5(Pessoa.class);
+		
+		// get the session e after the name of user, in order to use it in the UserPage (primeirapagina): "Welcome #user !"
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = context.getExternalContext();
-
-		// Obtém o usuário logado da sessão
 		Pessoa usuarioLogado = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
-
-		// Obtém o nome do usuário logado
-		String nomeUsuarioLogado = (usuarioLogado != null) ? usuarioLogado.getNome() : "Usuário não logado";
-		loggedUser.setNome(nomeUsuarioLogado);
+		String nameLoggedUser = (usuarioLogado != null) ? usuarioLogado.getNome() : "Usuário não logado";
+		loggedUser.setNome(nameLoggedUser);
 		
 	}
 	
@@ -267,13 +265,6 @@ public class PessoaBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User not found"));
 			return "index.xhtml";
 		}
-		
-		/* tentei fazer try catch 
-		 * erro: java.lang.IllegalStateException: Transaction already active
-		 * tentei injetar entityTransaction na classe e dar rollback no catch
-		 * surgiu varios erros
-		 * */
-		
 		
 		
 	}

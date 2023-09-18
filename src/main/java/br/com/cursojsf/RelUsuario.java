@@ -74,13 +74,18 @@ public class RelUsuario implements Serializable {
 	
 	
 	public void relPessoa() {
+		pessoas = daoGeneric.getListEntity(Pessoa.class);		
+	}
+
+	/*
+	public void relPessoa() {
 		if (dataIni == null && dataFim == null && nome == null) {
 			pessoas = daoGeneric.getListEntity(Pessoa.class);
 		}else {
 			pessoas = iDaoPessoa.relatorioPessoa(nome, dataIni, dataFim);
 		}
-		
 	}
+    */
 	
 	
 	

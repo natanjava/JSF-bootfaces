@@ -91,10 +91,10 @@
 
 				<h:outputLabel value="Experiencie" />
 				<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgramador}">
-					<f:selectItem itemValue="J" itemLabel="Junior" />
-					<f:selectItem itemValue="P" itemLabel="Full" />
-					<f:selectItem itemValue="S" itemLabel="Senior" />
-					<f:selectItem itemValue="E" itemLabel="Expert" />
+					<f:selectItem itemValue="Junior" itemLabel="Junior" />
+					<f:selectItem itemValue="Full" itemLabel="Full" />
+					<f:selectItem itemValue="Senior" itemLabel="Senior" />
+					<f:selectItem itemValue="Expert" itemLabel="Expert" />
 				</h:selectOneRadio>
 
 				<h:outputLabel value="Languagens" />
@@ -133,8 +133,7 @@
 			<b:dataTable 
 				value="#{pessoaBean.pessoas}" 
 				var="pessoa" 
-				columnVisibility="true"
-				>
+				columnVisibility="true">
 
 				<b:dataTableColumn value="#{pessoa.id}" label="ID" />
 
@@ -143,7 +142,9 @@
 				<b:dataTableColumn value="#{pessoa.sobrenome}" label="Surname"/>
 				
 				<b:dataTableColumn value="#{pessoa.perfiUser}" label="Role" />
-
+				
+				<b:dataTableColumn value="#{pessoa.nivelProgramador}" label="Experience" />
+				
 				<b:dataTableColumn label="Photo">
 					<h:panelGroup rendered="#{not empty pessoa.fotoIconBase64}">
 						<h:commandLink actionListener="#{pessoaBean.download}">
@@ -158,7 +159,7 @@
 					</h:panelGroup>
 				</b:dataTableColumn>
 
-				<b:dataTableColumn label="Edit">
+				<b:dataTableColumn label="Edit" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 					<h:commandLink title="Edit User">
 						<f:setPropertyActionListener value="#{pessoa}"
 							target="#{pessoaBean.pessoa}" />

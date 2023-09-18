@@ -1,43 +1,63 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:f="http://java.sun.com/jsf/core"
-	  xmlns:ui = "http://java.sun.com/jsf/facelets"
-	  xmlns:b="http://bootsfaces.net/ui">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
 
-	<h:head>
-		<title>Usuario</title>
-	</h:head>
-	
-	<h:body>
-	
-		<ui:include src="/menu.xhtml" />
-		
-		<b:messages id="msg-launch"/>
-		
-		<h:form id="formPessoas" style="margin-top:5%; margin-left: 5%;">
-			
-						
-			<b:commandButton value="Buscar" look="primary " action="#{relUsuario.relPessoa}" />
-			
+<h:head>
+	<title>Usuario</title>
+</h:head>
+
+<h:body>
+
+	<ui:include src="/menu.xhtml" />
+	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%">
+
+		<b:messages id="msg-launch" />
+
+		<br />
+		<div style="width: 500px; text-align: justify">
+			<h4>Users report page</h4>
+			Click on 'List Users' to access information for all users on the system.
+			Then, if necessary, use the field 'Search' to filter the search.
+			Also visit the <a href="rellancamento.jsf">launch report page</a>.
+		</div>
+
+		<h:form id="formPessoas" style="margin-bottom: 3%;">
+
+			<b:commandButton value="List Users" look="primary "
+				action="#{relUsuario.relPessoa}" />
+
 		</h:form>
-			
-			<br/>
-		
-		<h:form>	
-			<b:dataTable value="#{relUsuario.pessoas}" var="p" border="2" cellpadding="4" pdf="true" excel="true">
-			  <b:dataTableColumn value="#{p.id}" label="ID"/>
-			  
-			  <b:dataTableColumn value="#{p.nome}" label="Nome"/>	
-			  
-			  <b:dataTableColumn value="#{p.dataNascimento}" label="Data Nasc."/>		  
-			  
-			   							
-			</b:dataTable>		
-			
-		</h:form>	
-		
-	</h:body>
+
+		<br />
+
+		<h:form>
+			<b:dataTable value="#{relUsuario.pessoas}" 	var="p" 
+						border="2" cellpadding="4" 
+						pdf="true" excel="true" copy="true">
+				<b:dataTableColumn value="#{p.id}" label="ID" />
+
+				<b:dataTableColumn value="#{p.nome}" label="Nome" />
+
+				<h:column>
+					<f:facet name="header">Date of Birth</f:facet>
+					<h:outputLabel value="#{p.dataNascimento}">
+						<f:convertDateTime pattern="dd-MM-yyyy" />
+					</h:outputLabel>
+				</h:column>
+				
+				<b:dataTableColumn value="#{p.perfiUser}" label="Role" />
+				
+				<b:dataTableColumn value="#{p.nivelProgramador}" label="Experience" />
+
+			</b:dataTable>
+
+		</h:form>
+
+	</div>
+</h:body>
 
 </html>

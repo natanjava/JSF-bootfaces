@@ -1,46 +1,61 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:f="http://java.sun.com/jsf/core"
-	  xmlns:ui = "http://java.sun.com/jsf/facelets"
-	  xmlns:b="http://bootsfaces.net/ui">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
 
-	<h:head>
-		<title>Lançamentos</title>
-	</h:head>
+<h:head>
+	<title>Lançamentos</title>
+</h:head>
+
+<h:body>
+
+	<ui:include src="/menu.xhtml" />
+	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%">
+
+		<b:messages id="msg-launch" />
+		<br />
+		<div style="width: 500px; text-align: justify">
+			<h4>Launch report page</h4>
+			Click on 'List Launches' to access information for all Launches on the system.
+			Then, if necessary, use the field 'Search' to filter the search.
+			Also visit the <a href="relusuario.jsf">user report page</a>.
+		</div>
 	
-	<h:body>
+		<h:form id="formLancamento" style="margin-bottom:3%;">
 	
-		<ui:include src="/menu.xhtml" />
-		
-		<b:messages id="msg-launch"/>
-		
-		<h:form id="formLancamento" style="margin-top:5%; margin-left: 5%;">
-			
-						
-			<b:commandButton value="Buscar" look="primary " action="#{rellancamento.bucarLancamento}" />
-			
+	
+			<b:commandButton value="List Launches" look="primary "
+				action="#{rellancamento.bucarLancamento}" />
+	
 		</h:form>
-			
-			<br/>
-		
-		<h:form>	
-			<b:dataTable value="#{rellancamento.lancamentos}" var="lanc" border="2" cellpadding="4" pdf="true" excel="true">
-			  <b:dataTableColumn value="#{lanc.id}" label="ID"/>
-			  
-			  <b:dataTableColumn value="#{lanc.descricao}" label="Nota"/>
-			  
-			  
-			  <b:dataTableColumn value="#{lanc.usuario.nome}" label="User"/>
-			  
-			  <b:dataTableColumn value="#{lanc.dataIni}" label="Inicial"/>
-			  
-			   <b:dataTableColumn value="#{lanc.dataFim}" label="Final"/>								
-			</b:dataTable>		
-			
-		</h:form>	
-		
-	</h:body>
+	
+		<br />
+	
+		<h:form>
+			<b:dataTable value="#{rellancamento.lancamentos}" var="lanc"
+				 		border="2" cellpadding="4" 
+				 		pdf="true" excel="true" copy="true">
+				
+				<b:dataTableColumn value="#{lanc.id}" label="ID" />
+	
+				<b:dataTableColumn value="#{lanc.descricao}" label="Description" />
+	
+				<b:dataTableColumn value="#{lanc.empresaOrigem}" label="Supplier" />
+	
+				<b:dataTableColumn value="#{lanc.usuario.nome}" label="Author of the Launch" />
+	
+				<b:dataTableColumn value="#{lanc.dataIni}" label="Date of order" />
+	
+				<b:dataTableColumn value="#{lanc.dataFim}" label="Date of delivery" />
+			</b:dataTable>
+	
+		</h:form>
+	
+	</div>
+
+</h:body>
 
 </html>

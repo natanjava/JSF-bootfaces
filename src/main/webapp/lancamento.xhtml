@@ -22,7 +22,6 @@
 		<h4>Launches of User: <b>#{pessoaBean.loggedUser.nome}</b>.</h4> 
 		Only the last 5 order releases will be made available on this page. To access the complete release history,
 		access the <a href="rellancamento.jsf">launch report page</a>.
-		
 		</div>
 	
 		<h:form id="formLancamento" style="margin-top:2%; ">
@@ -48,12 +47,12 @@
 					value="#{lancamentoBean.lancamento.dataIni}" required="true"
 					requiredMessage="Date of order required" style="width:180px;"/>
 	
-				<h:outputLabel value="Service delivery" />
+				<h:outputLabel value="Date of delivery" />
 				<b:datepicker locale="en"
 					value="#{lancamentoBean.lancamento.dataFim}" required="true"
 					requiredMessage="Date of delyvery required" style="width:180px;"/>
 	
-				<!-- tag pra dar um espaço 
+				<!-- empty tag to make space 
 				<h:outputLabel />
 				-->
 	
@@ -76,7 +75,9 @@
 			<b:dataTable 
 				value="#{lancamentoBean.lancamentos}" 
 				var="lanc"
-				border="1" cellpadding="20">
+				border="1" cellpadding="20"
+				paginated="false"
+				searching="false">
 	
 				<b:dataTableColumn value="#{lanc.id}" label="ID" />	
 	
@@ -123,7 +124,7 @@
 
 
 <script type="text/javascript">
-	// TextArea, limit 250 cacarters
+	// TextArea, limit 250 cacarters, no more used but soon will be again implentated
     function limitarCaracteres() {
         var textarea = document.getElementById('formLancamento:descricaoTextarea'); 
         var limite = 255; // Defina o limite de caracteres desejado
