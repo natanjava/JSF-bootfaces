@@ -17,7 +17,8 @@
 
 	<ui:include src="/menu.xhtml" />
 	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%">
-		
+	
+		<br/>	
 		<h4>Welcome #{pessoaBean.loggedUser.nome}!</h4> Click <a href="info.jsf">here</a> and learn more about these System.
 
 		<h:form id="formPessoa" enctype="multipart/form-data" style="margin-top:2%">
@@ -124,6 +125,7 @@
 		</h:form>
 		<br /><br /><br />
 
+
 		<div style="text-align: center" >
 			<h4>Users already saved in the System.</h4> 
 		</div>
@@ -157,7 +159,7 @@
 				</b:dataTableColumn>
 
 				<b:dataTableColumn label="Edit">
-					<h:commandLink>
+					<h:commandLink title="Edit User">
 						<f:setPropertyActionListener value="#{pessoa}"
 							target="#{pessoaBean.pessoa}" />
 						<h:graphicImage value="/resources/img/editar.png" />
@@ -165,7 +167,7 @@
 				</b:dataTableColumn>
 
 				<b:dataTableColumn label="Remove" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
-					<h:commandLink title="Excluir" action="#{pessoaBean.remove}">
+					<h:commandLink title="Remove User" action="#{pessoaBean.remove}">
 						<f:setPropertyActionListener value="#{pessoa}"
 							target="#{pessoaBean.pessoa}" />
 						<h:graphicImage value="/resources/img/excluir.png" />

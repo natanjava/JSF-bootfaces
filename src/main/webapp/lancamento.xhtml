@@ -13,123 +13,113 @@
 <h:body>
 
 	<ui:include src="/menu.xhtml" />
+	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%">
 
-	<b:messages id="msg-launch" />
+		<b:messages id="msg-launch" />
+		
+		<br/>
+		<div style="width: 500px; text-align: justify">
+		<h4>Launches of User: <b>#{pessoaBean.loggedUser.nome}</b>.</h4> 
+		Only the last 5 order releases will be made available on this page. To access the complete release history,
+		access the <a href="rellancamento.jsf">launch report page</a>.
+		
+		</div>
+	
+		<h:form id="formLancamento" style="margin-top:2%; ">
+			<h:panelGrid columns="2">
+				<f:facet name="header">
+					<h:outputText value="Launch of order" />
+				</f:facet>
+	
+				<h:outputLabel value="ID" />
+				<h:inputText value="#{lancamentoBean.lancamento.id}" readonly="true" />
+	
+				<h:outputLabel value="Description" />
+				<h:inputTextarea id="descricaoTextarea" row = "10" col = "20" 
+								value="#{lancamentoBean.lancamento.descricao}"
+								required="true" requiredMessage="Descripton required" style="width:180px;" />
+	
+				<h:outputLabel value="Supplier" />
+				<h:inputText value="#{lancamentoBean.lancamento.empresaOrigem}"
+					required="true" requiredMessage="Supplier required"  />
+	
+				<h:outputLabel value="Date of order" />
+				<b:datepicker locale="en"
+					value="#{lancamentoBean.lancamento.dataIni}" required="true"
+					requiredMessage="Date of order required" style="width:180px;"/>
+	
+				<h:outputLabel value="Service delivery" />
+				<b:datepicker locale="en"
+					value="#{lancamentoBean.lancamento.dataFim}" required="true"
+					requiredMessage="Date of delyvery required" style="width:180px;"/>
+	
+				<!-- tag pra dar um espaço 
+				<h:outputLabel />
+				-->
+	
+			</h:panelGrid>
+	
+			<h:panelGroup style="margin-left: 8%;">
+				<h:commandButton value="Save Launch" action="#{lancamentoBean.salvar}"
+					image="/resources/img/salvar.png" title="Save Launch" />
 
-	<h:form id="formLancamento" style="margin-top:5%; margin-left: 5%;">
-		<h:panelGrid columns="2">
-			<f:facet name="header">
-				<h:outputText value="Pedidos" />
-			</f:facet>
-
-			<h:outputLabel value="ID do Pedido" />
-			<h:inputText value="#{lancamentoBean.lancamento.id}" readonly="true" />
-
-			<h:outputLabel value="Descrição" />
-			<h:inputTextarea id="descricaoTextarea" row = "10" col = "20" 
-							value="#{lancamentoBean.lancamento.descricao}"
-							required="true" requiredMessage="" style="width:180px;" />
-
-			<h:outputLabel value="Fornecedor" />
-			<h:inputText value="#{lancamentoBean.lancamento.empresaOrigem}"
-				required="true" requiredMessage=""  />
-
-
-			<h:outputLabel value="Initial Date" />
-			<b:datepicker locale="en"
-				value="#{lancamentoBean.lancamento.dataIni}" required="true"
-				requiredMessage="Preencha uma data" style="width:180px;"/>
-
-			<h:outputLabel value="Final Date" />
-			<b:datepicker locale="en"
-				value="#{lancamentoBean.lancamento.dataFim}" required="true"
-				requiredMessage="Preencha uma data" style="width:180px;"/>
-
-
-			<h:outputLabel />
-			<!-- tag pra dar um espaço -->
-
-		</h:panelGrid>
-
-		<h:panelGroup>
-			<h:commandButton value="Novo" action="#{lancamentoBean.novo}"
-				image="/resources/img/novo.png" title="Novo" />
-			<h:commandButton value="Salvar" action="#{lancamentoBean.salvar}"
-				image="/resources/img/salvar.png" title="Salvar" />
-			<h:commandButton value="Deletar" action="#{lancamentoBean.remover}"
-				image="/resources/img/excluir.png" title="Deletar" />
-			<h:commandButton value="Limpar" action="#{lancamentoBean.novo}"
-				image="/resources/img/limpar.png" title="Limpar" />
-		</h:panelGroup>
-	</h:form>
-
-	<br />
-	<h:form >
-		<b:dataTable value="#{lancamentoBean.lancamentos}" var="lanc"
-			border="1" cellpadding="20" >
-
-			<f:facet name="header">Lista de Lancamentos </f:facet>
-
-			<h:column>
-				<f:facet name="header">ID</f:facet>
-				<h:outputLabel value="#{lanc.id}" />
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">Descrição</f:facet>
-				<h:outputLabel value="#{lanc.descricao}" />
-			</h:column>
-
-
-			<h:column>
-				<f:facet name="header">Fornecedor</f:facet>
-				<h:outputLabel value="#{lanc.empresaOrigem}" />
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">Data da compra</f:facet>
-				<h:outputLabel value="#{lanc.dataIni}" >
-					  <f:convertDateTime pattern="dd-MM-yyyy" />
-				</h:outputLabel>
+				<h:commandButton value="Clean Form" action="#{lancamentoBean.novo}"
+					image="/resources/img/limpar.png" title="Clean Form" />
+			</h:panelGroup>
+		</h:form>
+	
+		<br /><br /><br />
+		<div style="text-align: center" >
+			<h4>Launches of User <b>#{pessoaBean.loggedUser.nome}</b> already saved in the System.</h4> 
+		</div>
+		<h:form >
+			<b:dataTable 
+				value="#{lancamentoBean.lancamentos}" 
+				var="lanc"
+				border="1" cellpadding="20">
+	
+				<b:dataTableColumn value="#{lanc.id}" label="ID" />	
+	
+				<b:dataTableColumn value="#{lanc.descricao}" label="Description"  />	
 				
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">Data da entrega</f:facet>
-				<h:outputLabel value="#{lanc.dataFim}" >
-					  <f:convertDateTime pattern="dd-MM-yyyy" />
-				</h:outputLabel>
+				<b:dataTableColumn value="#{lanc.empresaOrigem}" label="Supplier" />	
+					
+				<h:column>
+					<f:facet name="header">Date of order</f:facet>
+					<h:outputLabel value="#{lanc.dataIni}" >
+						  <f:convertDateTime pattern="dd-MM-yyyy" />
+					</h:outputLabel>
+				</h:column>
 				
-				
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">Usuario</f:facet>
-				<h:outputLabel value="#{lanc.usuario.nome}" />
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">Editar</f:facet>
-				<h:commandLink title="Editar">
-					<h:graphicImage value="/resources/img/editar.png" />
-					<f:setPropertyActionListener value="#{lanc}"
-						target="#{lancamentoBean.lancamento}" />
-				</h:commandLink>
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">Remover</f:facet>
-				<h:commandLink title="Excluir" action="#{lancamentoBean.remover}">
-					<h:graphicImage value="/resources/img/excluir.png" />
-					<f:setPropertyActionListener value="#{lanc}"
-						target="#{lancamentoBean.lancamento}" />
-				</h:commandLink>
-			</h:column>
-
-		</b:dataTable>
-
-	</h:form>
-
+				<h:column>
+					<f:facet name="header">Service delivery</f:facet>
+					<h:outputLabel value="#{lanc.dataFim}" >
+						  <f:convertDateTime pattern="dd-MM-yyyy" />
+					</h:outputLabel>
+				</h:column>
+	
+				<h:column>
+					<f:facet name="header">Edit</f:facet>
+					<h:commandLink title="Edit Launch">
+						<h:graphicImage value="/resources/img/editar.png" />
+						<f:setPropertyActionListener value="#{lanc}"
+							target="#{lancamentoBean.lancamento}" />
+					</h:commandLink>
+				</h:column>
+	
+				<h:column>
+					<f:facet name="header">Remove</f:facet>
+					<h:commandLink title="Remove Launch" action="#{lancamentoBean.remover}">
+						<h:graphicImage value="/resources/img/excluir.png" />
+						<f:setPropertyActionListener value="#{lanc}"
+							target="#{lancamentoBean.lancamento}" />
+					</h:commandLink>
+				</h:column>
+	
+			</b:dataTable>
+	
+		</h:form>
+	</div>
 
 
 <script type="text/javascript">

@@ -73,7 +73,8 @@ public class LancamentoBean implements Serializable {
 		lancamento = daoGeneric.merge(lancamento);
 		
 		carregarLancamentos();
-		FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Salvo com sucesso!"));
+		FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Successfully saved."));
+		lancamento = new Lancamento();
 		
 		return "";
 	}
@@ -84,7 +85,7 @@ public class LancamentoBean implements Serializable {
 		ExternalContext externalContext = context.getExternalContext();
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
 		lancamentos = daoLancamento.consultarLimit5(pessoaUser.getId());
-		System.out.println(lancamentos);
+	//	System.out.println(lancamentos);
 	}
 	
 	
@@ -98,7 +99,7 @@ public class LancamentoBean implements Serializable {
 		daoGeneric.deletarPorId(lancamento);
 		lancamento = new Lancamento();
 		carregarLancamentos();
-		FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Excluidocom sucesso!"));
+		FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Successfully removed."));
 		return "";
 	}
 	/*  Methods --- END*/
