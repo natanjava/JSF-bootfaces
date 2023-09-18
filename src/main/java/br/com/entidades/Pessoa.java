@@ -35,11 +35,11 @@ public class Pessoa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	//@NotEmpty (message="Name required")
 	@Size(min=1, max=50, message="Nome deve ter entre 1 e 50 letras")
 	private String nome;
 	
-	//@NotEmpty (message="Sobrenome deve ser informado")
-	//@NotNull (message="Sobrenome deve ser informado")
+	//@NotNull (message="Surname required")
 	private String Sobrenome;
 
 

@@ -14,51 +14,47 @@
 </h:head>
 
 <h:body>
-	<div style="margin-left: 5%;">
 
-		<ui:include src="/menu.xhtml" />
+	<ui:include src="/menu.xhtml" />
+	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%">
+		
+		<h4>Welcome #{pessoaBean.loggedUser.nome}!</h4> Click <a href="info.jsf">here</a> and learn more about these System.
 
-		<h:graphicImage height="100" width="200" library="img"
-			name="launchsystem.jpg" />
-
-		<h1>Welcome, User!  </h1>  
-
-		<h:form id="formPessoa" enctype="multipart/form-data" style="">
+		<h:form id="formPessoa" enctype="multipart/form-data" style="margin-top:2%">
 
 
-			<h:messages
-				style="color:white; background-color: black; max-width:400px;" />
+			<h:messages style="color:white; background-color: black; max-width:400px;" />
 
 			<h:panelGrid columns="2">
 
-				<f:facet name="header">
+				<f:facet name="header"> 
 					<h:outputText value="User Registration" />
 				</f:facet>
 
 				<h:outputLabel value="ID: " />
 				<b:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
 
-				<h:outputLabel value="Foto" />
+				<h:outputLabel value="Photo" />
 				<h:inputFile id="Foto" value="#{pessoaBean.arquivoFoto}" />
 
-				<h:outputLabel value="Nome: " />
+				<h:outputLabel value="Name: " />
 				<b:inputText value="#{pessoaBean.pessoa.nome}" />
 
-				<h:outputLabel value="Sobrenome: " />
+				<h:outputLabel value="Surname: " />
 				<b:inputText value="#{pessoaBean.pessoa.sobrenome}" id="sobrenome" />
 
 
 
-				<h:outputLabel value="Sexo: " />
+				<h:outputLabel value="Gender: " />
 				<b:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}"
 					required="false">
 					<f:selectItem itemValue="não informado" itemLabel="[Selecione]"
 						noSelectionOption="true" />
-					<f:selectItem itemValue="MASCULINO" itemLabel="Masculino" />
-					<f:selectItem itemValue="FEMININO" itemLabel="Feminino" />
+					<f:selectItem itemValue="MASCULIN" itemLabel="Masculin" />
+					<f:selectItem itemValue="FEMININ" itemLabel="Feminin" />
 				</b:selectOneMenu>
 
-				<h:outputLabel value="Nascimento: " />
+				<h:outputLabel value="Date of Birthday: " />
 				<b:datepicker locale="en"
 					value="#{pessoaBean.pessoa.dataNascimento}" />
 
@@ -73,68 +69,64 @@
 
 
 
-				<h:outputLabel value="Ativo" />
+				<h:outputLabel value="Active" />
 				<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />
 
 				<h:outputLabel value="Login" />
-				<b:inputText value="#{pessoaBean.pessoa.login}" />
+				<b:inputText value="#{pessoaBean.pessoa.login}" required="true" requiredMessage="Login required" />
 
-				<h:outputLabel value="Senha " />
-				<b:inputSecret value="#{pessoaBean.pessoa.senha}" redisplay="true" />
+				<h:outputLabel value="Password " />
+				<b:inputSecret value="#{pessoaBean.pessoa.senha}" redisplay="true" required="true" requiredMessage="Password required"/>
 
-				<h:outputLabel value="Perfil: " />
+				<h:outputLabel value="Rolle" />
 				<b:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfiUser}"
 					required="false">
-					<f:selectItem itemValue="não informado" itemLabel="[Selecione]"
+					<f:selectItem itemValue="not reported" itemLabel="[Select]"
 						noSelectionOption="true" />
 					<f:selectItem itemValue="ADMINISTRATOR" itemLabel="Administrator" />
 					<f:selectItem itemValue="RECEPCIONIST" itemLabel="Recepcionist" />
 					<f:selectItem itemValue="ASSISTENT" itemLabel="Assistent" />
 				</b:selectOneMenu>
 
-				<h:outputLabel value="Programador" />
+				<h:outputLabel value="Experiencie" />
 				<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgramador}">
 					<f:selectItem itemValue="J" itemLabel="Junior" />
-					<f:selectItem itemValue="P" itemLabel="Pleno" />
+					<f:selectItem itemValue="P" itemLabel="Full" />
 					<f:selectItem itemValue="S" itemLabel="Senior" />
-					<f:selectItem itemValue="E" itemLabel="Especialista" />
+					<f:selectItem itemValue="E" itemLabel="Expert" />
 				</h:selectOneRadio>
 
-				<h:outputLabel value="Linguagens" />
+				<h:outputLabel value="Languagens" />
 				<h:selectManyCheckbox value="#{pessoaBean.pessoa.linguagens}">
-					<f:selectItem itemValue="1" itemLabel="Java" />
-					<f:selectItem itemValue="2" itemLabel="PHP" />
-					<f:selectItem itemValue="3" itemLabel="Phyton" />
-					<f:selectItem itemValue="4" itemLabel="Cobol" />
+					<f:selectItem itemValue="1" itemLabel="English" />
+					<f:selectItem itemValue="2" itemLabel="Germany" />
+					<f:selectItem itemValue="3" itemLabel="Spanish" />
+					<f:selectItem itemValue="4" itemLabel="French" />
 				</h:selectManyCheckbox>
 
-				<h:outputLabel />
-				<!-- tag to make space -->
 
+				<!-- tag to make space -->
+				<h:outputLabel /><h:outputLabel />
+				
+			
 				<h:panelGroup>
-					<h:commandButton value="Novo" action="#{pessoaBean.limpar}"
-						image="/resources/img/novo.png" title="Novo" />
-					<h:commandButton value="Salvar" action="#{pessoaBean.salvar}"
-						image="/resources/img/salvar.png" title="Salvar" />
-					<h:commandButton value="Deletar" action="#{pessoaBean.remove}"
-						image="/resources/img/excluir.png" title="Deletar"
-						rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}" />
-					<!-- 
-						<h:commandButton value="Limpar" type="reset" image="/resources/img/limpar.png" title="Limpar"/>  
-						 -->
-					<h:commandButton value="Limpar 2" id="botaoLimpar2"
+					<h:commandButton value="Save Data" action="#{pessoaBean.salvar}"
+						image="/resources/img/salvar.png" title="Save Data" />
+					<h:commandButton value="Clean Formular" id="botaoLimpar2"
 						action="#{pessoaBean.limpar}" image="/resources/img/limpar.png"
-						title="Limpar">
+						title="Clean Formular">
 						<f:ajax execute="botaoLimpar2" render="@form" />
-					</h:commandButton>
+						</h:commandButton>
 				</h:panelGroup>
 
 			</h:panelGrid>
 
 		</h:form>
-		<br />
+		<br /><br /><br />
 
-
+		<div style="text-align: center" >
+			<h4>Users already saved in the System.</h4> 
+		</div>
 		<h:form>
 			<b:dataTable 
 				value="#{pessoaBean.pessoas}" 
@@ -142,13 +134,15 @@
 				columnVisibility="true"
 				>
 
-				<b:dataTableColumn value="#{pessoa.id}" />
+				<b:dataTableColumn value="#{pessoa.id}" label="ID" />
 
-				<b:dataTableColumn value="#{pessoa.nome}" />
+				<b:dataTableColumn value="#{pessoa.nome}" label="Name"/>
 
-				<b:dataTableColumn value="#{pessoa.sobrenome}" />
+				<b:dataTableColumn value="#{pessoa.sobrenome}" label="Surname"/>
+				
+				<b:dataTableColumn value="#{pessoa.perfiUser}" label="Role" />
 
-				<b:dataTableColumn label="Foto">
+				<b:dataTableColumn label="Photo">
 					<h:panelGroup rendered="#{not empty pessoa.fotoIconBase64}">
 						<h:commandLink actionListener="#{pessoaBean.download}">
 							<h:graphicImage width="75" height="60"
@@ -162,7 +156,7 @@
 					</h:panelGroup>
 				</b:dataTableColumn>
 
-				<b:dataTableColumn label="Editar">
+				<b:dataTableColumn label="Edit">
 					<h:commandLink>
 						<f:setPropertyActionListener value="#{pessoa}"
 							target="#{pessoaBean.pessoa}" />
@@ -170,7 +164,7 @@
 					</h:commandLink>
 				</b:dataTableColumn>
 
-				<b:dataTableColumn label="Excluir" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
+				<b:dataTableColumn label="Remove" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 					<h:commandLink title="Excluir" action="#{pessoaBean.remove}">
 						<f:setPropertyActionListener value="#{pessoa}"
 							target="#{pessoaBean.pessoa}" />

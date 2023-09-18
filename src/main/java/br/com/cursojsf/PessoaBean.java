@@ -51,6 +51,7 @@ public class PessoaBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Pessoa pessoa = new Pessoa();
+	private Pessoa loggedUser = new Pessoa();
 	private List<Pessoa> pessoas = new ArrayList<Pessoa> ();
 	
 	@Inject
@@ -70,6 +71,14 @@ public class PessoaBean implements Serializable {
 	
 
 	
+	
+	public Pessoa getLoggedUser() {
+		return loggedUser;
+	}
+	
+	public void setLoggedUser(Pessoa loggedUser) {
+		this.loggedUser = loggedUser;
+	}
 	
 	public Pessoa getPessoa() {
 		return pessoa;
@@ -187,7 +196,7 @@ public class PessoaBean implements Serializable {
 		pessoa = daoGeneric.merge(pessoa);
 		pessoa = new Pessoa();
 		carregarPessoas(); // existe alteracao no banco, carrega a lista de novo
-		mostrarMsg("Cadastrado com sucesso");
+		mostrarMsg("User saved successfully.");
 		 
 		return "";
 	}
@@ -209,13 +218,23 @@ public class PessoaBean implements Serializable {
 		daoGeneric.deletarPorId(pessoa);
 		pessoa = new Pessoa(); // para JSF rendereizar os dados com campo vazio
 		carregarPessoas(); // existe alteracao no banco, carrega a lista de novo
-		mostrarMsg("Removido com sucesso.");
+		mostrarMsg("Removed successfully");
 		return "";
 	} 
 	
 	@PostConstruct
 	public void carregarPessoas () {
 		pessoas = daoGeneric.getListEntityLimit5(Pessoa.class);
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = context.getExternalContext();
+
+		// Obtém o usuário logado da sessão
+		Pessoa usuarioLogado = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
+
+		// Obtém o nome do usuário logado
+		String nomeUsuarioLogado = (usuarioLogado != null) ? usuarioLogado.getNome() : "Usuário não logado";
+		loggedUser.setNome(nomeUsuarioLogado);
+		
 	}
 	
 	public String logar() throws Exception {
@@ -227,7 +246,7 @@ public class PessoaBean implements Serializable {
 				ExternalContext externalContext = context.getExternalContext();
 				/**/
 				externalContext.getSessionMap().put("usuarioLogado", pessoaUser.get(0)); // pega o objeto ao inves de perfil ou login
-				return "primeirapagina.xhtml";
+				return "primeirapagina.xhtml?faces-redirect=true";
 				/**/			
 				/*
 				HttpServletRequest req = (HttpServletRequest) externalContext.getRequest();

@@ -10,15 +10,17 @@
 
 		<b:navBar brand="Menu" fluid="true">
 		 <b:navbarLinks>
-		 	 <b:navCommandLink action="primeirapagina" value="Administração" />
-		   	 <b:navCommandLink action="lancamento" value="Lançamentos"/>
+		 	 <b:navCommandLink action="primeirapagina" value="User" />
+		   	 <b:navCommandLink action="lancamento" value="Launches"/>
 		  
-		     <b:dropMenu value="Relatórios">
-		       <b:navCommandLink action="rellancamento" value="Rel. Notas" />
-		       <b:navCommandLink action="relusuario" value="Rel. Usuário"/>
+		     <b:dropMenu value="Reports">
+		       <b:navCommandLink action="rellancamento" value="Lauches" />
+		       <b:navCommandLink action="relusuario" value="Users"/>
 		     </b:dropMenu>
 		     
-		     <b:navCommandLink value="Trocar o Usuário" action="#{pessoaBean.deslogar}" />
+		     <b:navCommandLink value="Info(s)" action="info" />		     
+
+		     <b:navCommandLink value="Log off" action="#{pessoaBean.deslogar}" />
 		  </b:navbarLinks>
 		</b:navBar> 
 	
