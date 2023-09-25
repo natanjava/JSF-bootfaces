@@ -17,23 +17,27 @@
 
 	<ui:include src="/menu.xhtml" />
 	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%">
-	
-		<br/>	
-		<h4>Welcome #{pessoaBean.loggedUser.nome}!</h4> Click <a href="info.jsf">here</a> and learn more about these System.
 
-		<h:form id="formPessoa" enctype="multipart/form-data" style="margin-top:2%">
+		<br />
+		<h4>Welcome #{pessoaBean.loggedUser.nome}!</h4>
+		Click <a href="info.jsf">here</a> and learn more about these System.
+
+		<h:form id="formPessoa" enctype="multipart/form-data"
+			style="margin-top:2%">
 
 
-			<h:messages style="color:white; background-color: black; max-width:400px;" />
+			<h:messages
+				style="color:white; background-color: black; max-width:400px;" />
 
 			<h:panelGrid columns="2">
 
-				<f:facet name="header"> 
+				<f:facet name="header">
 					<h:outputText value="User Registration" />
 				</f:facet>
 
 				<h:outputLabel value="ID: " />
-				<b:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
+				<b:inputText value="#{pessoaBean.pessoa.id}" readonly="true"  />
+	
 
 				<h:outputLabel value="Photo" />
 				<h:inputFile id="Foto" value="#{pessoaBean.arquivoFoto}" />
@@ -74,10 +78,12 @@
 				<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />
 
 				<h:outputLabel value="Login" />
-				<b:inputText value="#{pessoaBean.pessoa.login}" required="true" requiredMessage="Login required" />
+				<b:inputText value="#{pessoaBean.pessoa.login}" required="true"
+					requiredMessage="Login required" />
 
 				<h:outputLabel value="Password " />
-				<b:inputSecret value="#{pessoaBean.pessoa.senha}" redisplay="true" required="true" requiredMessage="Password required"/>
+				<b:inputSecret value="#{pessoaBean.pessoa.senha}" redisplay="true"
+					required="true" requiredMessage="Password required" />
 
 				<h:outputLabel value="Rolle" />
 				<b:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfiUser}"
@@ -107,44 +113,49 @@
 
 
 				<!-- tag to make space -->
-				<h:outputLabel /><h:outputLabel />
-				
-			
+				<h:outputLabel />
+				<h:outputLabel />
+
+
 				<h:panelGroup>
-					<h:commandButton value="Save Data" action="#{pessoaBean.salvar}"
+					<h:commandButton value="Save Data"  
+						action="#{pessoaBean.salvar}" 
 						image="/resources/img/salvar.png" title="Save Data" />
 					<h:commandButton value="Clean Formular" id="botaoLimpar2"
 						action="#{pessoaBean.limpar}" image="/resources/img/limpar.png"
 						title="Clean Formular">
 						<f:ajax execute="botaoLimpar2" render="@form" />
-						</h:commandButton>
+					</h:commandButton>
 				</h:panelGroup>
 
 			</h:panelGrid>
 
 		</h:form>
-		<br /><br /><br />
+		<br />
+		<br />
+		<br />
 
 
-		<div style="text-align: center" >
-			<h4>Users already saved in the System.</h4> 
+		<div style="text-align: center">
+			<h4>Users already saved in the System.</h4>
 		</div>
 		<h:form>
-			<b:dataTable 
-				value="#{pessoaBean.pessoas}" 
-				var="pessoa" 
+			<b:dataTable value="#{pessoaBean.pessoas}" var="pessoa"
 				columnVisibility="true">
 
-				<b:dataTableColumn value="#{pessoa.id}" label="ID" />
+				<b:dataTableColumn value="#{pessoa.id}" label="ID" >
+								<f:param name="idUser" value="#{pessoa.id}" />
+				</b:dataTableColumn>
 
-				<b:dataTableColumn value="#{pessoa.nome}" label="Name"/>
+				<b:dataTableColumn value="#{pessoa.nome}" label="Name" />
 
-				<b:dataTableColumn value="#{pessoa.sobrenome}" label="Surname"/>
-				
+				<b:dataTableColumn value="#{pessoa.sobrenome}" label="Surname" />
+
 				<b:dataTableColumn value="#{pessoa.perfiUser}" label="Role" />
-				
-				<b:dataTableColumn value="#{pessoa.nivelProgramador}" label="Experience" />
-				
+
+				<b:dataTableColumn value="#{pessoa.nivelProgramador}"
+					label="Experience" />
+
 				<b:dataTableColumn label="Photo">
 					<h:panelGroup rendered="#{not empty pessoa.fotoIconBase64}">
 						<h:commandLink actionListener="#{pessoaBean.download}">
@@ -159,16 +170,19 @@
 					</h:panelGroup>
 				</b:dataTableColumn>
 
-				<b:dataTableColumn label="Edit" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
-					<h:commandLink title="Edit User">
+				<b:dataTableColumn label="Edit"
+					rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
+					<h:commandLink title="Edit User" >
 						<f:setPropertyActionListener value="#{pessoa}"
 							target="#{pessoaBean.pessoa}" />
 						<h:graphicImage value="/resources/img/editar.png" />
 					</h:commandLink>
 				</b:dataTableColumn>
 
-				<b:dataTableColumn label="Remove" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
-					<h:commandLink title="Remove User" action="#{pessoaBean.remove}">
+				<b:dataTableColumn label="Remove"
+					rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
+					<h:commandLink title="Remove User" action="#{pessoaBean.remove}"
+						onclick="return confirm('Are you sure you want to delete Register?');">
 						<f:setPropertyActionListener value="#{pessoa}"
 							target="#{pessoaBean.pessoa}" />
 						<h:graphicImage value="/resources/img/excluir.png" />
@@ -178,11 +192,25 @@
 			</b:dataTable>
 
 		</h:form>
-
-
-		
-
 	</div>
+
+
+	<script>
+		function validateUpdate() {
+			var id = document.getElementById('idUser').value;
+			if (id == 14 ){
+				window.alert('Usuario não pode ser editado.');
+				return false;
+			}
+			return true;
+		}
+		
+	</script>
+
+
+
+
+
 
 </h:body>
 

@@ -2,15 +2,11 @@ package br.com.cursojsf;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,14 +20,11 @@ import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
-
-import com.google.gson.Gson;
 
 import br.com.dao.DaoGeneric;
 import br.com.entidades.Cidades;
@@ -68,6 +61,8 @@ public class PessoaBean implements Serializable {
 	
 	@Inject
 	private JPAUtil jpaUtil;
+	
+
 	
 
 	
@@ -128,20 +123,8 @@ public class PessoaBean implements Serializable {
 	public void setarquivoFoto(Part arquivoFoto) {
 		this.arquivoFoto = arquivoFoto;
 	}
+	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public String salvar () throws IOException {		
 		/*
 		daoGeneric.salvar(pessoa);  
@@ -149,54 +132,62 @@ public class PessoaBean implements Serializable {
 		*/
 		/*Com o merge ja atribui o resultado do merge do JPA direto à pessoa
 		 * e quando o JSF renderizar a pagina recupera os dados do formulario*/
+		System.out.println(pessoa.getId());
 		
-		
-		/*Processar a imagem*/
-		byte[] imagemByte = null;
-		if (arquivoFoto != null) {
-			imagemByte = getByte(arquivoFoto.getInputStream());
+		if (pessoa.getId() == null || pessoa.getId() != 1) {
+			/*Processar a imagem*/
+			byte[] imagemByte = null;
+			if (arquivoFoto != null) {
+				imagemByte = getByte(arquivoFoto.getInputStream());
+			}
+			
+			if (imagemByte != null && imagemByte.length > 0) { 
+				pessoa.setFotoIconBase64Original(imagemByte); /*atribuicao ao objeto, salva a imagem original*/
+				
+				/*transformar em buffer image*/
+				BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagemByte));
+				
+				/*descobrir  o tipo da imagem*/
+				int type = bufferedImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
+				
+				/*atribui largura e altura para miniatura*/
+				int largura = 200;
+				int altura = 200;
+				
+				/*criar a miniatura*/
+				BufferedImage resizedImage = new BufferedImage(altura, largura, type);
+				Graphics2D g = resizedImage.createGraphics(); // retorna a parte grafica
+				g.drawImage(bufferedImage, 0, 0, largura, altura, null);
+				g.dispose();   // finalmente grava a imagem
+				
+				/*escrever novamente a imagem no tamanho menor*/
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				String extensao = arquivoFoto.getContentType().split("\\/")[1]; // retorna como padrão a string "imagem/png"; posição[0]: image; posicao[1]: extensao
+				// com a extensao agora escreve a miniatura no buffer de saida baos
+				ImageIO.write(resizedImage, extensao, baos);
+				
+				
+				/*processa a imagem miniatura
+				 * para pdf seria aplication/pdf ao inves de data/image*/
+				String miniImagem = "data:"+arquivoFoto.getContentType() + ";base64,"+DatatypeConverter.printBase64Binary(baos.toByteArray());
+				
+				/*atribuicoes da mini imagem e da extensao*/
+				pessoa.setFotoIconBase64(miniImagem);
+				pessoa.setExtensao(extensao);		
+			}
+			
+			
+			//System.out.println(arquivoFoto);  // used in the time of debuging
+			pessoa = daoGeneric.merge(pessoa);
+			
+			pessoa = new Pessoa();
+			carregarPessoas(); // there s changes on Data Base, then load the list again
+			mostrarMsg("User saved successfully.");
+		}
+		else if (pessoa.getId() != null && pessoa.getId()== 1) {
+			mostrarMsg("Standard Admin can´t be updated.");
 		}
 		
-		if (imagemByte != null && imagemByte.length > 0) { 
-			pessoa.setFotoIconBase64Original(imagemByte); /*atribuicao ao objeto, salva a imagem original*/
-			
-			/*transformar em buffer image*/
-			BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagemByte));
-			
-			/*descobrir  o tipo da imagem*/
-			int type = bufferedImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
-			
-			/*atribui largura e altura para miniatura*/
-			int largura = 200;
-			int altura = 200;
-			
-			/*criar a miniatura*/
-			BufferedImage resizedImage = new BufferedImage(altura, largura, type);
-			Graphics2D g = resizedImage.createGraphics(); // retorna a parte grafica
-			g.drawImage(bufferedImage, 0, 0, largura, altura, null);
-			g.dispose();   // finalmente grava a imagem
-			
-			/*escrever novamente a imagem no tamanho menor*/
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			String extensao = arquivoFoto.getContentType().split("\\/")[1]; // retorna como padrão a string "imagem/png"; posição[0]: image; posicao[1]: extensao
-			// com a extensao agora escreve a miniatura no buffer de saida baos
-			ImageIO.write(resizedImage, extensao, baos);
-			
-			
-			/*processa a imagem miniatura
-			 * para pdf seria aplication/pdf ao inves de data/image*/
-			String miniImagem = "data:"+arquivoFoto.getContentType() + ";base64,"+DatatypeConverter.printBase64Binary(baos.toByteArray());
-			
-			/*atribuicoes da mini imagem e da extensao*/
-			pessoa.setFotoIconBase64(miniImagem);
-			pessoa.setExtensao(extensao);		
-		}
-		
-		//System.out.println(arquivoFoto);  // usado no teste de debug
-		pessoa = daoGeneric.merge(pessoa);
-		pessoa = new Pessoa();
-		carregarPessoas(); // existe alteracao no banco, carrega a lista de novo
-		mostrarMsg("User saved successfully.");
 		 
 		return "";
 	}
@@ -215,10 +206,15 @@ public class PessoaBean implements Serializable {
 	
 	
 	public String remove() {
-		daoGeneric.deletarPorId(pessoa);
-		pessoa = new Pessoa(); 
-		carregarPessoas(); 
-		mostrarMsg("Removed successfully");
+		if (pessoa.getId() != 1) {
+			daoGeneric.deletarPorId(pessoa);
+			pessoa = new Pessoa(); 
+			carregarPessoas(); 
+			mostrarMsg("Removed successfully");
+		}
+		else {
+			mostrarMsg("User 'Standard Admin' can´t be removed");
+		}
 		return "";
 	} 
 	
@@ -230,7 +226,7 @@ public class PessoaBean implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = context.getExternalContext();
 		Pessoa usuarioLogado = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
-		String nameLoggedUser = (usuarioLogado != null) ? usuarioLogado.getNome() : "Usuário não logado";
+		String nameLoggedUser = (usuarioLogado != null) ? usuarioLogado.getNome() : "User not logged";
 		loggedUser.setNome(nameLoggedUser);
 		
 	}
@@ -269,7 +265,7 @@ public class PessoaBean implements Serializable {
 		
 	}
 	
-	
+	/*Log off*/
 	public String deslogar() {
 		FacesContext context = FacesContext.getCurrentInstance();  // recupera qualquer informação do ambiente, em JSF			
 		ExternalContext externalContext = context.getExternalContext();
@@ -396,6 +392,9 @@ public class PessoaBean implements Serializable {
 			FacesContext.getCurrentInstance().responseComplete();
 		}
 	}
+	
+	
+
 
 	
 	
