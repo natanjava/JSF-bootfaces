@@ -126,16 +126,23 @@ public class PessoaBean implements Serializable {
 	
 
 	public String salvar () throws IOException {		
-		/*
-		daoGeneric.salvar(pessoa);  
-		pessoa = new Pessoa(); // depois que salva tem que criar um novo objeto
-		*/
-		/*Com o merge ja atribui o resultado do merge do JPA direto à pessoa
-		 * e quando o JSF renderizar a pagina recupera os dados do formulario*/
-		System.out.println(pessoa.getId());
 		
+		
+		// avoid duplicated login for new user
+		if (pessoa.getId() == null && !iDaoPessoa.verifyLogin(pessoa.getLogin())) {
+			mostrarMsg("Login already exists, please choose another login");
+			return "";
+		}
+		
+		// avoid duplicated login for saved user when it has been updated
+		if (pessoa.getId() != null && !iDaoPessoa.verifyLoginWithId(pessoa.getLogin(), pessoa.getId())) {
+			mostrarMsg("Login already exists, please choose another login");
+			return "";
+		}
+		
+		// these IF condition avoid the ADMIN to be deleted
 		if (pessoa.getId() == null || pessoa.getId() != 1) {
-			/*Processar a imagem*/
+			/*Processar the image*/
 			byte[] imagemByte = null;
 			if (arquivoFoto != null) {
 				imagemByte = getByte(arquivoFoto.getInputStream());
@@ -177,7 +184,7 @@ public class PessoaBean implements Serializable {
 			}
 			
 			
-			//System.out.println(arquivoFoto);  // used in the time of debuging
+			//System.out.println(arquivoFoto);  // used to debug
 			pessoa = daoGeneric.merge(pessoa);
 			
 			pessoa = new Pessoa();
@@ -392,6 +399,9 @@ public class PessoaBean implements Serializable {
 			FacesContext.getCurrentInstance().responseComplete();
 		}
 	}
+	
+	
+	
 	
 	
 

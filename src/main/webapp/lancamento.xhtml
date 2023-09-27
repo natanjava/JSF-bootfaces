@@ -34,7 +34,7 @@
 				<h:inputText value="#{lancamentoBean.lancamento.id}" readonly="true" />
 	
 				<h:outputLabel value="Description" />
-				<h:inputTextarea id="descricaoTextarea" row = "10" col = "20" 
+				<h:inputText id="descricaoTextarea"  
 								value="#{lancamentoBean.lancamento.descricao}"
 								required="true" requiredMessage="Descripton required" style="width:180px;" />
 	
@@ -100,7 +100,7 @@
 				</h:column>
 	
 				<h:column>
-					<f:facet name="header">Edit</f:facet>
+					<f:facet name="header">Update</f:facet>
 					<h:commandLink title="Edit Launch">
 						<h:graphicImage value="/resources/img/editar.png" />
 						<f:setPropertyActionListener value="#{lanc}"

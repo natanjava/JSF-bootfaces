@@ -67,7 +67,7 @@ public class IDaoPessoImpl implements IDaoPessoa, Serializable {
 		return selectItems;
 	}
 
-
+	// method not more used
 	@Override
 	public List<Pessoa> relatorioPessoa(String nome, Date dataIni, Date dataFim) {
 		List<Pessoa> pessoas = new ArrayList<Pessoa>();
@@ -122,6 +122,53 @@ public class IDaoPessoImpl implements IDaoPessoa, Serializable {
 		return pessoas;
 	}
 
+
+
+	@Override
+	public boolean verifyLogin(String login) {
+		List<Pessoa> pessoas = null;
+		
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		entityTransaction.begin();
+		
+		
+		pessoas = (List<Pessoa>) entityManager.createQuery("select p from Pessoa p where p.login = '" + login + "'")
+				.getResultList();		
+		
+		entityTransaction.commit();		
+		
+		if (pessoas.size() == 0) {
+			return true;
+		}
+		return false;
+	}
+
+
+
+
+
+
+	@Override
+	public boolean verifyLoginWithId(String login, Long id) {
+	List<Pessoa> pessoas = null;
+		
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		entityTransaction.begin();
+		
+		
+		pessoas = (List<Pessoa>) entityManager.createQuery("select p from Pessoa p where p.login = '" + login + 
+				"' and p.id <> '" + id + "'")
+				.getResultList();		
+		
+		entityTransaction.commit();		
+		
+		if (pessoas.size() == 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	
 	
 	
 }

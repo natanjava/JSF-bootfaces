@@ -16,12 +16,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.checkerframework.common.aliasing.qual.Unique;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.hibernate.validator.constraints.br.CPF;
 import org.hibernate.validator.constraints.br.TituloEleitoral;
 
@@ -36,7 +39,7 @@ public class Pessoa implements Serializable {
 	private Long id;
 	
 	//@NotEmpty (message="Name required")
-	@Size(min=1, max=50, message="Nome deve ter entre 1 e 50 letras")
+	@Size(min=1, max=50, message="Name must have between 1 and 50 letters")
 	private String nome;
 	
 	//@NotNull (message="Surname required")

@@ -14,5 +14,9 @@ public interface IDaoPessoa {
 	List<SelectItem> listaEstados();
 
 	List<Pessoa> relatorioPessoa(String nome, Date dataIni, Date dataFim);
+	
+	boolean verifyLogin(String login);
+	
+	boolean verifyLoginWithId(String login, Long id);
 
 }

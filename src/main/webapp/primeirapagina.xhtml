@@ -121,7 +121,7 @@
 					<h:commandButton value="Save Data"  
 						action="#{pessoaBean.salvar}" 
 						image="/resources/img/salvar.png" title="Save Data" />
-					<h:commandButton value="Clean Formular" id="botaoLimpar2"
+					<h:commandButton value="Clean Form" id="botaoLimpar2"
 						action="#{pessoaBean.limpar}" image="/resources/img/limpar.png"
 						title="Clean Formular">
 						<f:ajax execute="botaoLimpar2" render="@form" />
@@ -182,7 +182,7 @@
 				<b:dataTableColumn label="Remove"
 					rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 					<h:commandLink title="Remove User" action="#{pessoaBean.remove}"
-						onclick="return confirm('Are you sure you want to delete Register?');">
+						onclick="return confirm('Are you sure you want to delete the Register?');">
 						<f:setPropertyActionListener value="#{pessoa}"
 							target="#{pessoaBean.pessoa}" />
 						<h:graphicImage value="/resources/img/excluir.png" />
@@ -193,21 +193,6 @@
 
 		</h:form>
 	</div>
-
-
-	<script>
-		function validateUpdate() {
-			var id = document.getElementById('idUser').value;
-			if (id == 14 ){
-				window.alert('Usuario não pode ser editado.');
-				return false;
-			}
-			return true;
-		}
-		
-	</script>
-
-
 
 
 
