@@ -16,11 +16,11 @@
 <h:body>
 
 	<ui:include src="/menu.xhtml" />
-	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%">
+	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%; margin-top: 4%;">
 
-		<br />
-		<h4>Welcome #{pessoaBean.loggedUser.nome}!</h4>
-		Click <a href="info.jsf">here</a> and learn more about these System.
+		<h4>Welcome #{pessoaBean.loggedUser.nome}!  </h4>
+		Click <a href="info.jsf">here</a> and learn more about these System. Your Role is: #{pessoaBean.loggedUser.perfiUser}
+		
 
 		<h:form id="formPessoa" enctype="multipart/form-data"
 			style="margin-top:2%">
@@ -63,13 +63,14 @@
 				<b:datepicker locale="en"
 					value="#{pessoaBean.pessoa.dataNascimento}" />
 
-				<h:outputLabel value="Frameworks" />
+				<h:outputLabel value="IT-Skils" />
 				<h:selectManyMenu id="campoframeworks"
 					value="#{pessoaBean.pessoa.frameworks}" style="height:100px;">
-					<f:selectItem itemValue="Spring" />
-					<f:selectItem itemValue="Hibernate" />
-					<f:selectItem itemValue="Prime Faces" />
-					<f:selectItem itemValue="JSF" />
+					<f:selectItem itemValue="Windows" />
+					<f:selectItem itemValue="Linux" />
+					<f:selectItem itemValue="Office" />
+					<f:selectItem itemValue="Google Calendar" />
+					<f:selectItem itemValue="HTML/CSS" />
 				</h:selectManyMenu>
 
 
@@ -85,15 +86,23 @@
 				<b:inputSecret value="#{pessoaBean.pessoa.senha}" redisplay="true"
 					required="true" requiredMessage="Password required" />
 
+
+
+
+
 				<h:outputLabel value="Rolle" />
 				<b:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfiUser}"
-					required="false">
-					<f:selectItem itemValue="not reported" itemLabel="[Select]"
-						noSelectionOption="true" />
-					<f:selectItem itemValue="ADMINISTRATOR" itemLabel="Administrator" />
-					<f:selectItem itemValue="RECEPCIONIST" itemLabel="Recepcionist" />
-					<f:selectItem itemValue="ASSISTENT" itemLabel="Assistent" />
+					required="false" >
+					<div id="divAdministrator" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR') || pessoaBean.permiteAcesso('MANAGER')}">
+						<f:selectItem itemValue="not reported" itemLabel="[Select]"
+							noSelectionOption="true" />
+						<f:selectItem itemValue="ADMINISTRATOR" itemLabel="Administrator" />
+						<f:selectItem itemValue="MANAGER" itemLabel="Manager"  />
+						<f:selectItem itemValue="ASSISTENT" itemLabel="Assistent"  />
+					</div>		
 				</b:selectOneMenu>
+
+
 
 				<h:outputLabel value="Experiencie" />
 				<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgramador}">

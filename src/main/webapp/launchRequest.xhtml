@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title>Requests</title>
+</h:head>
+
+<h:body>
+
+	<ui:include src="/menu.xhtml" />
+	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%">
+
+		<b:messages id="msg-launch" />
+		
+		<br/>
+		<div style="width: 800px; text-align: justify">
+			<h4>Launches to be approveed. Restricted area only for ADMINISTRATORS.</h4> 
+		</div>
+		
+		
+		<h:form>
+			<b:dataTable 
+				value="#{lancamentoBean.launchesReview}" 
+				var="lanc"
+				border="1" cellpadding="20"
+				paginated="false"
+				searching="false">
+	
+				<b:dataTableColumn value="#{lanc.id}" label="ID" />	
+		
+				<b:dataTableColumn value="#{lanc.descricao}" label="Description"  />	
+					
+				<b:dataTableColumn value="#{lanc.empresaOrigem}" label="Supplier" />
+					
+	
+						
+				<h:column>
+					<f:facet name="header">Date of order</f:facet>
+					<h:outputLabel value="#{lanc.dataIni}" >
+						  <f:convertDateTime pattern="dd-MM-yyyy" />
+					</h:outputLabel>
+				</h:column>
+					
+				<h:column>
+					<f:facet name="header">Service delivery</f:facet>
+					<h:outputLabel value="#{lanc.dataFim}" >
+						  <f:convertDateTime pattern="dd-MM-yyyy" />
+					</h:outputLabel>
+				</h:column>
+					
+				<b:dataTableColumn value="#{lanc.coast}" label="Coast" />	
+					
+				<h:column>
+					<f:facet name="header">Change Status</f:facet>
+		            <a id="atrigger"  href="#changeStatus" data-toggle="modal">#{lanc.status}</a>
+				</h:column>		
+		
+			</b:dataTable>
+			
+
+		</h:form>
+		
+		<b:modal id="changeStatus" title="Modal Example" styleClass="modalPseudoClass">
+		  <p>Here is possible to change the status of the Launch.</p>
+		 
+		  <p>If the chosen status is not approved, then you need to explain a reason</p>
+		  
+		  <f:facet name="footer">
+		    <b:button value="Close" dismiss="modal" />
+		    <b:button value="Ok" look="primary" dismiss="modal" />
+		  </f:facet>
+		</b:modal>
+		
+		
+
+		
+		
+		
+		
+	</div>
+
+</h:body>
+
+</html>

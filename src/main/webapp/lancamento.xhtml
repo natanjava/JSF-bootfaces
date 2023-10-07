@@ -51,6 +51,10 @@
 				<b:datepicker locale="en"
 					value="#{lancamentoBean.lancamento.dataFim}" required="true"
 					requiredMessage="Date of delyvery required" style="width:180px;"/>
+				
+				<h:outputLabel value="Coast" />
+				<h:inputText value="#{lancamentoBean.lancamento.coast}"
+					required="true" requiredMessage="Coast required"  />
 	
 				<!-- empty tag to make space 
 				<h:outputLabel />
@@ -83,7 +87,9 @@
 	
 				<b:dataTableColumn value="#{lanc.descricao}" label="Description"  />	
 				
-				<b:dataTableColumn value="#{lanc.empresaOrigem}" label="Supplier" />	
+				<b:dataTableColumn value="#{lanc.empresaOrigem}" label="Supplier" />
+				
+
 					
 				<h:column>
 					<f:facet name="header">Date of order</f:facet>
@@ -98,6 +104,10 @@
 						  <f:convertDateTime pattern="dd-MM-yyyy" />
 					</h:outputLabel>
 				</h:column>
+				
+				<b:dataTableColumn value="#{lanc.coast}" label="Coast" />	
+				
+				<b:dataTableColumn value="#{lanc.status}" label="Status" />
 	
 				<h:column>
 					<f:facet name="header">Update</f:facet>
@@ -118,6 +128,7 @@
 				</h:column>
 	
 			</b:dataTable>
+			
 	
 		</h:form>
 	</div>
