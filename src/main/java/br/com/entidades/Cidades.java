@@ -48,6 +48,8 @@ public class Cidades implements Serializable {
 	public void setEstados(Estados estados) {
 		this.estados = estados;
 	}
+	
+
 
 	
 	

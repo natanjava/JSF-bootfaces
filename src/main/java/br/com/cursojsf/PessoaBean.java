@@ -53,6 +53,8 @@ public class PessoaBean implements Serializable {
 	@Inject
 	private IDaoPessoa iDaoPessoa;
 	
+	private JPAUtil jpaUtil;
+	
 	private List<SelectItem> estados; 
 	
 	private List<SelectItem> cidades;
@@ -60,7 +62,6 @@ public class PessoaBean implements Serializable {
 	private Part arquivoFoto;
 	
 	@Inject
-	private JPAUtil jpaUtil;
 	
 
 	
@@ -234,7 +235,10 @@ public class PessoaBean implements Serializable {
 		ExternalContext externalContext = context.getExternalContext();
 		Pessoa usuarioLogado = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
 		String nameLoggedUser = (usuarioLogado != null) ? usuarioLogado.getNome() : "User not logged";
+		String roleLoggedUser = (usuarioLogado != null) ? usuarioLogado.getPerfiUser() : "User withou role";
 		loggedUser.setNome(nameLoggedUser);
+		loggedUser.setPerfiUser(roleLoggedUser);
+		
 		
 	}
 	
@@ -286,13 +290,36 @@ public class PessoaBean implements Serializable {
 	
 	
 	/* usado para controlar partes do site que podem ser vista por determiados perfis */
-	public boolean permiteAcesso(String acesso) { 
+	public boolean permiteAcesso(String role) { 
 		
 		FacesContext context = FacesContext.getCurrentInstance();  			
 		ExternalContext externalContext = context.getExternalContext();
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");	
 		
-		return pessoaUser.getPerfiUser().equals(acesso);
+		return pessoaUser.getPerfiUser().equals(role);
+	}
+	
+	public boolean allowRegisterManager() {
+		FacesContext context = FacesContext.getCurrentInstance();  			
+		ExternalContext externalContext = context.getExternalContext();
+		Pessoa userRole = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
+		if (userRole.getPerfiUser().equals("MANAGER")) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean allowRegisterAssistent () {
+		FacesContext context = FacesContext.getCurrentInstance();  			
+		ExternalContext externalContext = context.getExternalContext();
+		Pessoa userRole = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
+		
+		if (userRole.getPerfiUser().equals("ASSISTENT")) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	

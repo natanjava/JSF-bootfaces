@@ -104,5 +104,18 @@ public class IDaoLancamentoImpl implements IDaoLancamento, Serializable {
 		
 		return lancamentos;
 	}
+
+
+	@Override
+	public List<Lancamento> underAprovalLaunchs(String status) {
+		List<Lancamento> list = null;
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		
+		list = entityManager.createQuery("from Lancamento where status = 'under review'").getResultList();
+		transaction.commit();
+		
+		return list;
+	}
 	
 }

@@ -28,6 +28,12 @@ public class Lancamento implements Serializable {
 	
 	private String empresaOrigem;
 	
+	private double coast;
+	
+	private String status;
+	
+	private String reason;
+	
 	
 	@ManyToOne(optional = false)
 	@org.hibernate.annotations.ForeignKey(name="usuario_fk")
@@ -47,8 +53,6 @@ public class Lancamento implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	
 
 	public String getEmpresaOrigem() {
 		return empresaOrigem;
@@ -91,6 +95,31 @@ public class Lancamento implements Serializable {
 		this.descricao = descricao;
 	}
 	
+	
+	public double getCoast() {
+		return coast;
+	}
+
+	public void setCoast(double coast) {
+		this.coast = coast;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

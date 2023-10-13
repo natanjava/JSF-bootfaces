@@ -14,9 +14,9 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 		<properties>
 			<!-- 
 			 -->
-			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5433/primeiroprojetojsf"/>
-			<property name="hibernate.connection.username" value="postgres"/> 
-			<property name="hibernate.connection.password" value="admin"/>
+<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5433/primeiroprojetojsf"/>
+<property name="hibernate.connection.username" value="postgres"/>  
+<property name="hibernate.connection.password" value="admin"/>
 			 
 			
 			

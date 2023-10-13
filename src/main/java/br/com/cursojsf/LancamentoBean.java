@@ -25,6 +25,7 @@ public class LancamentoBean implements Serializable {
 	
 	private Lancamento lancamento = new Lancamento();
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
+	private List<Lancamento> launchesReview = new ArrayList<Lancamento>();
 	
 	@Inject
 	private DaoGeneric<Lancamento> daoGeneric;
@@ -58,16 +59,28 @@ public class LancamentoBean implements Serializable {
 	public void setLancamentos(List<Lancamento> lancamentos) {
 		this.lancamentos = lancamentos;
 	}	
+	
+	public List<Lancamento> getLaunchesReview() {
+		return launchesReview;
+	}
+	
+	public void setLaunchesReview(List<Lancamento> launchesReview) {
+		this.launchesReview = launchesReview;
+	}
+	
+	
 	/*  get and set --- END*/
 	
 	
+
 	/*  Methods --- BEGIN*/
 	public String salvar () { 
 		FacesContext context = FacesContext.getCurrentInstance();  			
 		ExternalContext externalContext = context.getExternalContext();
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");  
-		// recupera o usuario logado e adiciona um lancamento
+		// recover the logged in user and assign a user to the launch
 		lancamento.setUsuario(pessoaUser);
+		lancamento.setStatus("under review");
 		
 		// daoGeneric.salvar(lancamento); antes era essa linha mas estava dando problema quando editava uma lancamento e salvava depois
 		lancamento = daoGeneric.merge(lancamento);
@@ -85,6 +98,7 @@ public class LancamentoBean implements Serializable {
 		ExternalContext externalContext = context.getExternalContext();
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
 		lancamentos = daoLancamento.consultarLimit5(pessoaUser.getId());
+		launchesReview = daoLancamento.underAprovalLaunchs("under review"); 
 	//	System.out.println(lancamentos);
 	}
 	

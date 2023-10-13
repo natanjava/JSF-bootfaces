@@ -13,5 +13,7 @@ public interface IDaoLancamento extends Serializable {
 	List<Lancamento> consultarLimit5(Long codUser);
 	
 	List<Lancamento> relatorioLancamento (String numNome, Date dataIni, Date dataFim);
+	
+	List<Lancamento> underAprovalLaunchs (String status);
 
 }

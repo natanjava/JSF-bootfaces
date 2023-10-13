@@ -15,13 +15,13 @@
 	<ui:include src="/menu.xhtml" />
 	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%">
 
-		<b:messages id="msg-launch" />
+		
 		
 		<br/>
 		<div style="width: 800px; text-align: justify">
-			<h4>Launches to be approveed. Restricted area only for ADMINISTRATORS.</h4> 
+			<h4>Launches to be approveed. Only ADMINISTRATORS can change the status.</h4> 
 		</div>
-		
+		<br/>
 		
 		<h:form>
 			<b:dataTable 
@@ -55,34 +55,61 @@
 					
 				<b:dataTableColumn value="#{lanc.coast}" label="Coast" />	
 					
-				<h:column>
-					<f:facet name="header">Change Status</f:facet>
-		            <a id="atrigger"  href="#changeStatus" data-toggle="modal">#{lanc.status}</a>
-				</h:column>		
+				 <b:dataTableColumn label="Change Status">
+					<h:commandLink title="Edit User" >
+						<f:setPropertyActionListener value="#{lanc}"
+							target="#{lancamentoBean.lancamento}" />
+						 #{lanc.status}	
+					</h:commandLink>
+				</b:dataTableColumn>	
 		
 			</b:dataTable>
-			
 
 		</h:form>
 		
-		<b:modal id="changeStatus" title="Modal Example" styleClass="modalPseudoClass">
-		  <p>Here is possible to change the status of the Launch.</p>
-		 
-		  <p>If the chosen status is not approved, then you need to explain a reason</p>
-		  
-		  <f:facet name="footer">
-		    <b:button value="Close" dismiss="modal" />
-		    <b:button value="Ok" look="primary" dismiss="modal" />
-		  </f:facet>
-		</b:modal>
+		<br/><br/><br/>
+		<b:messages id="msg-launch" />
 		
+		<h:panelGrid columns="2">
+				<h:outputLabel value="ID: " />
+				<b:inputText value="#{lancamentoBean.lancamento.id}" readonly="true"  />
+				
+				<h:outputLabel value="Description: " />
+				<b:inputTextarea value="#{lancamentoBean.lancamento.descricao}" id="description" rows="2"/>
+				
+				<h:outputLabel value="Cost: " />
+				<b:inputText value="#{lancamentoBean.lancamento.coast}" id="cost" />
+				
+				<h:outputLabel value="Status: " />
+				<b:selectOneMenu id="status" value="#{lancamentoBean.lancamento.status}">
+					<f:selectItem itemValue="APPROVED" itemLabel="Approved" />
+					<f:selectItem itemValue="REJECTED" itemLabel="Rejected" />
+				</b:selectOneMenu>
+				
+				<h:outputLabel value="Reason: " />
+				<b:inputTextarea value="#{lancamentoBean.lancamento.reason}" id="reason" rows="4"
+				    placeholder="Type hear some reason if the Launch Status is 'Rejected' " />
+				    
+				<h:panelGroup>
+					<h:commandButton value="Save Status"  
+						action="#{pessoaBean.salvar}" 
+						image="/resources/img/salvar.png" title="Save Data" />
+					<h:commandButton value="Clean Form" id="botaoLimpar2"
+						action="#{pessoaBean.limpar}" image="/resources/img/limpar.png"
+						title="Clean Formular">
+						<f:ajax execute="botaoLimpar2" render="@form" />
+					</h:commandButton>
+				</h:panelGroup>
+				
 		
-
-		
+		</h:panelGrid>
 		
 		
 		
 	</div>
+	
+
+
 
 </h:body>
 
