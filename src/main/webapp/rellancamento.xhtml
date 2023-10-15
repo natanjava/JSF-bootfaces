@@ -43,11 +43,13 @@
 	
 				<b:dataTableColumn value="#{lanc.descricao}" label="Description" />
 	
-				<b:dataTableColumn value="#{lanc.empresaOrigem}" label="Supplier" />
+				<b:dataTableColumn value="#{lanc.empresaOrigem.name}" label="Supplier" />
 	
-				<b:dataTableColumn value="#{lanc.usuario.nome}" label="Author of the Launch" />
+				<b:dataTableColumn value="#{lanc.usuario.nome}" label="Author" />
 				
 				<b:dataTableColumn value="#{lanc.status}" label="Status" />
+				
+				<b:dataTableColumn value="#{lanc.reason}" label="Reason" />
 	
 				<b:dataTableColumn value="#{lanc.dataIni}" label="Date of order" />
 	

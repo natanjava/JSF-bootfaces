@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.dao.DaoGeneric;
+import br.com.entidades.Company;
 import br.com.entidades.Lancamento;
 import br.com.entidades.Pessoa;
 import br.com.repository.IDaoLancamento;
@@ -25,11 +26,20 @@ public class LancamentoBean implements Serializable {
 	
 	
 	private Lancamento lancamento = new Lancamento();
+	
+	private Company company = new Company();
+
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
 	private List<Lancamento> launchesReview = new ArrayList<Lancamento>();
+	private List<Company> companies = new ArrayList<Company>();
 	
 	@Inject
 	private DaoGeneric<Lancamento> daoGeneric;
+	
+	@Inject
+	private DaoGeneric<Company> daoGenericCompany;
+	
+	
 	
 	@Inject
 	private IDaoLancamento daoLancamento;	
@@ -69,10 +79,29 @@ public class LancamentoBean implements Serializable {
 		this.launchesReview = launchesReview;
 	}
 	
+	public List<Company> getCompanies() {
+		return companies;
+	}
+	
+	public void setCompanies(List<Company> companies) {
+		this.companies = companies;
+	}
+	
+	public Company getCompany() {
+		return company;
+	}
+	
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+	
+	
+
 	
 	/*  get and set --- END*/
 	
 	
+
 
 	/*  Methods --- BEGIN*/
 	public String salvar () { 
@@ -82,22 +111,47 @@ public class LancamentoBean implements Serializable {
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");  
 		lancamento.setUsuario(pessoaUser);
 		
+		
 		if (lancamento.getStatus() == null) {
 			lancamento.setStatus("under review");
-		}
-		if (lancamento.getStatus().equalsIgnoreCase("REJECTED")  && lancamento.getReason() == "") {
-			FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Please wirte a reson for your decison."));
-			return "";
 		}
 				
 		// daoGeneric.salvar(lancamento); antes era essa linha mas estava dando problema quando editava uma lancamento e salvava depois
 		lancamento = daoGeneric.merge(lancamento);
+		//company.setLancamento(lancamento);
 		
 		FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Successfully saved."));
 		carregarLancamentos();
 		lancamento = new Lancamento();
 		return "";
 	}
+	
+	public String saveNewStatus() {
+		if (lancamento.getId() == null) {
+			FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Choose a Launch to update."));
+		}
+		else if (lancamento.getId() != null && lancamento.getStatus().equalsIgnoreCase("REJECTED")  && lancamento.getReason() == "") {
+			lancamento.setStatus("under review");
+			FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Please write a reson for your decison."));
+		} else {
+			lancamento = daoGeneric.merge(lancamento);
+			FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("New status sucessfully updated."));
+			carregarLancamentos();
+			lancamento = new Lancamento();
+		}
+		return "";
+	}
+	
+	public String saveCompany() {
+		company = daoGenericCompany.merge(company);
+		
+		FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Successfully saved."));
+		companies = daoGenericCompany.getListEntity(Company.class);
+		company = new Company();
+		return "";
+	}
+	
+	
 	
 
 	
@@ -109,6 +163,7 @@ public class LancamentoBean implements Serializable {
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
 		lancamento.setDataIni(new Date());
 		lancamentos = daoLancamento.consultarLimit5(pessoaUser.getId());
+		companies = daoGenericCompany.getListEntity(Company.class);
 		launchesReview = daoLancamento.underAprovalLaunchs("under review"); 
 	//	System.out.println(lancamentos);
 	}
@@ -116,14 +171,34 @@ public class LancamentoBean implements Serializable {
 	
 	public String novo() {
 		lancamento = new Lancamento();
+		lancamento.setCoast(0.0);
+		return "";
+	}
+	
+	
+	public String newCompany() {
+		company = new Company();
 		
 		return "";
+		
 	}
 	
 	public String remover() {
 		daoGeneric.deletarPorId(lancamento);
 		lancamento = new Lancamento();
 		carregarLancamentos();
+		FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Successfully removed."));
+		return "";
+	}
+	
+	public String removeCompany() {
+		
+		
+		
+		
+		daoGenericCompany.deletarPorId(company);
+		company = new Company();
+		companies = daoGenericCompany.getListEntity(Company.class);
 		FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Successfully removed."));
 		return "";
 	}

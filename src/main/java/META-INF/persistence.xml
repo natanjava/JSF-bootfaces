@@ -10,6 +10,7 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 		<class>br.com.entidades.Lancamento</class>
 		<class>br.com.entidades.Estados</class>
 		<class>br.com.entidades.Cidades</class>
+		<class>br.com.entidades.Company</class>
 		
 		<properties>
 			<!-- 

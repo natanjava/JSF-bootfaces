@@ -6,7 +6,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 
 
@@ -92,14 +93,15 @@
 
 
 				<h:outputLabel value="Rolle" />
-				<b:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfiUser}"
-					required="false" >
-						<f:selectItem itemValue="not reported" itemLabel="[Select]"
-							noSelectionOption="true" />
-						<f:selectItem itemValue="ADMINISTRATOR" itemLabel="Administrator" />
-						<f:selectItem itemValue="MANAGER" itemLabel="Manager"  />
-						<f:selectItem itemValue="ASSISTENT" itemLabel="Assistent"  />
+				<b:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfiUser}">
+					<f:selectItem itemValue="ASSISTENT" itemLabel="Assistent"  />
+					<f:selectItem itemValue="ADMINISTRATOR" itemLabel="Administrator" />
+					<f:selectItem itemValue="MANAGER" itemLabel="Manager"  />
 				</b:selectOneMenu>
+
+    
+				
+				
 
 				<h:outputLabel value="Level" />
 				<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgramador}">

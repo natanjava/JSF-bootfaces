@@ -26,7 +26,9 @@ public class Lancamento implements Serializable {
 	
 	private String descricao;
 	
-	private String empresaOrigem;
+	@ManyToOne
+	@org.hibernate.annotations.ForeignKey(name="company_fk")
+	private Company empresaOrigem;
 	
 	private Double coast;
 	
@@ -54,11 +56,12 @@ public class Lancamento implements Serializable {
 		this.id = id;
 	}
 
-	public String getEmpresaOrigem() {
+
+	public Company getEmpresaOrigem() {
 		return empresaOrigem;
 	}
 
-	public void setEmpresaOrigem(String empresaOrigem) {
+	public void setEmpresaOrigem(Company empresaOrigem) {
 		this.empresaOrigem = empresaOrigem;
 	}
 

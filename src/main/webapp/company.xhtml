@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title>Pedidos</title>
+</h:head>
+
+<h:body>
+
+	<ui:include src="/menu.xhtml" />
+	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%">
+
+		<b:messages id="msg-launch" />
+		
+		<br/>
+		<div style="width: 500px; text-align: justify">
+		<h4>Registration of Company</h4>
+		</div>
+	
+		<h:form id="formLancamento" style="margin-top:2%; ">
+			<h:panelGrid columns="2">
+				<f:facet name="header">
+					<h:outputText value="New company" />
+				</f:facet>
+	
+				<h:outputLabel value="ID" />
+				<h:inputText value="#{lancamentoBean.company.id}" readonly="true" />
+	
+				<h:outputLabel value="Name" />
+				<h:inputText value="#{lancamentoBean.company.name}" required="true" requiredMessage="Name required"/>
+			</h:panelGrid>
+	
+			<h:panelGroup style="margin-left: 8%;">
+				<h:commandButton value="Save Launch" action="#{lancamentoBean.saveCompany}"
+					image="/resources/img/salvar.png" title="Save Launch" />
+
+				<h:commandButton value="Clean Form" action="#{lancamentoBean.newCompany}" id="btnClean"
+					image="/resources/img/limpar.png" title="Clean Form" rendered="#{lancamentoBean.company.id != null}">
+					<f:ajax execute="btnClean" render="@form" />
+				</h:commandButton>
+			</h:panelGroup>
+		</h:form>
+	
+		<br /><br /><br />
+		<div style="text-align: center" >
+			<h4>Companies already saved in the System.</h4> 
+		</div>
+		<h:form >
+			<b:dataTable 
+				value="#{lancamentoBean.companies}" 
+				var="comp"
+				border="1" cellpadding="20"
+				paginated="false"
+				searching="false">
+	
+				<b:dataTableColumn value="#{comp.id}" label="ID" />	
+	
+				<b:dataTableColumn value="#{comp.name}" label="Name"  />	
+				
+				<h:column>
+				    <f:facet name="header">Update</f:facet>
+					<h:commandLink title="Edit Company">
+			            <h:graphicImage value="/resources/img/editar.png" />
+			            <f:setPropertyActionListener value="#{comp}" target="#{lancamentoBean.company}" />
+			        </h:commandLink>
+				</h:column>
+	
+				<h:column>
+					<f:facet name="header">Remove</f:facet>
+					<h:commandLink title="Remove Launch" action="#{lancamentoBean.removeCompany}" onclick="return confirm('Are you sure you want to delete?');">
+						<h:graphicImage value="/resources/img/excluir.png" />
+						<f:setPropertyActionListener value="#{comp}"
+							target="#{lancamentoBean.company}" />
+					</h:commandLink>
+				</h:column>
+	
+			</b:dataTable>
+	
+		</h:form>
+	</div>
+
+
+<script type="text/javascript">
+	// TextArea, limit 250 cacarters, no more used but soon will be implentated
+    function limitarCaracteres() {
+        var textarea = document.getElementById('formLancamento:descricaoTextarea'); 
+        var limite = 255; // Defina o limite de caracteres desejado
+
+        if (textarea.value.length > limite) {
+            textarea.value = textarea.value.substring(0, limite); 
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var textarea = document.getElementById('formLancamento:descricaoTextarea'); 
+        textarea.addEventListener('input', limitarCaracteres); 
+    });
+</script>
+</h:body>
+
+</html>

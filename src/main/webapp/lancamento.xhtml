@@ -38,9 +38,10 @@
 								value="#{lancamentoBean.lancamento.descricao}"
 								required="true" requiredMessage="Descripton required" style="width:180px;" />
 	
-				<h:outputLabel value="Supplier" />
-				<h:inputText value="#{lancamentoBean.lancamento.empresaOrigem}"
-					required="true" requiredMessage="Supplier required"  />
+			    <h:outputLabel value="Empresa Origem: " />
+			    <b:selectOneMenu value="#{lancamentoBean.lancamento.empresaOrigem}">
+			        <f:selectItems value="#{lancamentoBean.companies}" var="company" itemValue="#{company}" itemLabel="#{company.name}" />
+			    </b:selectOneMenu>
 	
 				<h:outputLabel value="Date of order" />
 				<b:datepicker locale="en" readonly="true" disabled="true"
@@ -65,8 +66,10 @@
 				<h:commandButton value="Save Launch" action="#{lancamentoBean.salvar}"
 					image="/resources/img/salvar.png" title="Save Launch" />
 
-				<h:commandButton value="Clean Form" action="#{lancamentoBean.novo}"
-					image="/resources/img/limpar.png" title="Clean Form" />
+				<h:commandButton value="Clean Form" action="#{lancamentoBean.novo}" id="btnClean"
+					image="/resources/img/limpar.png" title="Clean Form" rendered="#{lancamentoBean.lancamento.id != null}" >
+					<f:ajax execute="btnClean" render="@form" />
+				</h:commandButton>
 			</h:panelGroup>
 		</h:form>
 	
@@ -86,10 +89,6 @@
 	
 				<b:dataTableColumn value="#{lanc.descricao}" label="Description"  />	
 				
-				<b:dataTableColumn value="#{lanc.empresaOrigem}" label="Supplier" />
-				
-
-					
 				<h:column>
 					<f:facet name="header">Date of order</f:facet>
 					<h:outputLabel value="#{lanc.dataIni}" >
@@ -106,8 +105,12 @@
 				
 				<b:dataTableColumn value="#{lanc.coast}" label="Coast" />	
 				
-				<b:dataTableColumn value="#{lanc.status}" label="Status" />
-	
+				<b:dataTableColumn  label="Status" >
+					<h:outputLabel value="#{lanc.status}" rendered="#{lanc.status != 'REJECTED'}" />
+					<h:button value="#{lanc.status}" rendered="#{lanc.status == 'REJECTED'}" 
+							  onclick="alert('Reason for Rejection:\n  #{lanc.reason}')" />
+				</b:dataTableColumn>
+				
 				<h:column>
 				    <f:facet name="header">Update</f:facet>
 					<h:commandLink title="Edit Launch" rendered="#{lanc.status == 'under review'}">
@@ -119,7 +122,8 @@
 	
 				<h:column>
 					<f:facet name="header">Remove</f:facet>
-					<h:commandLink title="Remove Launch" action="#{lancamentoBean.remover}" rendered="#{lanc.status == 'under review'}" >
+					<h:commandLink title="Remove Launch" action="#{lancamentoBean.remover}" rendered="#{lanc.status == 'under review'}" 
+						onclick="return confirm('Are you sure you want to delete?');">
 						<h:graphicImage value="/resources/img/excluir.png" />
 						<f:setPropertyActionListener value="#{lanc}"
 							target="#{lancamentoBean.lancamento}" />
@@ -128,14 +132,13 @@
 				</h:column>
 	
 			</b:dataTable>
-			
 	
 		</h:form>
 	</div>
 
 
 <script type="text/javascript">
-	// TextArea, limit 250 cacarters, no more used but soon will be again implentated
+	// TextArea, limit 250 cacarters, no more used but soon will be implentated
     function limitarCaracteres() {
         var textarea = document.getElementById('formLancamento:descricaoTextarea'); 
         var limite = 255; // Defina o limite de caracteres desejado

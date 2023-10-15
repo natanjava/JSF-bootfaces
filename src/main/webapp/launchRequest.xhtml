@@ -36,7 +36,7 @@
 		
 				<b:dataTableColumn value="#{lanc.descricao}" label="Description"  />	
 					
-				<b:dataTableColumn value="#{lanc.empresaOrigem}" label="Supplier" />
+				<b:dataTableColumn value="#{lanc.empresaOrigem.name}" label="Supplier" />
 					
 	
 						
@@ -54,7 +54,7 @@
 					</h:outputLabel>
 				</h:column>
 					
-				<b:dataTableColumn value="#{lanc.coast}" label="Coast" />	
+				<b:dataTableColumn value="#{lanc.coast}" label="Costs ($)" />	
 					
 				 <b:dataTableColumn label="Change Status">
 					<h:commandLink title="Edit User" >
@@ -84,8 +84,8 @@
 					
 				<h:outputLabel value="Status: " />
 				<b:selectOneMenu id="status" value="#{lancamentoBean.lancamento.status}">
-					<f:selectItem itemValue="APPROVED" itemLabel="Approved" />
 					<f:selectItem itemValue="REJECTED" itemLabel="Rejected" />
+					<f:selectItem itemValue="APPROVED" itemLabel="Approved" />
 				</b:selectOneMenu>
 					
 				<h:outputLabel value="Reason: " />
@@ -94,7 +94,7 @@
 					    
 				<h:panelGroup>
 					<h:commandButton value="Save Status"  
-						action="#{lancamentoBean.salvar}" 
+						action="#{lancamentoBean.saveNewStatus}" 
 						image="/resources/img/salvar.png" title="Save Data" />
 					<h:commandButton value="Clean Form" id="botaoLimpar2"
 						action="#{lancamentoBean.novo}" image="/resources/img/limpar.png"
