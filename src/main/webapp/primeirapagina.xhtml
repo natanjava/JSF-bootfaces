@@ -94,18 +94,14 @@
 				<h:outputLabel value="Rolle" />
 				<b:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfiUser}"
 					required="false" >
-					<div id="divAdministrator" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR') || pessoaBean.permiteAcesso('MANAGER')}">
 						<f:selectItem itemValue="not reported" itemLabel="[Select]"
 							noSelectionOption="true" />
 						<f:selectItem itemValue="ADMINISTRATOR" itemLabel="Administrator" />
 						<f:selectItem itemValue="MANAGER" itemLabel="Manager"  />
 						<f:selectItem itemValue="ASSISTENT" itemLabel="Assistent"  />
-					</div>		
 				</b:selectOneMenu>
 
-
-
-				<h:outputLabel value="Experiencie" />
+				<h:outputLabel value="Level" />
 				<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgramador}">
 					<f:selectItem itemValue="Junior" itemLabel="Junior" />
 					<f:selectItem itemValue="Full" itemLabel="Full" />

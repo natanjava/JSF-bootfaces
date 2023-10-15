@@ -85,12 +85,16 @@ public class LancamentoBean implements Serializable {
 		if (lancamento.getStatus() == null) {
 			lancamento.setStatus("under review");
 		}
+		if (lancamento.getStatus().equalsIgnoreCase("REJECTED")  && lancamento.getReason() == "") {
+			FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Please wirte a reson for your decison."));
+			return "";
+		}
 				
 		// daoGeneric.salvar(lancamento); antes era essa linha mas estava dando problema quando editava uma lancamento e salvava depois
 		lancamento = daoGeneric.merge(lancamento);
 		
-		carregarLancamentos();
 		FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Successfully saved."));
+		carregarLancamentos();
 		lancamento = new Lancamento();
 		return "";
 	}

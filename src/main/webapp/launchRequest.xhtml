@@ -4,7 +4,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:b="http://bootsfaces.net/ui">
+	xmlns:b="http://bootsfaces.net/ui"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
 	<title>Requests</title>
@@ -71,7 +72,7 @@
 		<b:messages id="msg-launch" />
 		
 		<h:form id="form" style="margin-top:2%; ">
-			<h:panelGrid columns="2">
+			<h:panelGrid columns="2" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 				<h:outputLabel value="ID: " />
 				<b:inputText value="#{lancamentoBean.lancamento.id}" readonly="true"  />
 					

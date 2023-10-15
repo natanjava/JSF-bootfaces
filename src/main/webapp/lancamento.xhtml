@@ -109,21 +109,22 @@
 				<b:dataTableColumn value="#{lanc.status}" label="Status" />
 	
 				<h:column>
-					<f:facet name="header">Update</f:facet>
-					<h:commandLink title="Edit Launch">
-						<h:graphicImage value="/resources/img/editar.png" />
-						<f:setPropertyActionListener value="#{lanc}"
-							target="#{lancamentoBean.lancamento}" />
-					</h:commandLink>
+				    <f:facet name="header">Update</f:facet>
+					<h:commandLink title="Edit Launch" rendered="#{lanc.status == 'under review'}">
+			            <h:graphicImage value="/resources/img/editar.png" />
+			            <f:setPropertyActionListener value="#{lanc}" target="#{lancamentoBean.lancamento}" />
+			        </h:commandLink>
+			        <h:outputText value="Not Editable" rendered="#{lanc.status != 'under review'}" />
 				</h:column>
 	
 				<h:column>
 					<f:facet name="header">Remove</f:facet>
-					<h:commandLink title="Remove Launch" action="#{lancamentoBean.remover}">
+					<h:commandLink title="Remove Launch" action="#{lancamentoBean.remover}" rendered="#{lanc.status == 'under review'}" >
 						<h:graphicImage value="/resources/img/excluir.png" />
 						<f:setPropertyActionListener value="#{lanc}"
 							target="#{lancamentoBean.lancamento}" />
 					</h:commandLink>
+					<h:outputText value="Not excludable" rendered="#{lanc.status != 'under review'}" />
 				</h:column>
 	
 			</b:dataTable>
