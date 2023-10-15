@@ -28,7 +28,7 @@ public class Lancamento implements Serializable {
 	
 	private String empresaOrigem;
 	
-	private double coast;
+	private Double coast;
 	
 	private String status;
 	
@@ -95,12 +95,11 @@ public class Lancamento implements Serializable {
 		this.descricao = descricao;
 	}
 	
-	
-	public double getCoast() {
+	public Double getCoast() {
 		return coast;
 	}
 
-	public void setCoast(double coast) {
+	public void setCoast(Double coast) {
 		this.coast = coast;
 	}
 

@@ -2,6 +2,7 @@ package br.com.cursojsf;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -77,26 +78,32 @@ public class LancamentoBean implements Serializable {
 	public String salvar () { 
 		FacesContext context = FacesContext.getCurrentInstance();  			
 		ExternalContext externalContext = context.getExternalContext();
-		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");  
 		// recover the logged in user and assign a user to the launch
+		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");  
 		lancamento.setUsuario(pessoaUser);
-		lancamento.setStatus("under review");
 		
+		if (lancamento.getStatus() == null) {
+			lancamento.setStatus("under review");
+		}
+				
 		// daoGeneric.salvar(lancamento); antes era essa linha mas estava dando problema quando editava uma lancamento e salvava depois
 		lancamento = daoGeneric.merge(lancamento);
 		
 		carregarLancamentos();
 		FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Successfully saved."));
 		lancamento = new Lancamento();
-		
 		return "";
 	}
+	
+
+	
 	
 	@PostConstruct    // notação que faz metodo ser executado, sempre que página é carregada.
 	private void carregarLancamentos() {
 		FacesContext context = FacesContext.getCurrentInstance();  			
 		ExternalContext externalContext = context.getExternalContext();
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
+		lancamento.setDataIni(new Date());
 		lancamentos = daoLancamento.consultarLimit5(pessoaUser.getId());
 		launchesReview = daoLancamento.underAprovalLaunchs("under review"); 
 	//	System.out.println(lancamentos);

@@ -43,9 +43,8 @@
 					required="true" requiredMessage="Supplier required"  />
 	
 				<h:outputLabel value="Date of order" />
-				<b:datepicker locale="en"
-					value="#{lancamentoBean.lancamento.dataIni}" required="true"
-					requiredMessage="Date of order required" style="width:180px;"/>
+				<b:datepicker locale="en" readonly="true" disabled="true"
+					value="#{lancamentoBean.lancamento.dataIni}"  style="width:180px;"/>
 	
 				<h:outputLabel value="Date of delivery" />
 				<b:datepicker locale="en"
