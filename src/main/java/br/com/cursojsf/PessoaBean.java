@@ -29,8 +29,10 @@ import javax.xml.bind.DatatypeConverter;
 import br.com.dao.DaoGeneric;
 import br.com.entidades.Cidades;
 import br.com.entidades.Estados;
+import br.com.entidades.Lancamento;
 import br.com.entidades.Pessoa;
 import br.com.jpautil.JPAUtil;
+import br.com.repository.IDaoLancamento;
 import br.com.repository.IDaoPessoa;
 
 @javax.faces.view.ViewScoped
@@ -47,11 +49,16 @@ public class PessoaBean implements Serializable {
 	private Pessoa loggedUser = new Pessoa();
 	private List<Pessoa> pessoas = new ArrayList<Pessoa> ();
 	
+	private List<Lancamento> launchesReview = new ArrayList<Lancamento>();
+	
 	@Inject
 	private DaoGeneric<Pessoa> daoGeneric;
 
 	@Inject
 	private IDaoPessoa iDaoPessoa;
+	
+	@Inject
+	private IDaoLancamento daoLancamento;
 	
 	private JPAUtil jpaUtil;
 	
@@ -125,9 +132,18 @@ public class PessoaBean implements Serializable {
 		this.arquivoFoto = arquivoFoto;
 	}
 	
+	public List<Lancamento> getLaunchesReview() {
+		return launchesReview;
+	}
+
+	public void setLaunchesReview(List<Lancamento> launchesReview) {
+		this.launchesReview = launchesReview;
+	}
+	
+	
+	
 
 	public String salvar () throws IOException {		
-		
 		
 		// avoid duplicated login for new user
 		if (pessoa.getId() == null && !iDaoPessoa.verifyLogin(pessoa.getLogin())) {
@@ -238,6 +254,12 @@ public class PessoaBean implements Serializable {
 		String roleLoggedUser = (usuarioLogado != null) ? usuarioLogado.getPerfiUser() : "User withou role";
 		loggedUser.setNome(nameLoggedUser);
 		loggedUser.setPerfiUser(roleLoggedUser);
+		launchesReview = daoLancamento.underAprovalLaunchs("under review"); 
+		if (launchesReview.size() > 0 && loggedUser.getPerfiUser().equalsIgnoreCase("ADMINISTRATOR")) {
+			mostrarMsg("Theres Launches to be approved.");
+		}
+		
+		
 		
 		
 	}

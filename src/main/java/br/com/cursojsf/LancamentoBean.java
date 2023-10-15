@@ -192,14 +192,16 @@ public class LancamentoBean implements Serializable {
 	}
 	
 	public String removeCompany() {
-		
-		
-		
-		
-		daoGenericCompany.deletarPorId(company);
-		company = new Company();
-		companies = daoGenericCompany.getListEntity(Company.class);
-		FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Successfully removed."));
+		try {
+			daoGenericCompany.deletarPorId(company);
+			company = new Company();
+			companies = daoGenericCompany.getListEntity(Company.class);
+			FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Successfully removed."));
+			
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage
+					("This company cannot be excluded from the database because there are Launches associated with it."));
+		}
 		return "";
 	}
 	/*  Methods --- END*/
