@@ -113,6 +113,12 @@ public class LancamentoBean implements Serializable {
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");  
 		lancamento.setUsuario(pessoaUser);
 		
+		if (lancamento.getDataFim().before(lancamento.getDataIni())) {
+			FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage
+					("Delivery Date invalid. That must be later than current Date."));
+			return "";
+		}
+		
 		if (lancamento.getStatus() == null) {
 			lancamento.setStatus("under review");
 		}

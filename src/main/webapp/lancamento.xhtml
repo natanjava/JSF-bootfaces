@@ -54,11 +54,14 @@
 					value="#{lancamentoBean.lancamento.dataFim}" required="true"
 					requiredMessage="Date of delyvery required" style="width:180px;"/>
 				
-				<h:outputLabel value="Cost" />
+				<h:outputLabel value="Cost ($)" />
 				<b:inputText value="#{lancamentoBean.lancamento.coast}"
 					required="true" requiredMessage="Coast required"  onkeyup="handleCost(event)" maxlength="6">
 					  <f:facet name="prepend">
 				        <h:outputText value="$" />
+				      </f:facet>
+				       <f:facet name="append">
+				        <h:outputText value=".00" />
 				      </f:facet>
 				</b:inputText>
 	
@@ -111,7 +114,7 @@
 					</h:outputLabel>
 				</h:column>
 				
-				<b:dataTableColumn value="#{lanc.coast}" label="Coast" />	
+				<b:dataTableColumn value="#{lanc.coast}" label="Cost ($)" />	
 				
 				<b:dataTableColumn  label="Status" >
 					<h:outputLabel value="#{lanc.status}" rendered="#{lanc.status != 'REJECTED'}" />

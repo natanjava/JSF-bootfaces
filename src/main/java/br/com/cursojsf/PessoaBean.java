@@ -231,10 +231,27 @@ public class PessoaBean implements Serializable {
 	
 	public String remove() {
 		if (pessoa.getId() != 1) {
-			daoGeneric.deletarPorId(pessoa);
-			pessoa = new Pessoa(); 
-			carregarPessoas(); 
-			mostrarMsg("Removed successfully");
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = context.getExternalContext();
+			Pessoa usuarioLogado = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
+			
+			Long idLoggedUser = usuarioLogado.getId();
+			
+			if (pessoa.getId() == idLoggedUser) {
+				daoGeneric.deletarPorId(pessoa);
+				externalContext.getSessionMap().remove("usuarioLogado");
+				HttpServletRequest httpServletRequest = (HttpServletRequest) context.getCurrentInstance().getExternalContext().getRequest();
+				httpServletRequest.getSession().invalidate();
+				mostrarMsg("You were delete. Please log in with another User.");
+				return "index.jsf";
+			}
+			else {
+				daoGeneric.deletarPorId(pessoa);
+				pessoa = new Pessoa(); 
+				carregarPessoas(); 
+				mostrarMsg("Removed successfully");
+			}
+			
 		}
 		else {
 			mostrarMsg("User 'Standard Admin' can´t be removed");
@@ -258,9 +275,6 @@ public class PessoaBean implements Serializable {
 		if (launchesReview.size() > 0 && loggedUser.getPerfiUser().equalsIgnoreCase("ADMINISTRATOR")) {
 			mostrarMsg("There is one or more  Launches to be approved. Look at Reviews Page");
 		}
-		
-		
-		
 		
 	}
 	
