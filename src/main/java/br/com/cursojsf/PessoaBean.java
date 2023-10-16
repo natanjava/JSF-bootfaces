@@ -256,7 +256,7 @@ public class PessoaBean implements Serializable {
 		loggedUser.setPerfiUser(roleLoggedUser);
 		launchesReview = daoLancamento.underAprovalLaunchs("under review"); 
 		if (launchesReview.size() > 0 && loggedUser.getPerfiUser().equalsIgnoreCase("ADMINISTRATOR")) {
-			mostrarMsg("Theres Launches to be approved.");
+			mostrarMsg("There is one or more  Launches to be approved. Look at Launch Request Page");
 		}
 		
 		

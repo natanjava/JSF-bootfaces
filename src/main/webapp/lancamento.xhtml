@@ -19,26 +19,28 @@
 		
 		<br/>
 		<div style="width: 500px; text-align: justify">
-		<h4>Launches of User: <b>#{pessoaBean.loggedUser.nome}</b>.</h4> 
-		Only the last 5 order releases will be made available on this page. To access the complete release history,
-		access the <a href="rellancamento.jsf">launch report page</a>.
+		<h4>Registration of new Launch. Only Mangager can insert new LAunches in the System.</h4> 
+		On this page it is possible to register releases, if the logged-in user has this privilege, but
+		every User can see the releases registered until the current date.
+		
+		To see the complete list of all the system's releases, visit the page <a href="rellancamento.jsf">launch report page</a>.
 		</div>
 	
-		<h:form id="formLancamento" style="margin-top:2%; ">
-			<h:panelGrid columns="2">
+		<h:form id="formLancamento" style="margin-top:2%; " rendered="#{pessoaBean.permiteAcesso('MANAGER')}">
+			<h:panelGrid columns="2" style="margin-bottom:1%;">
 				<f:facet name="header">
-					<h:outputText value="Launch of order" />
+					<h:outputText value="Launch Formular" />
 				</f:facet>
 	
 				<h:outputLabel value="ID" />
-				<h:inputText value="#{lancamentoBean.lancamento.id}" readonly="true" />
+				<b:inputText value="#{lancamentoBean.lancamento.id}" readonly="true" />
 	
 				<h:outputLabel value="Description" />
-				<h:inputText id="descricaoTextarea"  
+				<b:inputText id="descricaoTextarea"  
 								value="#{lancamentoBean.lancamento.descricao}"
-								required="true" requiredMessage="Descripton required" style="width:180px;" />
+								required="true" requiredMessage="Descripton required"  />
 	
-			    <h:outputLabel value="Empresa Origem: " />
+			    <h:outputLabel value="Supplier" />
 			    <b:selectOneMenu value="#{lancamentoBean.lancamento.empresaOrigem}">
 			        <f:selectItems value="#{lancamentoBean.companies}" var="company" itemValue="#{company}" itemLabel="#{company.name}" />
 			    </b:selectOneMenu>
@@ -52,9 +54,13 @@
 					value="#{lancamentoBean.lancamento.dataFim}" required="true"
 					requiredMessage="Date of delyvery required" style="width:180px;"/>
 				
-				<h:outputLabel value="Coast" />
-				<h:inputText value="#{lancamentoBean.lancamento.coast}"
-					required="true" requiredMessage="Coast required"  />
+				<h:outputLabel value="Cost" />
+				<b:inputText value="#{lancamentoBean.lancamento.coast}"
+					required="true" requiredMessage="Coast required"  onkeyup="handleCost(event)" maxlength="6">
+					  <f:facet name="prepend">
+				        <h:outputText value="$" />
+				      </f:facet>
+				</b:inputText>
 	
 				<!-- empty tag to make space 
 				<h:outputLabel />
@@ -62,12 +68,12 @@
 	
 			</h:panelGrid>
 	
-			<h:panelGroup style="margin-left: 8%;">
+			<h:panelGroup style="margin-left: 10%; margin-top: 6%;">
 				<h:commandButton value="Save Launch" action="#{lancamentoBean.salvar}"
 					image="/resources/img/salvar.png" title="Save Launch" />
 
 				<h:commandButton value="Clean Form" action="#{lancamentoBean.novo}" id="btnClean"
-					image="/resources/img/limpar.png" title="Clean Form" rendered="#{lancamentoBean.lancamento.id != null}" >
+					image="/resources/img/limpar.png" title="Clean Form"  >
 					<f:ajax execute="btnClean" render="@form" />
 				</h:commandButton>
 			</h:panelGroup>
@@ -75,15 +81,15 @@
 	
 		<br /><br /><br />
 		<div style="text-align: center" >
-			<h4>Launches of User <b>#{pessoaBean.loggedUser.nome}</b> already saved in the System.</h4> 
+			<h4>Launches already saved in the System.</h4> 
 		</div>
 		<h:form >
 			<b:dataTable 
 				value="#{lancamentoBean.lancamentos}" 
 				var="lanc"
 				border="1" cellpadding="20"
-				paginated="false"
-				searching="false">
+				paginated="true"
+				searching="true">
 	
 				<b:dataTableColumn value="#{lanc.id}" label="ID" />	
 	
@@ -152,6 +158,36 @@
         var textarea = document.getElementById('formLancamento:descricaoTextarea'); 
         textarea.addEventListener('input', limitarCaracteres); 
     });
+    
+	/* Cost Mask*/
+	const handleCost = (event) => {
+	  let input = event.target;
+	  input.value = formatCurrency(input.value);
+	};
+	
+	const formatCurrency = (value) => {
+	  // Remove qualquer caractere não numérico
+	  value = value.replace(/[^\d.]/g, '');
+	
+	  // Divide o valor em parte inteira e parte decimal
+	  const parts = value.split('.');
+	  let integerPart = parts[0] || '';
+	  let decimalPart = parts[1] || '';
+	
+	  // Limita a parte decimal a dois dígitos
+	  if (decimalPart.length > 2) {
+	    decimalPart = decimalPart.slice(0, 2);
+	  }
+	
+	  // Formata o valor de volta
+	  value = integerPart + (decimalPart ? '.' + decimalPart : '');
+	
+	  return value;
+	};
+	/* ------ */
+    
+    
+
 </script>
 </h:body>
 

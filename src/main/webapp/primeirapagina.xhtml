@@ -28,8 +28,8 @@
 			style="margin-top:2%">
 
 
-			<h:messages
-				style="color:white; background-color: black; max-width:400px;" />
+			<b:messages
+				style="max-width:500px;" />
 
 			<h:panelGrid columns="2">
 
@@ -94,7 +94,7 @@
 
 				<h:outputLabel value="Rolle" />
 				<b:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfiUser}">
-					<f:selectItem itemValue="ASSISTENT" itemLabel="Assistent"  />
+					<f:selectItem itemValue="ASSISTENT" itemLabel="Assistent"   />
 					<f:selectItem itemValue="ADMINISTRATOR" itemLabel="Administrator" />
 					<f:selectItem itemValue="MANAGER" itemLabel="Manager"  />
 				</b:selectOneMenu>

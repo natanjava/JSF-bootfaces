@@ -1,6 +1,7 @@
 package br.com.cursojsf;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -123,6 +124,7 @@ public class LancamentoBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Successfully saved."));
 		carregarLancamentos();
 		lancamento = new Lancamento();
+		lancamento.setDataIni(new Date());
 		return "";
 	}
 	
@@ -162,16 +164,17 @@ public class LancamentoBean implements Serializable {
 		ExternalContext externalContext = context.getExternalContext();
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
 		lancamento.setDataIni(new Date());
-		lancamentos = daoLancamento.consultarLimit5(pessoaUser.getId());
+		lancamentos = daoLancamento.findLaunches(); 
 		companies = daoGenericCompany.getListEntity(Company.class);
 		launchesReview = daoLancamento.underAprovalLaunchs("under review"); 
 	//	System.out.println(lancamentos);
 	}
 	
 	
+	
 	public String novo() {
 		lancamento = new Lancamento();
-		lancamento.setCoast(0.0);
+		lancamento.setDataIni(new Date());
 		return "";
 	}
 	

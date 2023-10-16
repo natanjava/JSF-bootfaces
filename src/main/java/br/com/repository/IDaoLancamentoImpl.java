@@ -39,12 +39,24 @@ public class IDaoLancamentoImpl implements IDaoLancamento, Serializable {
 	
 	
 	@Override
-	public List<Lancamento> consultar(Long codUser) {
+	public List<Lancamento> findLaunchByUser(Long codUser) {
 		List<Lancamento> lista = null;
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
 		lista = entityManager.createQuery("from Lancamento where usuario.id = "+codUser).getResultList();
+		transaction.commit();
+		
+		return lista;
+	}
+	
+	@Override
+	public List<Lancamento> findLaunches() {
+		List<Lancamento> lista = null;
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		
+		lista = entityManager.createQuery("from Lancamento ").getResultList();
 		transaction.commit();
 		
 		return lista;

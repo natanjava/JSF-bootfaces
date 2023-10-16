@@ -8,7 +8,9 @@ import br.com.entidades.Lancamento;
 
 public interface IDaoLancamento extends Serializable {
 	
-	List<Lancamento> consultar(Long codUser);
+	List<Lancamento> findLaunchByUser(Long codUser);
+	
+	List<Lancamento> findLaunches();
 	
 	List<Lancamento> consultarLimit5(Long codUser);
 	

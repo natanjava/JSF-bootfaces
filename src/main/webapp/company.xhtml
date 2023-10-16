@@ -13,26 +13,25 @@
 <h:body>
 
 	<ui:include src="/menu.xhtml" />
-	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%">
+	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%; margin-top: 5%;">
 
 		<b:messages id="msg-launch" />
 		
-		<br/>
-		<div style="width: 500px; text-align: justify">
-		<h4>Registration of Company</h4>
+		<div style="width: 800px; text-align: justify;">
+		<h4>Registration of new partner Company. Only Assistent can insert new Companies in the System.</h4>
 		</div>
 	
-		<h:form id="formLancamento" style="margin-top:2%; ">
+		<h:form id="formLancamento" style="margin-top:2%;" rendered="#{pessoaBean.permiteAcesso('ASSISTENT')}">
 			<h:panelGrid columns="2">
 				<f:facet name="header">
 					<h:outputText value="New company" />
 				</f:facet>
 	
 				<h:outputLabel value="ID" />
-				<h:inputText value="#{lancamentoBean.company.id}" readonly="true" />
+				<b:inputText value="#{lancamentoBean.company.id}" readonly="true" />
 	
 				<h:outputLabel value="Name" />
-				<h:inputText value="#{lancamentoBean.company.name}" required="true" requiredMessage="Name required"/>
+				<b:inputText value="#{lancamentoBean.company.name}" required="true" requiredMessage="Name required"/>
 			</h:panelGrid>
 	
 			<h:panelGroup style="margin-left: 8%;">
@@ -40,7 +39,7 @@
 					image="/resources/img/salvar.png" title="Save Launch" />
 
 				<h:commandButton value="Clean Form" action="#{lancamentoBean.newCompany}" id="btnClean"
-					image="/resources/img/limpar.png" title="Clean Form" rendered="#{lancamentoBean.company.id != null}">
+					image="/resources/img/limpar.png" title="Clean Form" >
 					<f:ajax execute="btnClean" render="@form" />
 				</h:commandButton>
 			</h:panelGroup>
@@ -55,22 +54,22 @@
 				value="#{lancamentoBean.companies}" 
 				var="comp"
 				border="1" cellpadding="20"
-				paginated="false"
-				searching="false">
+				paginated="true"
+				searching="true">
 	
 				<b:dataTableColumn value="#{comp.id}" label="ID" />	
 	
 				<b:dataTableColumn value="#{comp.name}" label="Name"  />	
 				
-				<h:column>
+				<h:column rendered="#{pessoaBean.permiteAcesso('ASSISTENT')}">
 				    <f:facet name="header">Update</f:facet>
-					<h:commandLink title="Edit Company">
+					<h:commandLink title="Edit Company" >
 			            <h:graphicImage value="/resources/img/editar.png" />
 			            <f:setPropertyActionListener value="#{comp}" target="#{lancamentoBean.company}" />
 			        </h:commandLink>
 				</h:column>
 	
-				<h:column>
+				<h:column rendered="#{pessoaBean.permiteAcesso('ASSISTENT')}">
 					<f:facet name="header">Remove</f:facet>
 					<h:commandLink title="Remove Launch" action="#{lancamentoBean.removeCompany}" onclick="return confirm('Are you sure you want to delete?');">
 						<h:graphicImage value="/resources/img/excluir.png" />

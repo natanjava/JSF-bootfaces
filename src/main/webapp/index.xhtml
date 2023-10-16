@@ -10,24 +10,25 @@
 	</h:head>
 	
 	<h:body>
-		<h:form id="formPessoa" style="margin-top:20%; margin-left: 35%;">
-		<h:messages id="msg-erro" style="color:white; background-color: black; max-width:400px;" />
+		<b:form id="formPessoa" style="margin-top:15%; margin-left: 35%;">
+		<b:messages id="msg-erro" style="max-width:400px;" />
 		
-			<h1>LOGIN PAGE</h1>
+			<h3>LOGIN PAGE</h3>
+			<br/>
 			
 			<h:panelGrid columns="2">
 				<h:outputLabel value="Login: "/> 
-				<h:inputText value ="#{pessoaBean.pessoa.login}"  pt:placeholder="write admin here" 
+				<b:inputText value ="#{pessoaBean.pessoa.login}"  pt:placeholder="write admin here" 
 							 required="true" requiredMessage="Login required"  />
 				
 				<h:outputLabel value="Password: "/> 
-				<h:inputSecret value="#{pessoaBean.pessoa.senha}"  pt:placeholder="write 123 here" 
+				<b:inputSecret value="#{pessoaBean.pessoa.senha}"  pt:placeholder="write 123 here" 
 								required="true" requiredMessage="Password required"  /> <br></br><br></br>
 				
-				<h:commandButton value="Access" action="#{pessoaBean.logar}" />
+				<b:commandButton value="Access" action="#{pessoaBean.logar}" />
 			</h:panelGrid>		
 								
-		</h:form>
+		</b:form>
 	
 	
 	</h:body>
