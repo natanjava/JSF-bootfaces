@@ -10,19 +10,22 @@
 
 		<b:navBar brand="Menu" fluid="true">
 		 <b:navbarLinks>
-		 	 <b:navCommandLink action="primeirapagina" value="User" />
-		   	 <b:navCommandLink action="lancamento" value="Launches"/>
+		 	<b:dropMenu value="New">
+		 	 <b:navCommandLink value="User" action="primeirapagina"  />
+		   	 <b:navCommandLink value="Launches" action="lancamento" />
+		     <b:navCommandLink value="Company" action="company"/>		     
+		 	</b:dropMenu>
 		  
 		     <b:dropMenu value="Reports">
 		       <b:navCommandLink action="rellancamento" value="Lauches" />
 		       <b:navCommandLink action="relusuario" value="Users"/>
+		       <b:navCommandLink action="reportCompany" value="Companies"/>
 		     </b:dropMenu>
 		     
-		     <b:navCommandLink action="launchRequest" value="Launch request"/>
+		     <b:navCommandLink action="launchRequest" value="Reviews"/>
 		     
-		     <b:navCommandLink value="Info(s)" action="info"/>	
+		     <b:navCommandLink value="About" action="info"/>	
 		     
-		     <b:navCommandLink value="Company" action="company"/>		     
 
 		     <b:navCommandLink value="Log off" action="#{pessoaBean.deslogar}" />
 		  </b:navbarLinks>

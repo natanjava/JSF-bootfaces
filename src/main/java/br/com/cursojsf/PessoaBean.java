@@ -220,7 +220,7 @@ public class PessoaBean implements Serializable {
 	private void mostrarMsg(String msg) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		FacesMessage message = new FacesMessage(msg);
-		context.addMessage(null, message);  // parameter 'null' could be a specific componen
+		context.addMessage(null, message);  // parameter 'null' could be a specific component
 	}
 
 	public String limpar () {
@@ -256,7 +256,7 @@ public class PessoaBean implements Serializable {
 		loggedUser.setPerfiUser(roleLoggedUser);
 		launchesReview = daoLancamento.underAprovalLaunchs("under review"); 
 		if (launchesReview.size() > 0 && loggedUser.getPerfiUser().equalsIgnoreCase("ADMINISTRATOR")) {
-			mostrarMsg("There is one or more  Launches to be approved. Look at Launch Request Page");
+			mostrarMsg("There is one or more  Launches to be approved. Look at Reviews Page");
 		}
 		
 		

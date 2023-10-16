@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title>Company</title>
+</h:head>
+
+<h:body>
+
+	<ui:include src="/menu.xhtml" />
+	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%">
+
+		<b:messages id="msg-launch" />
+
+		<br />
+		<div style="width: 500px; text-align: justify">
+			<h4>Companies report page</h4>
+			Click on 'List Companies' to access information for all Companies on the system.
+			Then, if necessary, use the field 'Search' to filter the search.
+			Also visit the <a href="rellancamento.jsf">Launch report page</a> and
+			<a href="relusuario.jsf">User report page</a>.
+		</div>
+
+		<h:form id="formCompanies" style="margin-bottom: 3%;">
+
+			<b:commandButton value="List Companies" look="primary "
+				action="#{relUsuario.reportCompanies}" />
+
+		</h:form>
+
+		<br />
+
+		<h:form>
+			<b:dataTable value="#{relUsuario.companies}" 	var="c" 
+						border="2" cellpadding="4" 
+						pdf="true" excel="true" copy="true">
+				<b:dataTableColumn value="#{c.id}" label="ID" />
+
+				<b:dataTableColumn value="#{c.name}" label="Nome" />
+
+			</b:dataTable>
+
+		</h:form>
+
+	</div>
+</h:body>
+
+</html>

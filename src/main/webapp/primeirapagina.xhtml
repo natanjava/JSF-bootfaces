@@ -20,16 +20,19 @@
 	<ui:include src="/menu.xhtml" />
 	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%; margin-top: 4%;">
 
-		<h4>Welcome #{pessoaBean.loggedUser.nome}!  </h4>
-		Click <a href="info.jsf">here</a> and learn more about these System. Your Role is: #{pessoaBean.loggedUser.perfiUser}
+		<h4>
+			Welcome #{pessoaBean.loggedUser.nome}!  
+			<br/><br/> This is the User Page. Only <b>ADMINISTRATOR</b> can insert, edit and delete Users in the System.
+			<br/> 
+		</h4>
+		Click <a href="info.jsf">here</a> and learn more about these System. Your Role is: <b> #{pessoaBean.loggedUser.perfiUser} </b>
 		
 
-		<h:form id="formPessoa" enctype="multipart/form-data"
+		<h:form id="formPessoa" enctype="multipart/form-data" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}"
 			style="margin-top:2%">
 
 
-			<b:messages
-				style="max-width:500px;" />
+			<b:messages style="max-width:600px;" />
 
 			<h:panelGrid columns="2">
 

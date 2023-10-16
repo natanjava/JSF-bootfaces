@@ -17,6 +17,7 @@ import br.com.dao.DaoGeneric;
 import br.com.entidades.Company;
 import br.com.entidades.Lancamento;
 import br.com.entidades.Pessoa;
+import br.com.repository.IDaoCompany;
 import br.com.repository.IDaoLancamento;
 
 @Named(value= "lancamentoBean")
@@ -40,11 +41,11 @@ public class LancamentoBean implements Serializable {
 	@Inject
 	private DaoGeneric<Company> daoGenericCompany;
 	
-	
-	
 	@Inject
 	private IDaoLancamento daoLancamento;	
 	
+	@Inject
+	private IDaoCompany daoCompany;	
 	
 	
 	/*  get and set --- BEGIN*/	
@@ -112,14 +113,12 @@ public class LancamentoBean implements Serializable {
 		Pessoa pessoaUser = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");  
 		lancamento.setUsuario(pessoaUser);
 		
-		
 		if (lancamento.getStatus() == null) {
 			lancamento.setStatus("under review");
 		}
 				
-		// daoGeneric.salvar(lancamento); antes era essa linha mas estava dando problema quando editava uma lancamento e salvava depois
+		// daoGeneric.salvar(lancamento); merge works better
 		lancamento = daoGeneric.merge(lancamento);
-		//company.setLancamento(lancamento);
 		
 		FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Successfully saved."));
 		carregarLancamentos();
@@ -145,11 +144,19 @@ public class LancamentoBean implements Serializable {
 	}
 	
 	public String saveCompany() {
-		company = daoGenericCompany.merge(company);
+		String nameCompany = company.getName();
+		System.out.println(nameCompany);
 		
-		FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Successfully saved."));
-		companies = daoGenericCompany.getListEntity(Company.class);
-		company = new Company();
+		if (daoCompany.noRepeatCompany(nameCompany)) {
+			company = daoGenericCompany.merge(company);
+			FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("Successfully saved."));
+			companies = daoGenericCompany.getListEntity(Company.class);
+			company = new Company();
+		}
+		else {
+			FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("There s already a partner company with this name."));
+		}
+		
 		return "";
 	}
 	

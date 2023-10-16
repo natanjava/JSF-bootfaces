@@ -7,7 +7,7 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
-	<title>Pedidos</title>
+	<title>Launches</title>
 </h:head>
 
 <h:body>
@@ -19,11 +19,11 @@
 		
 		<br/>
 		<div style="width: 500px; text-align: justify">
-		<h4>Registration of new Launch. Only Mangager can insert new LAunches in the System.</h4> 
+		<h4>Registration of new Launch. Only <b>MANAGER</b> can insert new Launches in the System.</h4> 
 		On this page it is possible to register releases, if the logged-in user has this privilege, but
 		every User can see the releases registered until the current date.
 		
-		To see the complete list of all the system's releases, visit the page <a href="rellancamento.jsf">launch report page</a>.
+		To generate Report, visit the page <a href="rellancamento.jsf">launch report page</a>.
 		</div>
 	
 		<h:form id="formLancamento" style="margin-top:2%; " rendered="#{pessoaBean.permiteAcesso('MANAGER')}">
@@ -94,6 +94,8 @@
 				<b:dataTableColumn value="#{lanc.id}" label="ID" />	
 	
 				<b:dataTableColumn value="#{lanc.descricao}" label="Description"  />	
+				
+				<b:dataTableColumn value="#{lanc.usuario.nome}" label="Author"  />
 				
 				<h:column>
 					<f:facet name="header">Date of order</f:facet>
