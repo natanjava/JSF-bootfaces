@@ -15,19 +15,15 @@
 	<ui:include src="/menu.xhtml" />
 	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%">
 
-		<b:messages id="msg-launch" />
 		
-		<br/>
-		<div style="width: 500px; text-align: justify">
-		<h4>Registration of new Launch. Only <b>MANAGER</b> can insert new Launches in the System.</h4> 
-		On this page it is possible to register releases, if the logged-in user has this privilege, but
-		every User can see the releases registered until the current date.
-		
-		To generate Report, visit the page <a href="rellancamento.jsf">launch report page</a>.
+		<div style="width: 600px; text-align: justify">
+			This is the Launch Page. Only <b>MANAGER</b> can insert, edit and delete new Launches in the System. 
+			To generate Report, visit the <a href="rellancamento.jsf">launch report page</a>.
 		</div>
-	
-		<h:form id="formLancamento" style="margin-top:2%; " rendered="#{pessoaBean.permiteAcesso('MANAGER')}">
-			<h:panelGrid columns="2" style="margin-bottom:1%;">
+		<br/>
+		<b:messages id="msg-launch" style="max-width:600px;"/>
+		<h:form id="formLancamento"  rendered="#{pessoaBean.permiteAcesso('MANAGER')}">
+			<h:panelGrid columns="2" >
 				<f:facet name="header">
 					<h:outputText value="Launch Formular" />
 				</f:facet>
@@ -82,7 +78,7 @@
 			</h:panelGroup>
 		</h:form>
 	
-		<br /><br /><br />
+		<br />
 		<div style="text-align: center" >
 			<h4>Launches already saved in the System.</h4> 
 		</div>

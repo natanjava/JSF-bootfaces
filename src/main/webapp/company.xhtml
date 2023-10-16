@@ -7,20 +7,21 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
-	<title>Companies</title>
+	<title>Company Registration</title>
 </h:head>
 
 <h:body>
 
 	<ui:include src="/menu.xhtml" />
-	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%; margin-top: 5%;">
+	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%;" >
 
-		<b:messages id="msg-launch" />
 		
-		<div style="width: 800px; text-align: justify;">
-		<h4>Registration of new partner Company. Only <b>ASSISTENT</b> can insert new Companies in the System.</h4>
+		<div style="width: 600px; text-align: justify;">
+		This is the Company Registration Page. Only <b>ASSISTENT</b> can insert new Companies in the System.
+		To generate Report, visit the <a href="reportCompany.jsf">company report page</a>.
 		</div>
 	
+		<b:messages id="msg-launch" style="max-width:600px;"/>
 		<h:form id="formLancamento" style="margin-top:2%;" rendered="#{pessoaBean.permiteAcesso('ASSISTENT')}">
 			<h:panelGrid columns="2">
 				<f:facet name="header">

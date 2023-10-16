@@ -1,36 +1,39 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  	xmlns:b="http://bootsfaces.net/ui"
-	  xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
-
-	<h:head>
-		<title>Login</title>
-	</h:head>
-	
-	<h:body>
-		<b:form id="formPessoa" style="margin-top:15%; margin-left: 35%;">
-		<b:messages id="msg-erro" style="max-width:400px;" />
-		
-			<h3>LOGIN PAGE</h3>
-			<br/>
-			
-			<h:panelGrid columns="2">
-				<h:outputLabel value="Login: "/> 
-				<b:inputText value ="#{pessoaBean.pessoa.login}"  pt:placeholder="write admin here" 
-							 required="true" requiredMessage="Login required"  />
-				
-				<h:outputLabel value="Password: "/> 
-				<b:inputSecret value="#{pessoaBean.pessoa.senha}"  pt:placeholder="write 123 here" 
-								required="true" requiredMessage="Password required"  /> <br></br><br></br>
-				
-				<b:commandButton value="Access" action="#{pessoaBean.logar}" />
-			</h:panelGrid>		
-								
-		</b:form>
-	
-	
-	</h:body>
-
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Launch System</title>
+        <style type="text/css">
+            .form-signin {
+                margin: 0 auto;
+                max-width: 330px;
+                padding: 15px;
+            }
+        </style>
+    </h:head>
+    <h:body style="padding-top: 60px; background-color: #add;">
+        <b:container>
+            <h:form styleClass="form-signin" prependId="false">
+            	<b:messages id="msg-erro" style="max-width:400px;" />
+                <h3 class="form-signin-heading">Please sign in</h3>
+                <b:inputText id="email" value ="#{pessoaBean.pessoa.login}"  placeholder="write admin here" 
+							 required="true" requiredMessage="Login required"  >
+                    <f:facet name="prepend">
+                        <b:icon name="user" />
+                    </f:facet>
+                </b:inputText>
+                <b:inputText id="password" value="#{pessoaBean.pessoa.senha}"  placeholder="write 123 here" 
+								required="true" requiredMessage="Password required" type="password">
+                    <f:facet name="prepend">
+                        <b:iconAwesome name="key" />
+                    </f:facet>
+                </b:inputText>
+                <b:commandButton look="primary btn-block" value="Sign In" icon="log-in" size="lg" action="#{pessoaBean.logar}"/>
+            </h:form>
+        </b:container>
+    </h:body>
 </html>

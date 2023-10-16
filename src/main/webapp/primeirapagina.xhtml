@@ -18,21 +18,20 @@
 <h:body>
 
 	<ui:include src="/menu.xhtml" />
-	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%; margin-top: 4%;">
+	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%;">
 
 		<h4>
 			Welcome #{pessoaBean.loggedUser.nome}!  
-			<br/><br/> This is the User Page. Only <b>ADMINISTRATOR</b> can insert, edit and delete Users in the System.
-			<br/> 
 		</h4>
-		Click <a href="info.jsf">here</a> and learn more about these System. Your Role is: <b> #{pessoaBean.loggedUser.perfiUser} </b>
+			This is the User Page. Only <b>ADMINISTRATOR</b> can insert, edit and delete Users in the System.
+			<br/> 
+			Your Role is: <b> #{pessoaBean.loggedUser.perfiUser} </b>. Click <a href="info.jsf">here</a> to learn more about these System. 
 		
+		<b:messages style="max-width:600px;" />
 
-		<h:form id="formPessoa" enctype="multipart/form-data" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}"
-			style="margin-top:2%">
+		<h:form id="formPessoa" enctype="multipart/form-data" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 
 
-			<b:messages style="max-width:600px;" />
 
 			<h:panelGrid columns="2">
 
@@ -40,22 +39,22 @@
 					<h:outputText value="User Registration" />
 				</f:facet>
 
-				<h:outputLabel value="ID: " />
+				<h:outputLabel value="ID" />
 				<b:inputText value="#{pessoaBean.pessoa.id}" readonly="true"  />
 	
 
 				<h:outputLabel value="Photo" />
 				<h:inputFile id="Foto" value="#{pessoaBean.arquivoFoto}" />
 
-				<h:outputLabel value="Name: " />
+				<h:outputLabel value="Name" />
 				<b:inputText value="#{pessoaBean.pessoa.nome}" />
 
-				<h:outputLabel value="Surname: " />
+				<h:outputLabel value="Surname" />
 				<b:inputText value="#{pessoaBean.pessoa.sobrenome}" id="sobrenome" />
 
 
 
-				<h:outputLabel value="Gender: " />
+				<h:outputLabel value="Gender " />
 				<b:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}"
 					required="false">
 					<f:selectItem itemValue="não informado" itemLabel="[Selecione]"
@@ -64,7 +63,7 @@
 					<f:selectItem itemValue="FEMININ" itemLabel="Feminin" />
 				</b:selectOneMenu>
 
-				<h:outputLabel value="Date of Birthday: " />
+				<h:outputLabel value="Birthday" />
 				<b:datepicker locale="en"
 					value="#{pessoaBean.pessoa.dataNascimento}" />
 
@@ -91,20 +90,12 @@
 				<b:inputSecret value="#{pessoaBean.pessoa.senha}" redisplay="true"
 					required="true" requiredMessage="Password required" />
 
-
-
-
-
 				<h:outputLabel value="Rolle" />
 				<b:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfiUser}">
 					<f:selectItem itemValue="ASSISTENT" itemLabel="Assistent"   />
 					<f:selectItem itemValue="ADMINISTRATOR" itemLabel="Administrator" />
 					<f:selectItem itemValue="MANAGER" itemLabel="Manager"  />
 				</b:selectOneMenu>
-
-    
-				
-				
 
 				<h:outputLabel value="Level" />
 				<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgramador}">
@@ -122,11 +113,9 @@
 					<f:selectItem itemValue="4" itemLabel="French" />
 				</h:selectManyCheckbox>
 
-
 				<!-- tag to make space -->
 				<h:outputLabel />
 				<h:outputLabel />
-
 
 				<h:panelGroup>
 					<h:commandButton value="Save Data"  
@@ -142,10 +131,7 @@
 			</h:panelGrid>
 
 		</h:form>
-		<br />
-		<br />
-		<br />
-
+		<br/>
 
 		<div style="text-align: center">
 			<h4>Users already saved in the System.</h4>
