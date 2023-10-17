@@ -18,5 +18,7 @@ public interface IDaoPessoa {
 	boolean verifyLogin(String login);
 	
 	boolean verifyLoginWithId(String login, Long id);
+	
+	void deleteUserById(Long id);
 
 }

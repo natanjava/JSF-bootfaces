@@ -168,6 +168,39 @@ public class IDaoPessoImpl implements IDaoPessoa, Serializable {
 		}
 		return false;
 	}
+
+
+
+
+
+
+	@Override
+	public void deleteUserById(Long id) {
+	    EntityTransaction entityTransaction = entityManager.getTransaction();
+
+	    try {
+	        entityTransaction.begin();
+
+	        // Primeiro, exclua os lançamentos associados à pessoa
+	        String deleteLancamentoQuery = "delete from Lancamento l where l.usuario.id = :userId";
+	        int deletedLancamentos = entityManager.createQuery(deleteLancamentoQuery)
+	                .setParameter("userId", id)
+	                .executeUpdate();
+
+	        // Em seguida, exclua a pessoa
+	        String deletePessoaQuery = "delete from Pessoa p where p.id = :userId";
+	        int deletedPessoa = entityManager.createQuery(deletePessoaQuery)
+	                .setParameter("userId", id)
+	                .executeUpdate();
+
+	         entityTransaction.commit();
+
+	    } catch (Exception e) {
+	        entityTransaction.rollback();
+	        e.printStackTrace();
+	    }
+		
+	}
 	
 	
 	

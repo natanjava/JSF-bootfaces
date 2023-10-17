@@ -151,7 +151,6 @@ public class LancamentoBean implements Serializable {
 	
 	public String saveCompany() {
 		String nameCompany = company.getName();
-		System.out.println(nameCompany);
 		
 		if (daoCompany.noRepeatCompany(nameCompany)) {
 			company = daoGenericCompany.merge(company);
@@ -160,7 +159,7 @@ public class LancamentoBean implements Serializable {
 			company = new Company();
 		}
 		else {
-			FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("There s already a partner company with this name."));
+			FacesContext.getCurrentInstance().addMessage("msg-launch", new FacesMessage("There is already a partner company with this name."));
 		}
 		
 		return "";
@@ -180,7 +179,6 @@ public class LancamentoBean implements Serializable {
 		lancamentos = daoLancamento.findLaunches(); 
 		companies = daoGenericCompany.getListEntity(Company.class);
 		launchesReview = daoLancamento.underAprovalLaunchs("under review"); 
-	//	System.out.println(lancamentos);
 	}
 	
 	

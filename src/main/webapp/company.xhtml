@@ -17,12 +17,12 @@
 
 		
 		<div style="width: 600px; text-align: justify;">
-		This is the Company Registration Page. Only <b>ASSISTENT</b> can insert new Companies in the System.
-		To generate Report, visit the <a href="reportCompany.jsf">company report page</a>.
+		This is the registration page of new partner company. To generate Report, visit the <a href="reportCompany.jsf">company report page</a>.
 		</div>
 	
 		<b:messages id="msg-launch" style="max-width:600px;"/>
-		<h:form id="formLancamento" style="margin-top:2%;" rendered="#{pessoaBean.permiteAcesso('ASSISTENT')}">
+		<h:form id="formLancamento" style="margin-top:2%;" 
+				rendered="#{pessoaBean.permiteAcesso('ASSISTENT') or pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 			<h:panelGrid columns="2">
 				<f:facet name="header">
 					<h:outputText value="New company" />

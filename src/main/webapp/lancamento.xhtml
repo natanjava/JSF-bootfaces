@@ -7,7 +7,7 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
-	<title>Launches</title>
+	<title>Launche Registration</title>
 </h:head>
 
 <h:body>
@@ -17,12 +17,12 @@
 
 		
 		<div style="width: 600px; text-align: justify">
-			This is the Launch Page. Only <b>MANAGER</b> can insert, edit and delete new Launches in the System. 
+			This is the launch registration page. 
 			To generate Report, visit the <a href="rellancamento.jsf">launch report page</a>.
 		</div>
 		<br/>
 		<b:messages id="msg-launch" style="max-width:600px;"/>
-		<h:form id="formLancamento"  rendered="#{pessoaBean.permiteAcesso('MANAGER')}">
+		<h:form id="formLancamento"  rendered="#{pessoaBean.permiteAcesso('MANAGER') or pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 			<h:panelGrid columns="2" >
 				<f:facet name="header">
 					<h:outputText value="Launch Formular" />
@@ -120,7 +120,7 @@
 							  onclick="alert('Reason for Rejection:\n  #{lanc.reason}')" />
 				</b:dataTableColumn>
 				
-				<h:column rendered="#{pessoaBean.permiteAcesso('MANAGER')}">
+				<h:column rendered="#{pessoaBean.permiteAcesso('MANAGER') or pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 				    <f:facet name="header">Update</f:facet>
 					<h:commandLink title="Edit Launch" rendered="#{lanc.status == 'under review'}">
 			            <h:graphicImage value="/resources/img/editar.png" />
@@ -129,21 +129,21 @@
 			        <h:outputText value="Not Editable" rendered="#{lanc.status != 'under review'}" />
 				</h:column>
 	
-				<h:column rendered="#{pessoaBean.permiteAcesso('MANAGER')}">
+				<h:column rendered="#{pessoaBean.permiteAcesso('MANAGER') or pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 					<f:facet name="header">Remove</f:facet>
-					<h:commandLink title="Remove Launch" action="#{lancamentoBean.remover}" rendered="#{lanc.status == 'under review'}" 
+					<h:commandLink title="Remove Launch" action="#{lancamentoBean.remover}"  
 						onclick="return confirm('Are you sure you want to delete?');">
 						<h:graphicImage value="/resources/img/excluir.png" />
 						<f:setPropertyActionListener value="#{lanc}"
 							target="#{lancamentoBean.lancamento}" />
 					</h:commandLink>
-					<h:outputText value="Not excludable" rendered="#{lanc.status != 'under review'}" />
 				</h:column>
 	
 			</b:dataTable>
-	
+
 		</h:form>
 	</div>
+	
 
 
 <script type="text/javascript">

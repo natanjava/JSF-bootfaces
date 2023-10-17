@@ -13,6 +13,7 @@ import br.com.dao.DaoGeneric;
 import br.com.entidades.Company;
 import br.com.entidades.Lancamento;
 import br.com.entidades.Pessoa;
+import br.com.repository.IDaoCompany;
 import br.com.repository.IDaoPessoa;
 
 @ViewScoped
@@ -24,16 +25,19 @@ public class RelUsuario implements Serializable {
 	
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 	
-	private	List<Company> companies = new ArrayList<Company>();
-	
 	private Date dataIni;
 	
 	private Date dataFim;
 	
 	private String nome;
+	private	List<Company> companies = new ArrayList<Company>();
+	
 
 	@Inject
 	private IDaoPessoa iDaoPessoa;
+	
+	@Inject
+	private IDaoCompany iDaoCompany;
 	
 	@Inject
 	private DaoGeneric<Pessoa> daoGeneric;
@@ -84,11 +88,7 @@ public class RelUsuario implements Serializable {
 		this.companies = companies;
 	}
 	
-	
 
-	
-	
-	
 	public void relPessoa() {
 		pessoas = daoGeneric.getListEntity(Pessoa.class);		
 	}
@@ -96,10 +96,7 @@ public class RelUsuario implements Serializable {
 	public void reportCompanies() {
 		companies = daoGenericCompany.getListEntity(Company.class);	
 	}
-	
 
-
-	
 	
 	
 

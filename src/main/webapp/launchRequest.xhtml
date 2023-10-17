@@ -18,14 +18,14 @@
 		
 		
 		<div style="width: 600px; text-align: justify">
-			<h4> Only ADMINISTRATORS can change the status.</h4> 
+			This is the review page.
 		</div>
 		
 		
 		<b:messages id="msg-launch" />
 		
-		<h:form id="form" style="margin-top:2%; ">
-			<h:panelGrid columns="2" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
+		<h:form id="form" style="margin-top:2%;" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
+			<h:panelGrid columns="2" >
 				<h:outputLabel value="ID: " />
 				<b:inputText value="#{lancamentoBean.lancamento.id}" readonly="true"  />
 					

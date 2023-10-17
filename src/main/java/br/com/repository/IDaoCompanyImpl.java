@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import br.com.entidades.Company;
+import br.com.entidades.Lancamento;
 
 @Named
 public class IDaoCompanyImpl implements IDaoCompany, Serializable{
@@ -27,13 +28,28 @@ public class IDaoCompanyImpl implements IDaoCompany, Serializable{
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
-		companiesWithSameName = entityManager.createQuery("from Company c where c.name = :name")
-	            .setParameter("name", name)
+		companiesWithSameName = entityManager.createQuery("from Company c where lower(c.name) = lower(:name)")
+		        .setParameter("name", name.toLowerCase())
 	            .getResultList();
 		
 		transaction.commit();
 		
 		return companiesWithSameName.isEmpty();
 	}
+
+	@Override
+	public int getLaunchCompany(String empresaOrigem) {
+		List<Lancamento> numberLaunches = null;
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		
+		numberLaunches = entityManager.createQuery("from Lancamento l where l.empresaOrigem = :empresaOrigem")
+					.setParameter("empresaOrigem", empresaOrigem)
+					.getResultList();
+		transaction.commit();
+		
+		return numberLaunches.size();
+	}
+
 
 }

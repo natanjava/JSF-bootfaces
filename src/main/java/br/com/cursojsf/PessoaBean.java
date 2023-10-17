@@ -32,6 +32,7 @@ import br.com.entidades.Estados;
 import br.com.entidades.Lancamento;
 import br.com.entidades.Pessoa;
 import br.com.jpautil.JPAUtil;
+import br.com.repository.IDaoCompany;
 import br.com.repository.IDaoLancamento;
 import br.com.repository.IDaoPessoa;
 
@@ -238,7 +239,9 @@ public class PessoaBean implements Serializable {
 			Long idLoggedUser = usuarioLogado.getId();
 			
 			if (pessoa.getId() == idLoggedUser) {
-				daoGeneric.deletarPorId(pessoa);
+				
+				//daoGeneric.deletarPorId(pessoa);
+				iDaoPessoa.deleteUserById(pessoa.getId());
 				externalContext.getSessionMap().remove("usuarioLogado");
 				HttpServletRequest httpServletRequest = (HttpServletRequest) context.getCurrentInstance().getExternalContext().getRequest();
 				httpServletRequest.getSession().invalidate();
@@ -246,7 +249,8 @@ public class PessoaBean implements Serializable {
 				return "index.jsf";
 			}
 			else {
-				daoGeneric.deletarPorId(pessoa);
+				//daoGeneric.deletarPorId(pessoa);
+				iDaoPessoa.deleteUserById(pessoa.getId());
 				pessoa = new Pessoa(); 
 				carregarPessoas(); 
 				mostrarMsg("Removed successfully");

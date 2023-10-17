@@ -6,6 +6,10 @@ public interface IDaoCompany extends Serializable {
 	
 	boolean noRepeatCompany(String name);
 	
+	int getLaunchCompany(String nameCompany);
+	
+
+	
 	
 
 }

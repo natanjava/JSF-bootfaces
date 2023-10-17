@@ -3,10 +3,15 @@ package br.com.entidades;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.inject.Inject;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import br.com.dao.DaoGeneric;
+import br.com.repository.IDaoCompany;
 
 @Entity
 public class Company implements Serializable  {
@@ -16,12 +21,20 @@ public class Company implements Serializable  {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@Inject
+	private IDaoCompany iDaoCompany;
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	private String name;
+	
+
+	
+	
+	
 
 	public Long getId() {
 		return id;
@@ -43,6 +56,7 @@ public class Company implements Serializable  {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {

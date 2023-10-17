@@ -23,12 +23,26 @@
 		<h4>
 			Welcome #{pessoaBean.loggedUser.nome}!  
 		</h4>
-			This is the User Page. Only <b>ADMINISTRATOR</b> can insert, edit and delete Users in the System.
-			<br/> 
-			Your Role is: <b> #{pessoaBean.loggedUser.perfiUser} </b>. Click <a href="info.jsf">here</a> to learn more about these System. 
+		This is the user registration page.
+		<br/> 
+		Your Role is: <a id="atrigger"  href="#amodal" data-toggle="modal"><b> #{pessoaBean.loggedUser.perfiUser} </b></a>. 
+		Click <a href="info.jsf">here</a> to learn more about these System. 
+		
+		
+		<b:modal id="amodal" title="Understanding Roles" styleClass="modalPseudoClass">
+			  <p><u>ADMINISTRATOR</u> can: Insert, edit und delet User. Approve or reject launch request.</p>
+			  <p><u>MANAGER</u> can: Insert, edit and delete Launches, before they are approved/rejected.</p>
+			  <p><u>ASSISTENT</u> can: Insert, edit and delete Partner Companies.</p>
+			  <p><u>ALL USERS</u> can: View users, launches and partner companies that have been saved 
+			  in the system. Generate reports on users, releases and orders.</p>
+			  <f:facet name="footer">
+			    <b:button value="Close" dismiss="modal" />
+			    <b:button value="Ok" look="primary" dismiss="modal" />
+			  </f:facet>
+		</b:modal>
 		
 		<b:messages style="max-width:600px;" />
-
+		<br/> 
 		<h:form id="formPessoa" enctype="multipart/form-data" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 
 			<h:panelGrid columns="2">
@@ -177,7 +191,7 @@
 				<b:dataTableColumn label="Remove"
 					rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 					<h:commandLink title="Remove User" action="#{pessoaBean.remove}"
-						onclick="return confirm('Are you sure you want to delete the Register?');">
+						onclick="return confirm('The Launches associated with this User will be automatically \ndeleted. Are you sure you want to delete the User?');">
 						<f:setPropertyActionListener value="#{pessoa}"
 							target="#{pessoaBean.pessoa}" />
 						<h:graphicImage value="/resources/img/excluir.png" />
