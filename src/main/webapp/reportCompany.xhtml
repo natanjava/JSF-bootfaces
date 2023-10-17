@@ -7,7 +7,7 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
-	<title>Company</title>
+	<title>Company Report</title>
 </h:head>
 
 <h:body>
@@ -17,15 +17,14 @@
 
 		<b:messages id="msg-launch" />
 
-		<br />
-		<div style="width: 500px; text-align: justify">
+		<div style="width: 600px; text-align: justify">
 			<h4>Companies report page</h4>
 			Click on 'List Companies' to access information for all Companies on the system.
 			Then, if necessary, use the field 'Search' to filter the search.
 			Also visit the <a href="rellancamento.jsf">Launch report page</a> and
 			<a href="relusuario.jsf">User report page</a>.
 		</div>
-
+		<br/>
 		<h:form id="formCompanies" style="margin-bottom: 3%;">
 
 			<b:commandButton value="List Companies" look="primary "
@@ -41,8 +40,8 @@
 						pdf="true" excel="true" copy="true">
 				<b:dataTableColumn value="#{c.id}" label="ID" />
 
-				<b:dataTableColumn value="#{c.name}" label="Nome" />
-
+				<b:dataTableColumn value="#{c.name}" label="Name" />
+				
 			</b:dataTable>
 
 		</h:form>

@@ -297,15 +297,15 @@ public class PessoaBean implements Serializable {
 				return "primeirapagina.xhtml";*/
 				
 			} else {
-				FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User not found."));	
+				FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User/Password not found."));	
 				return "index.xhtml";
 			}
 		} catch (NoResultException e) {
-			FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User not found"));
+			FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User/Password not found"));
 			return "index.xhtml";
 		}
 		catch (IndexOutOfBoundsException e)	{
-			FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User not found"));
+			FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User/Password not found"));
 			return "index.xhtml";
 		}
 		

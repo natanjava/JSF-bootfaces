@@ -96,6 +96,8 @@ public class RelUsuario implements Serializable {
 	public void reportCompanies() {
 		companies = daoGenericCompany.getListEntity(Company.class);	
 	}
+	
+
 
 	
 	

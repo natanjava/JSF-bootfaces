@@ -67,7 +67,7 @@
 	
 			</h:panelGrid>
 	
-			<h:panelGroup style="margin-left: 10%; margin-top: 6%;">
+			<h:panelGroup style="margin-left: 8%; margin-top: 6%;">
 				<h:commandButton value="Save Launch" action="#{lancamentoBean.salvar}"
 					image="/resources/img/salvar.png" title="Save Launch" />
 
@@ -92,7 +92,9 @@
 	
 				<b:dataTableColumn value="#{lanc.id}" label="ID" />	
 	
-				<b:dataTableColumn value="#{lanc.descricao}" label="Description"  />	
+				<b:dataTableColumn value="#{lanc.descricao}" label="Description"  />
+				
+				<b:dataTableColumn value="#{lanc.empresaOrigem.name}" label="Supplier"  />	
 				
 				<b:dataTableColumn value="#{lanc.usuario.nome}" label="Author"  />
 				
@@ -118,7 +120,7 @@
 							  onclick="alert('Reason for Rejection:\n  #{lanc.reason}')" />
 				</b:dataTableColumn>
 				
-				<h:column>
+				<h:column rendered="#{pessoaBean.permiteAcesso('MANAGER')}">
 				    <f:facet name="header">Update</f:facet>
 					<h:commandLink title="Edit Launch" rendered="#{lanc.status == 'under review'}">
 			            <h:graphicImage value="/resources/img/editar.png" />
@@ -127,7 +129,7 @@
 			        <h:outputText value="Not Editable" rendered="#{lanc.status != 'under review'}" />
 				</h:column>
 	
-				<h:column>
+				<h:column rendered="#{pessoaBean.permiteAcesso('MANAGER')}">
 					<f:facet name="header">Remove</f:facet>
 					<h:commandLink title="Remove Launch" action="#{lancamentoBean.remover}" rendered="#{lanc.status == 'under review'}" 
 						onclick="return confirm('Are you sure you want to delete?');">

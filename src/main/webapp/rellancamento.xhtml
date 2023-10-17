@@ -7,7 +7,7 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
-	<title>Lançamentos</title>
+	<title>Launche Report</title>
 </h:head>
 
 <h:body>
@@ -16,23 +16,23 @@
 	<div style="margin-left: 5%; margin-right: 5%; margin-bottom: 3%">
 
 		<b:messages id="msg-launch" />
-		<br />
-		<div style="width: 500px; text-align: justify">
+		<div style="width: 600px; text-align: justify">
 			<h4>Launch report page</h4>
 			Click on 'List Launches' to access information for all Launches on the system.
 			Then, if necessary, use the field 'Search' to filter the search.
-			Also visit the <a href="relusuario.jsf">user report page</a>.
+			Also visit the <a href="relusuario.jsf">user report page</a> and 
+			the the <a href="reportCompany.jsf">company report page</a>.
 		</div>
-	
-		<h:form id="formLancamento" style="margin-bottom:3%;">
-	
+
+		<br/>	
+		<h:form id="formLancamento">
 	
 			<b:commandButton value="List Launches" look="primary "
 				action="#{rellancamento.bucarLancamento}" />
 	
 		</h:form>
 	
-		<br />
+		<br /><br />
 	
 		<h:form>
 			<b:dataTable value="#{rellancamento.lancamentos}" var="lanc"
