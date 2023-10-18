@@ -1,40 +1,29 @@
-package br.com.entidades;
+package br.com.model;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.inject.Inject;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
-
-import br.com.dao.DaoGeneric;
-import br.com.repository.IDaoCompany;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Company implements Serializable  {
+public class Cidades implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
-	@Inject
-	private IDaoCompany iDaoCompany;
-	
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String name;
+	private String nome;
 	
-
-	
-	
-	
+	@ManyToOne (fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	private Estados estados;
 
 	public Long getId() {
 		return id;
@@ -44,19 +33,32 @@ public class Company implements Serializable  {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
+	public Estados getEstados() {
+		return estados;
+	}
+
+	public void setEstados(Estados estados) {
+		this.estados = estados;
+	}
+	
+
+
+	
+	
+	
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -66,12 +68,11 @@ public class Company implements Serializable  {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Company other = (Company) obj;
+		Cidades other = (Cidades) obj;
 		return Objects.equals(id, other.id);
 	}
+	 
 	
 	
 	
-	
-
 }

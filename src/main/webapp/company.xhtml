@@ -61,8 +61,7 @@
 				<b:dataTableColumn value="#{comp.id}" label="ID" />	
 	
 				<b:dataTableColumn value="#{comp.name}" label="Name"  />	
-				
-				<h:column rendered="#{pessoaBean.permiteAcesso('ASSISTENT')}">
+				<h:column rendered="#{pessoaBean.permiteAcesso('ASSISTENT') or pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 				    <f:facet name="header">Update</f:facet>
 					<h:commandLink title="Edit Company" >
 			            <h:graphicImage value="/resources/img/editar.png" />
@@ -70,7 +69,7 @@
 			        </h:commandLink>
 				</h:column>
 	
-				<h:column rendered="#{pessoaBean.permiteAcesso('ASSISTENT')}">
+				<h:column rendered="#{pessoaBean.permiteAcesso('ASSISTENT') or pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 					<f:facet name="header">Remove</f:facet>
 					<h:commandLink title="Remove Launch" action="#{lancamentoBean.removeCompany}" onclick="return confirm('Are you sure you want to delete?');">
 						<h:graphicImage value="/resources/img/excluir.png" />

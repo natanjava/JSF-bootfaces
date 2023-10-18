@@ -1,4 +1,4 @@
-package br.com.cursojsf;
+package br.com.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,9 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.dao.DaoGeneric;
-import br.com.entidades.Company;
-import br.com.entidades.Lancamento;
-import br.com.entidades.Pessoa;
+import br.com.model.Company;
+import br.com.model.Lancamento;
+import br.com.model.Pessoa;
 import br.com.repository.IDaoCompany;
 import br.com.repository.IDaoPessoa;
 

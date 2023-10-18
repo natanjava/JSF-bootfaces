@@ -1,4 +1,4 @@
-package br.com.cursojsf;
+package br.com.bean;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -27,11 +27,11 @@ import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
 
 import br.com.dao.DaoGeneric;
-import br.com.entidades.Cidades;
-import br.com.entidades.Estados;
-import br.com.entidades.Lancamento;
-import br.com.entidades.Pessoa;
 import br.com.jpautil.JPAUtil;
+import br.com.model.Cidades;
+import br.com.model.Estados;
+import br.com.model.Lancamento;
+import br.com.model.Pessoa;
 import br.com.repository.IDaoCompany;
 import br.com.repository.IDaoLancamento;
 import br.com.repository.IDaoPessoa;
@@ -61,6 +61,7 @@ public class PessoaBean implements Serializable {
 	@Inject
 	private IDaoLancamento daoLancamento;
 	
+	@Inject
 	private JPAUtil jpaUtil;
 	
 	private List<SelectItem> estados; 
@@ -69,13 +70,8 @@ public class PessoaBean implements Serializable {
 	
 	private Part arquivoFoto;
 	
-	@Inject
 	
-
-	
-
-	
-	
+	/*  get and set --- BEGIN*/	
 	public Pessoa getLoggedUser() {
 		return loggedUser;
 	}
@@ -140,10 +136,63 @@ public class PessoaBean implements Serializable {
 	public void setLaunchesReview(List<Lancamento> launchesReview) {
 		this.launchesReview = launchesReview;
 	}
+	/*  get and set --- END*/	
 	
 	
+	/* method activated whenever the page is loaded*/
+	@PostConstruct
+	public void carregarPessoas () {
+		pessoas = daoGeneric.getListEntityLimit5(Pessoa.class);
+		
+		// get the session e after the name of user, in order to use it in the UserPage (primeirapagina): "Welcome #user !"
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = context.getExternalContext();
+		Pessoa usuarioLogado = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
+		String nameLoggedUser = (usuarioLogado != null) ? usuarioLogado.getNome() : "User not logged";
+		String roleLoggedUser = (usuarioLogado != null) ? usuarioLogado.getPerfiUser() : "User withou role";
+		loggedUser.setNome(nameLoggedUser);
+		loggedUser.setPerfiUser(roleLoggedUser);
+		launchesReview = daoLancamento.underAprovalLaunchs("under review"); 
+		if (launchesReview.size() > 0 && loggedUser.getPerfiUser().equalsIgnoreCase("ADMINISTRATOR")) {
+			mostrarMsg("There is one or more  Launches to be approved. Look at Reviews Page");
+		}
+		
+	}
 	
-
+	/*method that permit log in*/
+	public String logar() throws Exception {
+		List<Pessoa> pessoaUser = iDaoPessoa.consultarUsuario(pessoa.getLogin(), pessoa.getSenha());
+		try {
+			
+			if (pessoaUser != null ||  pessoaUser.size()!=0) { // user Ok
+				FacesContext context = FacesContext.getCurrentInstance();  			
+				ExternalContext externalContext = context.getExternalContext();
+				/**/
+				externalContext.getSessionMap().put("usuarioLogado", pessoaUser.get(0)); // pega o objeto ao inves de perfil ou login
+				return "primeirapagina.xhtml?faces-redirect=true";
+				/**/			
+				/*
+				HttpServletRequest req = (HttpServletRequest) externalContext.getRequest();
+				HttpSession session = req.getSession();						
+				session.setAttribute("usuarioLogado", pessoaUser);  // pega o objeto inteiro e guarda na sessão
+				
+				return "primeirapagina.xhtml";*/
+				
+			} else {
+				FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User/Password not found."));	
+				return "index.xhtml";
+			}
+		} catch (NoResultException e) {
+			FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User/Password not found"));
+			return "index.xhtml";
+		}
+		catch (IndexOutOfBoundsException e)	{
+			FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User/Password not found"));
+			return "index.xhtml";
+		}
+	}
+	
+	/* save new user; handle upload of image*/
 	public String salvar () throws IOException {		
 		
 		// avoid duplicated login for new user
@@ -158,9 +207,10 @@ public class PessoaBean implements Serializable {
 			return "";
 		}
 		
-		// these IF condition avoid the ADMIN to be deleted
+		// these IF condition below avoid the ADMIN to be deleted
 		if (pessoa.getId() == null || pessoa.getId() != 1) {
-			/*Processar the image*/
+			
+			/*Process the image*/
 			byte[] imagemByte = null;
 			if (arquivoFoto != null) {
 				imagemByte = getByte(arquivoFoto.getInputStream());
@@ -169,34 +219,34 @@ public class PessoaBean implements Serializable {
 			if (imagemByte != null && imagemByte.length > 0) { 
 				pessoa.setFotoIconBase64Original(imagemByte); /*atribuicao ao objeto, salva a imagem original*/
 				
-				/*transformar em buffer image*/
+				/*transfor in buffer */
 				BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagemByte));
 				
-				/*descobrir  o tipo da imagem*/
+				/*find out the typ of image*/
 				int type = bufferedImage.getType() == 0? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
 				
-				/*atribui largura e altura para miniatura*/
+				/*set up with and height to miniature*/
 				int largura = 200;
 				int altura = 200;
 				
-				/*criar a miniatura*/
+				/*create the miniature*/
 				BufferedImage resizedImage = new BufferedImage(altura, largura, type);
 				Graphics2D g = resizedImage.createGraphics(); // retorna a parte grafica
 				g.drawImage(bufferedImage, 0, 0, largura, altura, null);
-				g.dispose();   // finalmente grava a imagem
+				g.dispose();   // finally record the image
 				
-				/*escrever novamente a imagem no tamanho menor*/
+				/*write the image again with a smaller size*/
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				String extensao = arquivoFoto.getContentType().split("\\/")[1]; // retorna como padrão a string "imagem/png"; posição[0]: image; posicao[1]: extensao
-				// com a extensao agora escreve a miniatura no buffer de saida baos
+				// now with the extension, write the imageon the output buffer => baos
 				ImageIO.write(resizedImage, extensao, baos);
 				
 				
-				/*processa a imagem miniatura
-				 * para pdf seria aplication/pdf ao inves de data/image*/
+				/* process the miniature
+				 * for PDF: instead data/image that would be aplication/pdf */
 				String miniImagem = "data:"+arquivoFoto.getContentType() + ";base64,"+DatatypeConverter.printBase64Binary(baos.toByteArray());
 				
-				/*atribuicoes da mini imagem e da extensao*/
+				/*mini image and extension assignments*/
 				pessoa.setFotoIconBase64(miniImagem);
 				pessoa.setExtensao(extensao);		
 			}
@@ -207,7 +257,7 @@ public class PessoaBean implements Serializable {
 			
 			pessoa = new Pessoa();
 			carregarPessoas(); // there s changes on Data Base, then load the list again
-			mostrarMsg("User saved successfully.");
+			mostrarMsg("User saved successfully."); // show successful message
 		}
 		else if (pessoa.getId() != null && pessoa.getId()== 1) {
 			mostrarMsg("Standard Admin can´t be updated.");
@@ -217,19 +267,20 @@ public class PessoaBean implements Serializable {
 		return "";
 	}
 	
-	
+	/* generic method: show some message to the user*/
 	private void mostrarMsg(String msg) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		FacesMessage message = new FacesMessage(msg);
-		context.addMessage(null, message);  // parameter 'null' could be a specific component
+		context.addMessage(null, message);  // parameter 'null' could be a specific component on the page
 	}
-
+	
+	/* clean formular*/
 	public String limpar () {
 		pessoa = new Pessoa();
 		return "";
 	} 
 	
-	
+	/* remove user*/
 	public String remove() {
 		if (pessoa.getId() != 1) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -263,57 +314,45 @@ public class PessoaBean implements Serializable {
 		return "";
 	} 
 	
-	@PostConstruct
-	public void carregarPessoas () {
-		pessoas = daoGeneric.getListEntityLimit5(Pessoa.class);
-		
-		// get the session e after the name of user, in order to use it in the UserPage (primeirapagina): "Welcome #user !"
-		FacesContext context = FacesContext.getCurrentInstance();
-		ExternalContext externalContext = context.getExternalContext();
-		Pessoa usuarioLogado = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
-		String nameLoggedUser = (usuarioLogado != null) ? usuarioLogado.getNome() : "User not logged";
-		String roleLoggedUser = (usuarioLogado != null) ? usuarioLogado.getPerfiUser() : "User withou role";
-		loggedUser.setNome(nameLoggedUser);
-		loggedUser.setPerfiUser(roleLoggedUser);
-		launchesReview = daoLancamento.underAprovalLaunchs("under review"); 
-		if (launchesReview.size() > 0 && loggedUser.getPerfiUser().equalsIgnoreCase("ADMINISTRATOR")) {
-			mostrarMsg("There is one or more  Launches to be approved. Look at Reviews Page");
+	/*This method convert InputStream to Array of Bytes*/
+	private byte[] getByte (InputStream is) throws IOException {
+		int len; //variavel de controle: lenght
+		int size = 1024; // tamanho padrão usado para arquivo;
+		byte[] buf = null;   // fluxo
+		if (is instanceof ByteArrayInputStream) {    // talvez InputStream é uma instancia de ByteArrayInputStream
+			size = is.available();
+			buf = new byte[size];
+			len = is.read(buf, 0, size);   // escreve InputStream o que esta no buffer, da posição 0 até seu tamanho.
 		}
+		else {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();     // saida de mida em forma de bytes
+			buf = new byte[size];    // new byte de 1024;
+			
+			while( (len = is.read(buf, 0, size)) != -1 ) {   // varrer o is e escrever no arquivo de saida, ler e adicion ao mesmo tempo ate ser -1 (erro)
+				bos.write(buf,0,len);    // escreve no arquivo de saida			
+			}
+			buf = bos.toByteArray();
+		}	
+		return buf;
 		
 	}
 	
-	public String logar() throws Exception {
-		List<Pessoa> pessoaUser = iDaoPessoa.consultarUsuario(pessoa.getLogin(), pessoa.getSenha());
-		try {
+	/* download image saved at the moment of registration*/
+	public void download () throws IOException {
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String fileDownloadId = params.get("fileDownloadId");
+		if (fileDownloadId != null && fileDownloadId != "") {
+			//System.out.println(fileDownloadId);
+			Pessoa pessoa = daoGeneric.consultar(Pessoa.class, fileDownloadId);
 			
-			if (pessoaUser != null ||  pessoaUser.size()!=0) { // user Ok
-				FacesContext context = FacesContext.getCurrentInstance();  			
-				ExternalContext externalContext = context.getExternalContext();
-				/**/
-				externalContext.getSessionMap().put("usuarioLogado", pessoaUser.get(0)); // pega o objeto ao inves de perfil ou login
-				return "primeirapagina.xhtml?faces-redirect=true";
-				/**/			
-				/*
-				HttpServletRequest req = (HttpServletRequest) externalContext.getRequest();
-				HttpSession session = req.getSession();						
-				session.setAttribute("usuarioLogado", pessoaUser);  // pega o objeto inteiro e guarda na sessão
-				
-				return "primeirapagina.xhtml";*/
-				
-			} else {
-				FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User/Password not found."));	
-				return "index.xhtml";
-			}
-		} catch (NoResultException e) {
-			FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User/Password not found"));
-			return "index.xhtml";
+			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+			response.addHeader("Content-Disposition", "attachment;filename=download."+pessoa.getExtensao());
+			response.setContentType("application/octet-stream");
+			response.setContentLength(pessoa.getFotoIconBase64Original().length);
+			response.getOutputStream().write(pessoa.getFotoIconBase64Original());
+			response.getOutputStream().flush();
+			FacesContext.getCurrentInstance().responseComplete();
 		}
-		catch (IndexOutOfBoundsException e)	{
-			FacesContext.getCurrentInstance().addMessage("msg-erro", new FacesMessage("User/Password not found"));
-			return "index.xhtml";
-		}
-		
-		
 	}
 	
 	/*Log off*/
@@ -328,8 +367,7 @@ public class PessoaBean implements Serializable {
 		return "index.jsf?faces-redirect=true";
 	}
 	
-	
-	/* usado para controlar partes do site que podem ser vista por determiados perfis */
+	/* used to control parts of the website that can be accessed by certain profiles */
 	public boolean permiteAcesso(String role) { 
 		
 		FacesContext context = FacesContext.getCurrentInstance();  			
@@ -339,28 +377,9 @@ public class PessoaBean implements Serializable {
 		return pessoaUser.getPerfiUser().equals(role);
 	}
 	
-	public boolean allowRegisterManager() {
-		FacesContext context = FacesContext.getCurrentInstance();  			
-		ExternalContext externalContext = context.getExternalContext();
-		Pessoa userRole = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
-		if (userRole.getPerfiUser().equals("MANAGER")) {
-			return true;
-		}
-		
-		return false;
-	}
+
 	
-	public boolean allowRegisterAssistent () {
-		FacesContext context = FacesContext.getCurrentInstance();  			
-		ExternalContext externalContext = context.getExternalContext();
-		Pessoa userRole = (Pessoa) externalContext.getSessionMap().get("usuarioLogado");
-		
-		if (userRole.getPerfiUser().equals("ASSISTENT")) {
-			return true;
-		}
-		
-		return false;
-	}
+	
 	
 	
 	
@@ -404,6 +423,7 @@ public class PessoaBean implements Serializable {
 	
 	/* Everything which is called via Listener (from a JSF-tag), must to have one parameter 'AjaxBehaviorEvent'     	
 	  * This method is no more been used, there was problem wit JSF-tag renderization*/	
+	/*
 	public void carregaCidades(AjaxBehaviorEvent event) {
 		
 		String codigoEstado = (String) event.getComponent().getAttributes().get("submittedValue");
@@ -425,47 +445,9 @@ public class PessoaBean implements Serializable {
 			}
 		}		
 	}
+	 * */
 	
-	/*This method convert InputStream to Array of Bytes*/
-	private byte[] getByte (InputStream is) throws IOException {
-		int len; //variavel de controle: lenght
-		int size = 1024; // tamanho padrão usado para arquivo;
-		byte[] buf = null;   // fluxo
-		if (is instanceof ByteArrayInputStream) {    // talvez InputStream é uma instancia de ByteArrayInputStream
-			size = is.available();
-			buf = new byte[size];
-			len = is.read(buf, 0, size);   // escreve InputStream o que esta no buffer, da posição 0 até seu tamanho.
-		}
-		else {
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();     // saida de mida em forma de bytes
-			buf = new byte[size];    // new byte de 1024;
-			
-			while( (len = is.read(buf, 0, size)) != -1 ) {   // varrer o is e escrever no arquivo de saida, ler e adicion ao mesmo tempo ate ser -1 (erro)
-				bos.write(buf,0,len);    // escreve no arquivo de saida			
-			}
-			buf = bos.toByteArray();
-		}	
-		return buf;
-		
-	}
-	
-	
-	public void download () throws IOException {
-		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-		String fileDownloadId = params.get("fileDownloadId");
-		if (fileDownloadId != null && fileDownloadId != "") {
-			//System.out.println(fileDownloadId);
-			Pessoa pessoa = daoGeneric.consultar(Pessoa.class, fileDownloadId);
-			
-			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-			response.addHeader("Content-Disposition", "attachment;filename=download."+pessoa.getExtensao());
-			response.setContentType("application/octet-stream");
-			response.setContentLength(pessoa.getFotoIconBase64Original().length);
-			response.getOutputStream().write(pessoa.getFotoIconBase64Original());
-			response.getOutputStream().flush();
-			FacesContext.getCurrentInstance().responseComplete();
-		}
-	}
+
 	
 	
 	

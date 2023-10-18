@@ -6,11 +6,11 @@ xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org
 	<persistence-unit name="JSF-intro">
 	
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>br.com.entidades.Pessoa</class>
-		<class>br.com.entidades.Lancamento</class>
-		<class>br.com.entidades.Estados</class>
-		<class>br.com.entidades.Cidades</class>
-		<class>br.com.entidades.Company</class>
+		<class>br.com.model.Pessoa</class>
+		<class>br.com.model.Lancamento</class>
+		<class>br.com.model.Estados</class>
+		<class>br.com.model.Cidades</class>
+		<class>br.com.model.Company</class>
 		
 		<properties>
 			<!-- 

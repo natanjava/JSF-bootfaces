@@ -15,9 +15,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
-import br.com.entidades.Estados;
-import br.com.entidades.Lancamento;
-import br.com.entidades.Pessoa;
+import br.com.model.Estados;
+import br.com.model.Lancamento;
+import br.com.model.Pessoa;
 
 @Named
 public class IDaoPessoImpl implements IDaoPessoa, Serializable {

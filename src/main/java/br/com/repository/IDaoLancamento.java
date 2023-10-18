@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import br.com.entidades.Lancamento;
+import br.com.model.Lancamento;
 
 public interface IDaoLancamento extends Serializable {
 	

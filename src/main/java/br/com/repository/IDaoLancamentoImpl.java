@@ -11,7 +11,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import br.com.entidades.Lancamento;
+import br.com.model.Lancamento;
 
 @Named
 public class IDaoLancamentoImpl implements IDaoLancamento, Serializable {

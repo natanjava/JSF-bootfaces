@@ -8,8 +8,8 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import br.com.entidades.Company;
 import br.com.jpautil.JPAUtil;
+import br.com.model.Company;
 
 @Named
 public class DaoGeneric<E> implements Serializable{

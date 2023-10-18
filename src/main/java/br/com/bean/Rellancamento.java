@@ -1,4 +1,4 @@
-package br.com.cursojsf;
+package br.com.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.dao.DaoGeneric;
-import br.com.entidades.Lancamento;
+import br.com.model.Lancamento;
 import br.com.repository.IDaoLancamento;
 
 @ViewScoped
@@ -32,8 +32,6 @@ public class Rellancamento implements Serializable {
 	
 	@Inject
 	private DaoGeneric<Lancamento> daoGeneric;
-	
-	
 	
 	
 	

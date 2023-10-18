@@ -8,8 +8,8 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import br.com.entidades.Company;
-import br.com.entidades.Lancamento;
+import br.com.model.Company;
+import br.com.model.Lancamento;
 
 @Named
 public class IDaoCompanyImpl implements IDaoCompany, Serializable{

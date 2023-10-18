@@ -14,8 +14,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import br.com.entidades.Pessoa;
 import br.com.jpautil.JPAUtil;
+import br.com.model.Pessoa;
 
 @WebFilter (urlPatterns = {"/*"})
 public class FilterAutenticacao implements Filter {

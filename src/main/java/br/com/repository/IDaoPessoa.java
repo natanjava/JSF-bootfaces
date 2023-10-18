@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import br.com.entidades.Pessoa;
+import br.com.model.Pessoa;
 
 public interface IDaoPessoa {
 	
