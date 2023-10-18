@@ -325,7 +325,7 @@ public class PessoaBean implements Serializable {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) context.getCurrentInstance().getExternalContext().getRequest();
 		httpServletRequest.getSession().invalidate();
 		
-		return "index.jsf";
+		return "index.jsf?faces-redirect=true";
 	}
 	
 	

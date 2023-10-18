@@ -19,18 +19,31 @@
 	<div style="margin-left: 15%; margin-right: 5%; margin-bottom: 5%; 
 		margin-top: 5% ; width: 800px; text-align: justify; font-family: verdana">
 		<h3>About the System</h3>
-		<p>This model system registers users, and entries made by each user. Registration forms have validations. After logging in, 
-		a list of users already saved in the system is loaded. Each user can log into the system using their own login and password, 
-		but only users with Administrator privileges can delete and update other registers. On the Lauch page, caunches can be registered 
-		for the logged user at the moment. There are report generation pages for launch and for the user, in which it´s possible to search for 
-		results through filters or not and generate a PDF report.</p>
-		<p>Tolls - Technical Information: Eclipse IDE, Postgresql, EC2 Amanzon Tecnology (deploy on cloud Server).
-		Java Server Faces, Hibernate, CDI, BootFaces.</p> 
-		<p><a href="https://github.com/natanjava/JSF-intro" target="_blank">GitHub Link</a>.  
+		<p><a href="https://github.com/natanjava/JSF-bootfaces" target="_blank">This system (version 2.0)</a> registers users, 
+		   launches and companies.</p> 
+		<p>
+		Each logged in user has different privileges. Each new user registered in the system can log in with username/password.
+		Those who have privileges to register new launches need to say which partner company will be registered in the launch. 
+		The launch will be analyzed by an administrator. If the launch is rejected, the ADMINISTRATOR must explain why. 
+		And when there is new launch that have not been analyzed, a warning message will appear whenever an ADMINISTRATOR accesses 
+		the first page of the system.
 		</p>
 		
-		<h:graphicImage value="/resources/img/caseSis.jpg" alt="User Case Diagram" width="800" height="600" />
+		<p><u>ADMINISTRATOR</u> has access to all parts of the system:
+  			 User, Launch, Company, Review and Reports pages, in terms of insertion, update and deletion.<br/>  
+		   <u>MANAGER</u> can: Insert Launches. Once an ADMINISTRATOR approves/rejects a launch, 
+		    MANAGER can no longer edit or delete it.<br/>
+		   <u>ASSISTENT</u> can: Insert, edit and delete Partner Companies.<br/>
+		   <u>ALL USERS</u> can: acess the list of users, launches and partner companies that have been saved 
+		     in the system. Generate reports on users, launches and companies.<br/>
+		 </p>
 		
+		<h:graphicImage value="/resources/img/sisCase.jpg" alt="User Case Diagram" width="800" height="600" />
+		
+		<p><b>Tolls - Technical Information:</b> Eclipse IDE, Postgresql, EC2 Amanzon Tecnology,
+		Java Server Faces, Hibernate, CDI, BootFaces.</p> 
+		<p><a href="https://github.com/natanjava/JSF-bootfaces" target="_blank">GitHub Link</a>.  
+		</p>
 	</div>
 
 </h:body>

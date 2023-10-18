@@ -30,11 +30,13 @@
 		
 		
 		<b:modal id="amodal" title="Understanding Roles" styleClass="modalPseudoClass">
-			  <p><u>ADMINISTRATOR</u> can: Insert, edit und delet User. Approve or reject launch request.</p>
-			  <p><u>MANAGER</u> can: Insert, edit and delete Launches, before they are approved/rejected.</p>
+			  <p><u>ADMINISTRATOR</u> has access to all parts of the system:
+  				 User, Launch, Company, Review and Reports pages, in terms of insertion, update and deletion.  
+  			  </p>
+			  <p><u>MANAGER</u> can: Insert Launches. Once an ADMINISTRATOR approves/rejects a launch, MANAGER can no longer edit or delete it.</p>
 			  <p><u>ASSISTENT</u> can: Insert, edit and delete Partner Companies.</p>
-			  <p><u>ALL USERS</u> can: View users, launches and partner companies that have been saved 
-			  in the system. Generate reports on users, releases and orders.</p>
+			  <p><u>ALL USERS</u> can: acess the list of users, launches and partner companies that have been saved 
+			  in the system. Generate reports on users, launches and companies.</p>
 			  <f:facet name="footer">
 			    <b:button value="Close" dismiss="modal" />
 			    <b:button value="Ok" look="primary" dismiss="modal" />
