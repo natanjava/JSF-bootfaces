@@ -7,7 +7,7 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
-	<title>Launche Registration</title>
+	<title>Order Registration</title>
 </h:head>
 
 <h:body>
@@ -17,12 +17,12 @@
 
 		
 		<div style="width: 600px; text-align: justify">
-			This is the launch registration page. 
-			To generate Report, visit the <a href="rellancamento.jsf">launch report page</a>.
+			This is the order registration page. 
+			To generate Report, visit the <a href="rellancamento.jsf">order report page</a>.
 		</div>
 		<br/>
 		<b:messages id="msg-launch" style="max-width:600px;"/>
-		<h:form id="formLancamento"  rendered="#{pessoaBean.permiteAcesso('MANAGER') or pessoaBean.permiteAcesso('ADMINISTRATOR')}">
+		<h:form id="formLancamento"  rendered="#{pessoaBean.permiteAcesso('ASSISTENT') or pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 			<h:panelGrid columns="2" >
 				<f:facet name="header">
 					<h:outputText value="Launch Formular" />
@@ -69,8 +69,8 @@
 			</h:panelGrid>
 	
 			<h:panelGroup style="margin-left: 8%; margin-top: 6%;">
-				<h:commandButton value="Save Launch" action="#{lancamentoBean.salvar}"
-					image="/resources/img/salvar.png" title="Save Launch" />
+				<h:commandButton value="Save Order" action="#{lancamentoBean.salvar}"
+					image="/resources/img/salvar.png" title="Save Order" />
 
 				<h:commandButton value="Clean Form" action="#{lancamentoBean.novo}" id="btnClean"
 					image="/resources/img/limpar.png" title="Clean Form"  >
@@ -81,7 +81,7 @@
 	
 		<br />
 		<div style="text-align: center" >
-			<h4>Launches already saved in the System.</h4> 
+			<h4>Orders already saved in the System.</h4> 
 		</div>
 		<h:form >
 			<b:dataTable 
@@ -123,7 +123,7 @@
 				
 				<h:column rendered="#{pessoaBean.permiteAcesso('MANAGER') or pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 				    <f:facet name="header">Update</f:facet>
-					<h:commandLink title="Edit Launch" rendered="#{lanc.status == 'under review'}">
+					<h:commandLink title="Edit Order" rendered="#{lanc.status == 'under review'}">
 			            <h:graphicImage value="/resources/img/editar.png" />
 			            <f:setPropertyActionListener value="#{lanc}" target="#{lancamentoBean.lancamento}" />
 			        </h:commandLink>
@@ -132,7 +132,7 @@
 	
 				<h:column rendered="#{pessoaBean.permiteAcesso('MANAGER') or pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 					<f:facet name="header">Remove</f:facet>
-					<h:commandLink title="Remove Launch" action="#{lancamentoBean.remover}"  
+					<h:commandLink title="Remove Order" action="#{lancamentoBean.remover}"  
 						onclick="return confirm('Are you sure you want to delete?');">
 						<h:graphicImage value="/resources/img/excluir.png" />
 						<f:setPropertyActionListener value="#{lanc}"

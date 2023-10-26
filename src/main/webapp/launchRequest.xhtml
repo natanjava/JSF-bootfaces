@@ -18,13 +18,14 @@
 		
 		
 		<div style="width: 600px; text-align: justify">
-			This is the review page.
+			On this page the Manager can see all orders that have not been analyzed yet. 
+			The Manager has to approve or reject it.
 		</div>
 		
 		
 		<b:messages id="msg-launch" />
 		
-		<h:form id="form" style="margin-top:2%;" rendered="#{pessoaBean.permiteAcesso('ADMINISTRATOR')}">
+		<h:form id="form" style="margin-top:2%;" rendered="#{pessoaBean.permiteAcesso('MANAGER') or pessoaBean.permiteAcesso('ADMINISTRATOR')}">
 			<h:panelGrid columns="2" >
 				<h:outputLabel value="ID: " />
 				<b:inputText value="#{lancamentoBean.lancamento.id}" readonly="true"  />
@@ -63,7 +64,7 @@
 		<br/>
 
 		<div style="text-align: center">
-			<h4>Launches to be approveed.</h4> 
+			<h4>Orders to be approved.</h4> 
 		</div>
 		
 		<h:form>

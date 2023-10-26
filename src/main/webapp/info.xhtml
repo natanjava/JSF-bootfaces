@@ -20,26 +20,26 @@
 		width: 800px; text-align: justify; font-family: verdana">
 		<h3>About the System</h3>
 		<p><a href="https://github.com/natanjava/JSF-bootfaces" target="_blank">This system (version 2.0)</a> registers users, 
-		   launches and companies.</p> 
+		   orders and companies.</p> 
 		<p>
 		Each logged in user has different privileges. Each new user registered in the system can log in with username/password.
-		Those who have privileges to register new launches need to say which partner company will be associated whenever a new
-		launch is registered. 
-		The launch will be analyzed by an administrator. If the launch is rejected, the ADMINISTRATOR must explain why. 
-		And when there is new launch that have not been analyzed, a warning message will appear whenever an ADMINISTRATOR accesses 
-		the first page of the system.
+		Those who have privileges to register new orders need to say which partner company will be associated whenever a new
+		order is registered. 
+		The order will be analyzed by an MANAGER. If the order is rejected, the MANAGER must explain why. 
+		And when there is new order that have not been analyzed, a warning message will appear whenever an ADMINISTRATOR or 
+		MANAGER accesses the first page of the system (user page).
 		</p>
 		
 		<p><u>ADMINISTRATOR</u> has access to all parts of the system:
-  			 User, Launch, Company, Review and Reports pages, in terms of insertion, update and deletion.<br/>  
-		   <u>MANAGER</u> can: Insert Launches. Once an ADMINISTRATOR approves/rejects a launch, 
-		    MANAGER can no longer edit or delete it.<br/>
+  			 User, Order, Company, Review and Reports pages, in terms of insertion, update and deletion.<br/>  
+		   <u>MANAGER</u> can: analyze Order. Once an Order is approved/rejected by the MANAGER/ADMINISTRATOR, 
+		    it is no longer possible to uptade, only delete.<br/>
 		   <u>ASSISTENT</u> can: Insert, edit and delete Partner Companies.<br/>
-		   <u>ALL USERS</u> can: acess the list of users, launches and partner companies that have been saved 
-		     in the system. Generate reports on users, launches and companies.<br/>
+		   <u>ALL USERS</u> can: acess the list of users, orders and partner companies that have been saved 
+		     in the system. Generate reports on users, orders and companies.<br/>
 		 </p>
 		
-		<h:graphicImage value="/resources/img/sisCase.jpg" alt="User Case Diagram" width="800" height="600" />
+		<h:graphicImage value="/resources/img/imgCaseS.jpeg" alt="User Case Diagram" width="800" height="600" />
 		
 		<p><b>Tolls - Technical Information:</b> Eclipse IDE, Postgresql, EC2 Amanzon Tecnology,
 		Java Server Faces, Hibernate, CDI, BootFaces, JavaScript</p> 

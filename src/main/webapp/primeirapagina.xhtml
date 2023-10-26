@@ -26,17 +26,18 @@
 		This is the user registration page.
 		<br/> 
 		Your Role is: <a id="atrigger"  href="#amodal" data-toggle="modal"><b> #{pessoaBean.loggedUser.perfiUser} </b></a>. 
-		Click <a href="info.jsf">here</a> to learn more about these System. 
+		Click <a href="info.jsf">here</a> to learn more about this System. 
 		
 		
 		<b:modal id="amodal" title="Understanding Roles" styleClass="modalPseudoClass">
-			  <p><u>ADMINISTRATOR</u> has access to all parts of the system:
-  				 User, Launch, Company, Review and Reports pages, in terms of insertion, update and deletion.  
-  			  </p>
-			  <p><u>MANAGER</u> can: Insert Launches. Once an ADMINISTRATOR approves/rejects a launch, MANAGER can no longer edit or delete it.</p>
-			  <p><u>ASSISTENT</u> can: Insert, edit and delete Partner Companies.</p>
-			  <p><u>ALL USERS</u> can: acess the list of users, launches and partner companies that have been saved 
-			  in the system. Generate reports on users, launches and companies.</p>
+			<p><u>ADMINISTRATOR</u> has access to all parts of the system:
+	  			 User, Order, Company, Review and Reports pages, in terms of insertion, update and deletion.<br/>  
+			   <u>MANAGER</u> can: analyze Order. Once an Order is approved/rejected by the MANAGER/ADMINISTRATOR, 
+			    it is no longer possible to uptade, only delete.<br/>
+			   <u>ASSISTENT</u> can: Insert, edit and delete Partner Companies.<br/>
+			   <u>ALL USERS</u> can: acess the list of users, orders and partner companies that have been saved 
+			     in the system. Generate reports on users, orders and companies.<br/>
+			 </p>
 			  <f:facet name="footer">
 			    <b:button value="Close" dismiss="modal" />
 			    <b:button value="Ok" look="primary" dismiss="modal" />
