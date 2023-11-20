@@ -15,7 +15,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
@@ -28,11 +27,8 @@ import javax.xml.bind.DatatypeConverter;
 
 import br.com.dao.DaoGeneric;
 import br.com.jpautil.JPAUtil;
-import br.com.model.Cidades;
-import br.com.model.Estados;
 import br.com.model.Lancamento;
 import br.com.model.Pessoa;
-import br.com.repository.IDaoCompany;
 import br.com.repository.IDaoLancamento;
 import br.com.repository.IDaoPessoa;
 
@@ -153,8 +149,9 @@ public class PessoaBean implements Serializable {
 		loggedUser.setNome(nameLoggedUser);
 		loggedUser.setPerfiUser(roleLoggedUser);
 		launchesReview = daoLancamento.underAprovalLaunchs("under review"); 
-		if (launchesReview.size() > 0 && loggedUser.getPerfiUser().equalsIgnoreCase("ADMINISTRATOR")) {
-			mostrarMsg("There is one or more  Orders to be approved. Look at Reviews Page");
+		if (launchesReview.size() > 0 && (loggedUser.getPerfiUser().equalsIgnoreCase("ADMINISTRATOR") 
+				                           || loggedUser.getPerfiUser().equalsIgnoreCase("MANAGER")  )) {
+			mostrarMsg("There is one or more  Orders to be approved. Look at Pending Approvals Page");
 		}
 		
 	}
